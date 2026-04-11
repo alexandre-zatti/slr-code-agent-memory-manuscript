@@ -1,0 +1,156 @@
+\section{Introdução}
+\label{sec:introducao}
+
+% PRISMA Item 3: Rationale — justificativa no contexto do conhecimento existente
+% PRISMA Item 4: Objectives — declaração explícita das questões abordadas
+
+Nove dos 28 estudos sobre persistência de conhecimento em
+agentes de codificação relatam cenários em que a memória
+prejudica o desempenho do agente.
+Esse achado torna crítico distinguir quando persistir conhecimento
+é vantajoso e quando é prejudicial, decisão que precede a
+comparação entre arquiteturas tecnicamente sofisticadas.
+Agentes de codificação baseados em modelos de linguagem de grande
+escala (LLMs) alcançaram adoção crescente em tarefas de Engenharia
+de Software como resolução automatizada de issues, geração de
+código e manutenção de repositórios~\cite{du2026memory}.
+Sistemas como SWE-Agent, OpenHands e Agentless interagem
+iterativamente com o código-fonte, executam testes e propõem
+correções sem intervenção humana direta.
+A capacidade desses agentes, contudo, permanece limitada por uma
+restrição básica: cada sessão parte do zero.
+
+O agente redescobre a arquitetura do projeto, repete erros já
+cometidos em sessões anteriores e ignora decisões de design
+previamente validadas.
+Essa volatilidade de conhecimento equivale a um desenvolvedor sem
+memória entre reuniões.
+A persistência de conhecimento entre sessões surgiu como resposta
+a essa limitação: ao registrar informações de resoluções
+anteriores, o agente pode reutilizá-las nas tarefas seguintes.
+
+Ao menos 24 sistemas de persistência foram propostos desde 2024,
+todos publicados entre 2024 e o primeiro trimestre de 2026.
+As arquiteturas variam de bancos de experiência que destilam
+trajetórias de resolução a grafos de conhecimento, memória guiada
+por AST e metáforas de controle de versão inspiradas no Git.
+O campo, porém, permanece fragmentado: os estudos não convergem
+para uma taxonomia unificada, e a maioria não cita trabalhos
+contemporâneos sobre o mesmo problema.
+
+Dessa fragmentação emergem lacunas que limitam tanto a pesquisa
+quanto a prática.
+Nenhum estudo compara três ou mais arquiteturas de persistência no
+mesmo benchmark com o mesmo modelo; toda evidência de superioridade
+arquitetural depende de comparações entre estudos com condições
+experimentais heterogêneas.
+A subnotificação de custos agrava o problema: 43\% dos estudos
+omitem dados de custo, e nenhum constrói uma fronteira de Pareto
+entre acurácia e custo computacional.
+Tampouco existe evidência controlada sobre a relação entre
+complexidade arquitetural e eficácia, de modo que não se sabe se
+arquiteturas simples são suficientes ou se a sofisticação se
+justifica em cenários específicos.
+
+Trabalhos secundários existentes cobrem aspectos adjacentes sem
+preencher essas lacunas; o posicionamento detalhado desta revisão
+diante deles é apresentado na
+\autoref{sec:trabalhos-relacionados}.
+
+Esta revisão sistemática responde à seguinte questão principal: \textit{de que forma a literatura existente aborda a
+persistência de conhecimento em agentes de codificação baseados em
+IA, e que evidências empíricas existem sobre a eficácia e
+custo-eficiência de diferentes arquiteturas de persistência?}
+Para operacionalizar essa questão principal, cinco questões
+secundárias orientam a síntese, cada uma motivada por uma lacuna
+específica no estado atual do campo.
+
+\noindent\textbf{QS1.} Quais arquiteturas de persistência foram
+propostas, e como se classificam quanto a escopo temporal,
+substrato representacional e política de controle?
+A heterogeneidade arquitetural impede tanto a comparação direta
+quanto a adoção informada por equipes que precisam escolher entre
+alternativas concorrentes.
+Uma taxonomia explícita revela quais escolhas de projeto dominam
+o campo e quais permanecem inexploradas.
+
+\noindent\textbf{QS2.} Quais métodos de avaliação e benchmarks são
+utilizados, e quão comparáveis são os resultados?
+Quando estudos diferentes adotam benchmarks, modelos base e
+protocolos experimentais distintos, ganhos reportados não são
+diretamente comparáveis entre si.
+Esta questão verifica se há convergência metodológica e identifica
+os obstáculos que impedem a síntese cross-study.
+
+\noindent\textbf{QS3.} Quais resultados de desempenho são
+reportados em relação a baselines sem persistência?
+A magnitude dos ganhos determina se persistência representa uma
+melhoria marginal ou substantiva sobre os agentes sem memória.
+Sintetizar esses resultados expõe se o ganho se mantém em
+diferentes condições experimentais ou depende de contextos
+específicos.
+
+\noindent\textbf{QS4.} Quais métricas de custo e eficiência são
+reportadas, e qual a relação entre custo e eficácia?
+Persistência adiciona overhead de armazenamento, recuperação e
+contexto efetivo do agente.
+Sem dados de custo, qualquer ganho de acurácia é incompleto para
+fins de adoção prática, e a relação custo-eficácia permanece
+inacessível ao leitor.
+
+\noindent\textbf{QS5.} Que evidências existem sobre a relação
+entre complexidade arquitetural e eficácia, incluindo degradação?
+Sistemas mais sofisticados nem sempre superam alternativas
+simples, e mais memória nem sempre produz mais eficácia.
+Identificar mecanismos de degradação e padrões de complexidade
+versus ganho informa decisões de projeto em cenários onde a
+sofisticação não se justifica.
+
+\begin{table}[htbp]
+\centering
+\caption{Mapa das questões secundárias: objetivo de cada questão e
+localização da resposta no manuscrito.}
+\label{tab:mapa-rqs}
+\small
+\begin{tabularx}{\textwidth}{l X l l}
+\toprule
+\textbf{QS} & \textbf{Objetivo} & \textbf{Seção} & \textbf{Tabela/Figura} \\
+\midrule
+QS1 & Mapear e classificar as arquiteturas de persistência &
+  \autoref{sec:qs1} & \autoref{tab:arquiteturas}, \autoref{fig:taxonomia} \\
+QS2 & Catalogar métodos de avaliação e benchmarks &
+  \autoref{sec:qs2} & \autoref{tab:benchmarks} \\
+QS3 & Sintetizar resultados de desempenho vs.\ baselines &
+  \autoref{sec:qs3} & \autoref{tab:desempenho}, \autoref{fig:ganhos} \\
+QS4 & Quantificar cobertura e relação custo-eficácia &
+  \autoref{sec:qs4} & \autoref{tab:custo}, \autoref{fig:custo} \\
+QS5 & Avaliar relação entre complexidade e eficácia &
+  \autoref{sec:qs5} & \autoref{tab:degradacao} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\noindent O escopo abrange publicações de 2023 a março de 2026, com
+buscas em Scopus e arXiv complementadas por rastreamento de citações.
+
+As contribuições desta revisão são as seguintes:
+
+\begin{enumerate}
+  \item o primeiro mapeamento sistemático do campo, classificando
+    24 arquiteturas de persistência para agentes de codificação
+    segundo três dimensões: escopo temporal da memória, substrato
+    representacional e política de leitura e escrita;
+  \item a síntese quantitativa de 19 comparações controladas sobre
+    eficácia e custo, com identificação de rendimentos decrescentes
+    em baselines fortes e de impacto bimodal sobre o custo
+    operacional;
+  \item a confirmação empírica de três lacunas centrais do campo:
+    ausência de comparações head-to-head entre arquiteturas no
+    mesmo benchmark, subnotificação sistemática de custos por
+    tarefa e cobertura insuficiente da relação entre complexidade
+    arquitetural e eficácia.
+\end{enumerate}
+
+As lacunas confirmadas motivam diretamente o estudo comparativo
+empírico planejado como segunda etapa desta dissertação, descrito
+em mais detalhe na \autoref{sec:direcoes-futuras}.

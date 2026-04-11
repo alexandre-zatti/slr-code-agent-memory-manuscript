@@ -1,0 +1,102 @@
+% fig:ganhos — Horizontal bar chart: performance gains vs baseline
+% 17 studies with comparable pp gains (excluding Dong speedup and Tablan score)
+% Color = architecture type. Requer: tikz (já carregado em main.tex)
+\begin{tikzpicture}[
+  font=\small,
+  bar label/.style={anchor=east, font=\footnotesize},
+  gain label/.style={anchor=west, font=\footnotesize},
+]
+
+% --- Definições ---
+\def\barheight{0.35}
+\def\scale{0.22}  % 1pp = 0.22cm
+
+% --- Dados: (nome, ganho em pp, cor) ordenados por ganho decrescente ---
+% Li (GBT) 39.0 outro
+% Zhang (DGM) 30.0 outro
+% Nadafian (KAPSO) 15.6 híbrido
+% Wang (CodeMEM) 12.2 AST
+% Zhou (ToM-SWE) 11.5 híbrido
+% Su (LbI/OSW) 10.1 banco
+% Deng (MemCoder) 9.4 banco
+% Wang (MemGov.) 9.4 banco
+% Su (LbI/SWE) 8.8 banco
+% Shen (Struct.) 6.8 banco
+% Wu (GCC) 6.2 git
+% Wang (RepoMem) 3.4 git
+% Shen (TALM) 3.2 banco
+% Xia (Live-SWE) 3.2 outro
+% Wong (CCA) 3.0 híbrido
+% Guo (EET) 2.7 banco
+% Chen (SWE-Exp) 2.2 banco
+
+\def\entries{
+  {Li (GBT)/39.0/archOutro},
+  {Zhang (DGM)/30.0/archOutro},
+  {Nadafian (KAPSO)/15.6/archHibrido},
+  {Wang (CodeMEM)/12.2/archAST},
+  {Zhou (ToM-SWE)/11.5/archHibrido},
+  {Su (LbI) OSWorld/10.1/archBanco},
+  {Deng (MemCoder)/9.4/archBanco},
+  {Wang (MemGov.)/9.4/archBanco},
+  {Su (LbI) SWE-b./8.8/archBanco},
+  {Shen (Struct.)/6.8/archBanco},
+  {Wu (GCC)/6.2/archGit},
+  {Wang (RepoMem)/3.4/archGit},
+  {Shen (TALM)/3.2/archBanco},
+  {Xia (Live-SWE)/3.2/archOutro},
+  {Wong (CCA)/3.0/archHibrido},
+  {Guo (EET)/2.7/archBanco},
+  {Chen (SWE-Exp)/2.2/archBanco}%
+}
+
+% --- Barras ---
+\foreach \name/\gain/\col [count=\i from 0] in \entries {
+  \pgfmathsetmacro{\y}{-\i * 0.65}
+  \pgfmathsetmacro{\w}{\gain * \scale}
+  % Label
+  \node[bar label] at (-0.2, \y) {\name};
+  % Bar
+  \fill[\col!80] (0, \y - \barheight/2)
+    rectangle (\w, \y + \barheight/2);
+  \draw[\col!60!black, line width=0.3pt] (0, \y - \barheight/2)
+    rectangle (\w, \y + \barheight/2);
+  % Gain label
+  \node[gain label] at (\w + 0.1, \y)
+    {+\pgfmathprintnumber[fixed, precision=1]{\gain}};
+}
+
+% --- Eixo X ---
+\pgfmathsetmacro{\ybot}{-16 * 0.65 - 0.5}
+\draw[thick, -Stealth] (0, 0.5) -- (0, \ybot);
+\draw[thick] (0, \ybot) -- (9.0, \ybot);
+\foreach \v in {0, 5, 10, 15, 20, 25, 30, 35, 40} {
+  \pgfmathsetmacro{\x}{\v * \scale}
+  \draw (\x, \ybot) -- (\x, \ybot - 0.15);
+  \node[font=\scriptsize, below] at (\x, \ybot - 0.15) {\v};
+}
+\node[font=\footnotesize, below] at (4.4, \ybot - 0.7)
+  {Ganho (pontos percentuais)};
+
+% --- Legenda (duas linhas, espaçamento generoso) ---
+\pgfmathsetmacro{\yleg}{\ybot - 1.8}
+% Linha 1
+\fill[archBanco!80] (0.5, \yleg) rectangle (0.85, \yleg+0.25);
+\node[anchor=west, font=\footnotesize] at (0.95, \yleg+0.125)
+  {Banco exp.};
+\fill[archHibrido!80] (3.2, \yleg) rectangle (3.55, \yleg+0.25);
+\node[anchor=west, font=\footnotesize] at (3.65, \yleg+0.125)
+  {Híbrido};
+\fill[archGit!80] (5.6, \yleg) rectangle (5.95, \yleg+0.25);
+\node[anchor=west, font=\footnotesize] at (6.05, \yleg+0.125)
+  {Git metáf.};
+% Linha 2
+\pgfmathsetmacro{\ylegb}{\yleg - 0.5}
+\fill[archAST!80] (0.5, \ylegb) rectangle (0.85, \ylegb+0.25);
+\node[anchor=west, font=\footnotesize] at (0.95, \ylegb+0.125)
+  {AST guiado};
+\fill[archOutro!80] (3.2, \ylegb) rectangle (3.55, \ylegb+0.25);
+\node[anchor=west, font=\footnotesize] at (3.65, \ylegb+0.125)
+  {Outro};
+
+\end{tikzpicture}

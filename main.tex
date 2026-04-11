@@ -1,0 +1,260 @@
+% Revisão Sistemática da Literatura — PRISMA 2020
+% Alvo primário: venue brasileiro (português, ABNT)
+% Estrutura flexível para adaptação a venues internacionais
+\documentclass[12pt,a4paper]{article}
+
+% =====================================================================
+% Encoding e idioma
+% =====================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage{times}
+
+% =====================================================================
+% Tipografia refinada
+% =====================================================================
+% microtype: protrusion e expansion de caracteres — melhora line breaks,
+% reduz overfull hboxes e dá acabamento profissional ao texto.
+% Invisível mas é a maior diferença entre LaTeX amador e polido.
+\usepackage[protrusion=true, expansion=true, tracking=false,
+            disable=false]{microtype}
+% Suprime patch de \footnote que entra em conflito com \thanks em
+% \maketitle (warning benigno, mas ruidoso no log)
+\microtypesetup{patch=none}
+
+% Remover \sloppy: microtype resolve a maioria dos overfull hboxes sem
+% produzir os espaços inter-palavra excessivos que \sloppy causa.
+% Se um hbox persistir, ajustar a frase localmente.
+
+% =====================================================================
+% Cores — paleta consistente para todo o manuscrito
+% =====================================================================
+% xcolor com opção table para \rowcolor em tabelas
+\usepackage[table]{xcolor}
+
+% Paleta categórica: ColorBrewer Dark2 (colorblind-safe, 8 classes)
+% Usada para tipos de arquitetura em figuras e tabelas
+\definecolor{archBanco}{HTML}{1B9E77}      % banco de experiência
+\definecolor{archHibrido}{HTML}{D95F02}    % híbrido
+\definecolor{archGit}{HTML}{7570B3}        % git-metáfora
+\definecolor{archAST}{HTML}{E7298A}        % AST-guiado
+\definecolor{archGrafo}{HTML}{66A61E}      % grafo de conhecimento
+\definecolor{archTexto}{HTML}{E6AB02}      % notas de texto
+\definecolor{archPaginacao}{HTML}{A6761D}  % paginação OS
+\definecolor{archOutro}{HTML}{666666}      % outro / survey / benchmark
+
+% Cores semânticas para resultados
+\definecolor{posGain}{HTML}{2E7D32}        % ganho positivo
+\definecolor{negLoss}{HTML}{C62828}        % degradação / perda
+\definecolor{neutGray}{HTML}{9E9E9E}       % neutro / sem dados
+\definecolor{hlRow}{HTML}{F5F5F5}          % fundo alternado em tabelas
+
+% =====================================================================
+% Figuras e tabelas
+% =====================================================================
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+
+% Espaçamento entre linhas de tabelas — padrão booktabs é apertado,
+% 1.15 dá respiro sem desperdiçar espaço vertical
+\renewcommand{\arraystretch}{1.15}
+
+% Formatação de captions: fonte menor, label em negrito, separador
+% por ponto, margem para não colidir com as bordas da tabela.
+\usepackage[font=small, labelfont=bf, labelsep=period,
+            margin=1cm]{caption}
+
+% =====================================================================
+% Números e unidades — formatação PT-BR automática
+% =====================================================================
+% siunitx v3: vírgula decimal, ponto de milhar, alinhamento em tabelas
+\usepackage{siunitx}
+\sisetup{
+  output-decimal-marker = {,},
+  group-separator = {.},
+  group-minimum-digits = 4,
+  detect-all,
+}
+% Uso: \num{1036} → 1.036 | \num{6.5} → 6,5 | \SI{86}{\percent}
+% Em tabelas: coluna S para alinhamento numérico automático
+
+% =====================================================================
+% Listas compactas
+% =====================================================================
+\usepackage{enumitem}
+\setlist{nosep, leftmargin=*}
+
+% =====================================================================
+% TikZ — bibliotecas e estilos globais
+% =====================================================================
+\usepackage{tikz}
+\usetikzlibrary{
+  arrows.meta,
+  positioning,
+  shapes.geometric,
+  calc,
+  patterns,
+  fit,
+  backgrounds,
+}
+
+% Estilos reutilizáveis para diagramas
+\tikzset{
+  % Caixas do diagrama PRISMA
+  prisma box/.style={
+    draw=black!70, fill=white, rounded corners=2pt,
+    minimum width=4.5cm, minimum height=1cm,
+    font=\small, align=center, text width=4.2cm,
+  },
+  prisma arrow/.style={
+    -Stealth, thick, black!70,
+  },
+  % Estilo para nós de taxonomia / bubble chart
+  taxon node/.style={
+    circle, draw=#1!70, fill=#1!15, thick,
+    font=\small\bfseries, inner sep=2pt,
+  },
+  taxon node/.default=archBanco,
+  % Barras de gráfico
+  bar style/.style={
+    fill=#1, draw=#1!80!black, line width=0.3pt,
+  },
+  bar style/.default=archBanco,
+  % Label de eixo
+  axis label/.style={
+    font=\footnotesize, text=black!80,
+  },
+  % Anotação
+  annot/.style={
+    font=\scriptsize, text=black!60,
+  },
+}
+
+% =====================================================================
+% Citação ABNT (venue brasileiro)
+% =====================================================================
+% hyperref ANTES de abntex2cite para detecção correta de ABNThyperref
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black!80!blue,
+  citecolor=black!80!blue,
+  urlcolor=black!80!blue,
+  bookmarksdepth=3,
+}
+\usepackage[alf,abnt-etal-list=3]{abntex2cite}
+
+% =====================================================================
+% Layout
+% =====================================================================
+% Margens padrão ABNT
+\usepackage[left=3cm,right=2cm,top=3cm,bottom=2cm]{geometry}
+
+% Para facilitar adaptação futura:
+% - Trocar babel para [english] para venue internacional
+% - Trocar abntex2cite para natbib ou biblatex
+% - Trocar template do documentclass conforme venue
+
+\begin{document}
+
+\title{Arquiteturas de Persistência de Conhecimento para Agentes de
+Codificação Baseados em IA: Uma Revisão Sistemática da Literatura}
+
+\author{
+  Alexandre Zatti\thanks{Programa de Pós-Graduação em Computação
+  Aplicada (PPGPCA), Universidade Federal da Fronteira Sul (UFFS).
+  Autor correspondente.} \\
+  Samuel Feitosa\thanks{PPGPCA/UFFS. Orientador.}
+}
+
+\date{}
+
+\maketitle
+
+\begin{abstract}
+\textbf{Contexto.}
+Agentes de codificação baseados em Modelos de Linguagem de Grande
+Escala (LLMs) sofrem de volatilidade de conhecimento entre sessões:
+a cada nova tarefa, o agente perde o contexto acumulado em
+resoluções anteriores.
+Diversas arquiteturas de persistência foram propostas para mitigar
+essa limitação, mas o campo permanece fragmentado, sem comparação
+sistemática entre alternativas nem análise cruzada de custos.
+\textbf{Objetivo.}
+Mapear a literatura sobre persistência de conhecimento em agentes
+de codificação baseados em Inteligência Artificial (IA) e responder
+a cinco questões secundárias que cobrem taxonomia, avaliação,
+desempenho, custo e complexidade arquitetural.
+\textbf{Método.}
+Revisão sistemática conduzida conforme o PRISMA 2020.
+Buscas em Scopus e arXiv, complementadas por rastreamento de
+citações via Semantic Scholar, identificaram 1.194 registros
+publicados entre 2023 e março de 2026.
+Após remoção de duplicatas e triagem por título, resumo e texto
+completo, 28 estudos foram incluídos para extração estruturada
+de 37 campos.
+\textbf{Resultados.}
+Bancos de experiência respondem por 46\% dos estudos primários,
+com o próprio LLM atuando como controlador de leitura e escrita
+em 54\% dos casos e escopo temporal híbrido em 58\%.
+Os 19 estudos com comparação controlada reportam ganhos universais
+sobre o baseline sem persistência, com mediana de 6,8 pontos
+percentuais no SWE-bench Verified e amplitude de +2,2 a +39,0
+pontos percentuais.
+Apesar desses ganhos, 43\% dos estudos omitem dados de custo, 32\%
+documentam cenários de degradação por memória e nenhum compara três
+ou mais arquiteturas no mesmo benchmark com o mesmo modelo.
+\textbf{Conclusão.}
+A ausência de comparações diretas e a subnotificação de custos
+limitam tanto a escolha arquitetural quanto a avaliação prática.
+Esses achados motivam um estudo comparativo empírico controlado,
+previsto como próxima etapa desta pesquisa.
+\end{abstract}
+
+\textbf{Palavras-chave:} revisão sistemática; agentes de codificação;
+persistência de conhecimento; memória para agentes; custo-eficiência.
+
+\input{secoes/introducao}
+\input{secoes/trabalhos-relacionados}
+\input{secoes/metodo}
+\input{secoes/resultados}
+\input{secoes/discussao}
+\input{secoes/conclusao}
+
+\input{secoes/apendice-validacao-busca}
+
+% =====================================================================
+% Metadados do manuscrito (PRISMA 2020 itens 24-27)
+% =====================================================================
+\section*{Registro e protocolo}
+Esta revisão sistemática não foi registrada em bases como PROSPERO,
+que concentra revisões da área biomédica.
+O protocolo foi desenvolvido antes da execução das buscas e está
+disponível no pacote público de replicação (DOI:
+10.5281/zenodo.19463131), junto das emendas registradas durante a
+condução.
+
+\section*{Financiamento}
+Esta pesquisa não recebeu financiamento específico de agências de
+fomento públicas, privadas ou sem fins lucrativos.
+
+\section*{Conflitos de interesse}
+Os autores declaram não haver conflitos de interesse.
+
+\section*{Disponibilidade de dados e materiais}
+O protocolo, as planilhas de triagem (título/resumo e texto
+completo) com as decisões e razões de exclusão, os formulários de
+extração estruturada dos 28 estudos incluídos e os artefatos
+intermediários da síntese estão publicados como pacote de replicação
+no Zenodo sob licença CC-BY-4.0 (DOI:
+\href{https://doi.org/10.5281/zenodo.19463131}{10.5281/zenodo.19463131}),
+com espelho em
+\url{https://github.com/alexandre-zatti/slr-code-agent-memory}.
+
+\bibliography{referencias/estudos-incluidos}
+
+\end{document}

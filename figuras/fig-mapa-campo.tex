@@ -1,0 +1,180 @@
+% Figura: mapa do campo — 28 estudos por ano e arquitetura
+% Eixo X: ano de publicação (2024–2026).
+% Cor: família arquitetural (paleta global archXxx do main.tex).
+% Marcadores: borda dupla = artigo-semente; quadrado = substrato
+% de persistência executável.
+% Coordenadas explícitas (sem \foreach, sem \begin{scope}[shift=...])
+% para passar no verificador estático de colisões TikZ.
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[
+    every node/.style={font=\scriptsize},
+    fnode/.style={
+      circle, draw=#1!75!black, fill=#1!18, line width=0.4pt,
+      minimum size=10mm, inner sep=0pt,
+      font=\scriptsize, text=black, align=center,
+    },
+    fnode/.default=archBanco,
+    seednode/.style={
+      circle, draw=#1!80!black, fill=#1!22,
+      double, double distance=0.5pt, line width=0.5pt,
+      minimum size=10mm, inner sep=0pt,
+      font=\scriptsize\bfseries, text=black, align=center,
+    },
+    seednode/.default=archBanco,
+    execnode/.style={
+      rectangle, rounded corners=1pt,
+      draw=#1!80!black, fill=#1!22, line width=0.5pt,
+      minimum width=10mm, minimum height=10mm, inner sep=0pt,
+      font=\scriptsize, text=black, align=center,
+    },
+    execnode/.default=archOutro,
+    % (swatches usam minimum size=4mm inline para que o verificador
+    % est\'atico de colis\~oes leia as dimens\~oes reais)
+  ]
+
+    % --- R\'otulos de ano no topo ---
+    \node[font=\footnotesize\bfseries] at (1.50, 10.90) {2024};
+    \node[font=\footnotesize\bfseries] at (5.75, 10.90) {2025};
+    \node[font=\footnotesize\bfseries] at (11.25, 10.90) {2026};
+
+    % =================================================================
+    % 2024 (1 paper)
+    % Coluna em x=1.50; linha em y=10.00.
+    % =================================================================
+    \node[fnode=archBanco] (n01) at (1.50, 10.00) {Qian};
+
+    % =================================================================
+    % 2025 (16 papers) — 3 sub-colunas em x=4.50, 5.75, 7.00
+    % Linhas em y = 10.00, 8.80, 7.60, 6.40, 5.20, 4.00, 2.80
+    %   (passo 1.20 cm, gap entre n\'os 0.20 cm = MAJOR-safe).
+    % =================================================================
+    % --- sub-coluna A ---
+    \node[fnode=archBanco]   (n02) at (4.50, 10.00) {Chen};
+    \node[fnode=archOutro]   (n03) at (4.50,  8.80) {Desh.};
+    \node[fnode=archHibrido] (n04) at (4.50,  7.60) {Hosain};
+    \node[seednode=archOutro](n05) at (4.50,  6.40) {Joshi};
+    \node[seednode=archBanco](n06) at (4.50,  5.20) {Lind.};
+    \node[fnode=archOutro]   (n07) at (4.50,  4.00) {Sriva.};
+    \node[fnode=archBanco]   (n08) at (4.50,  2.80) {Su};
+
+    % --- sub-coluna B ---
+    \node[fnode=archBanco]   (n09) at (5.75, 10.00) {Shen};
+    \node[fnode=archBanco]   (n10) at (5.75,  8.80) {Tab.};
+    \node[seednode=archGit]  (n11) at (5.75,  7.60) {Repo};
+    \node[fnode=archHibrido] (n12) at (5.75,  6.40) {Wong};
+    \node[seednode=archGit]  (n13) at (5.75,  5.20) {Wu};
+    \node[execnode=archOutro](n14) at (5.75,  4.00) {Live};
+    \node[fnode=archBanco]   (n15) at (5.75,  2.80) {Accel};
+
+    % --- sub-coluna C ---
+    \node[execnode=archOutro](n16) at (7.00, 10.00) {Darw.};
+    \node[fnode=archHibrido] (n17) at (7.00,  8.80) {ToM};
+
+    % =================================================================
+    % 2026 (11 papers) — 2 sub-colunas em x=10.00 e x=11.25, e 1 em 12.50
+    % =================================================================
+    % --- sub-coluna A ---
+    \node[fnode=archTexto]   (n18) at (10.00, 10.00) {Bui};
+    \node[seednode=archBanco](n19) at (10.00,  8.80) {Deng};
+    \node[fnode=archGrafo]   (n20) at (10.00,  7.60) {Dong};
+    \node[seednode=archOutro](n21) at (10.00,  6.40) {Du};
+    \node[fnode=archBanco]   (n22) at (10.00,  5.20) {Guo};
+    \node[execnode=archOutro](n23) at (10.00,  4.00) {Li};
+
+    % --- sub-coluna B ---
+    \node[fnode=archHibrido] (n24) at (11.25, 10.00) {Nadaf.};
+    \node[fnode=archBanco]   (n25) at (11.25,  8.80) {Shen};
+    \node[fnode=archHibrido] (n26) at (11.25,  7.60) {Vasil.};
+    \node[seednode=archAST]  (n27) at (11.25,  6.40) {Wang};
+    \node[fnode=archBanco]   (n28) at (11.25,  5.20) {MemG};
+
+    % =================================================================
+    % R\'otulo de eixo (abaixo da \'area do gr\'afico)
+    % =================================================================
+    \node[font=\footnotesize, text=black!70]
+      at (6.00, 1.60) {Ano de publica\c{c}\~ao};
+
+    % =================================================================
+    % Legenda — duas linhas, coordenadas absolutas (sem scope shift)
+    % Linha superior: 4 swatches de cor (y = 0.40)
+    % Linha inferior: 4 swatches de cor + marcadores (y = -0.40)
+    % Espa\c{c}amento horizontal entre slots = 3.40 cm
+    % =================================================================
+    % --- Cabe\c{c}alho da legenda ---
+    \node[font=\scriptsize\bfseries, anchor=west]
+      at (0.00, 1.05) {Fam\'ilia arquitetural};
+
+    % --- Linha 1 (slots em x = 0.20, 3.80, 7.40, 11.00) ---
+    \node[circle, draw=archBanco!75!black, fill=archBanco!18,
+          minimum size=4mm, inner sep=0pt]
+      at (0.20, 0.40) {};
+    \node[anchor=west, font=\scriptsize] at (0.80, 0.40)
+      {banco exp.};
+    \node[circle, draw=archHibrido!75!black, fill=archHibrido!18,
+          minimum size=4mm, inner sep=0pt]
+      at (3.80, 0.40) {};
+    \node[anchor=west, font=\scriptsize] at (4.40, 0.40)
+      {h\'ibrido};
+    \node[circle, draw=archGit!75!black, fill=archGit!18,
+          minimum size=4mm, inner sep=0pt]
+      at (7.40, 0.40) {};
+    \node[anchor=west, font=\scriptsize] at (8.00, 0.40)
+      {git-met\'afora};
+    \node[circle, draw=archAST!75!black, fill=archAST!18,
+          minimum size=4mm, inner sep=0pt]
+      at (11.00, 0.40) {};
+    \node[anchor=west, font=\scriptsize] at (11.60, 0.40)
+      {AST-guiado};
+
+    % --- Linha 2 ---
+    \node[circle, draw=archGrafo!75!black, fill=archGrafo!18,
+          minimum size=4mm, inner sep=0pt]
+      at (0.20, -0.40) {};
+    \node[anchor=west, font=\scriptsize] at (0.80, -0.40)
+      {grafo conhec.};
+    \node[circle, draw=archTexto!75!black, fill=archTexto!18,
+          minimum size=4mm, inner sep=0pt]
+      at (3.80, -0.40) {};
+    \node[anchor=west, font=\scriptsize] at (4.40, -0.40)
+      {notas texto};
+    \node[circle, draw=archPaginacao!75!black, fill=archPaginacao!18,
+          minimum size=4mm, inner sep=0pt]
+      at (7.40, -0.40) {};
+    \node[anchor=west, font=\scriptsize] at (8.00, -0.40)
+      {pagina\c{c}\~ao OS};
+    \node[circle, draw=archOutro!75!black, fill=archOutro!18,
+          minimum size=4mm, inner sep=0pt]
+      at (11.00, -0.40) {};
+    \node[anchor=west, font=\scriptsize] at (11.60, -0.40)
+      {outro/survey};
+
+    % --- Linha 3: marcadores ---
+    \node[font=\scriptsize\bfseries, anchor=west]
+      at (0.00, -1.20) {Marcadores};
+    \node[circle, draw=black!70, fill=black!8, double,
+          double distance=0.5pt, line width=0.4pt,
+          minimum size=4mm, inner sep=0pt]
+      at (2.40, -1.20) {};
+    \node[anchor=west, font=\scriptsize] at (3.00, -1.20)
+      {artigo-semente (n=7)};
+    \node[rectangle, rounded corners=0.5pt, draw=black!70,
+          fill=black!8, line width=0.4pt,
+          minimum width=4mm, minimum height=4mm, inner sep=0pt]
+      at (7.40, -1.20) {};
+    \node[anchor=west, font=\scriptsize] at (8.00, -1.20)
+      {substrato execut\'avel (n=3)};
+
+  \end{tikzpicture}
+  \caption[Mapa cronol\'ogico do campo]{Mapa cronol\'ogico das 28
+  arquiteturas inclu\'idas, distribu\'idas por ano de publica\c{c}\~ao
+  (2024--2026) e fam\'ilia arquitetural (cor). Marcadores com borda
+  dupla e r\'otulo em negrito identificam os sete artigos-semente;
+  marcadores quadrados, os tr\^es estudos cujo substrato de
+  persist\^encia \'e execut\'avel (Live SWE-Agent, Darwin-G\"odel
+  Machine, Traversal-as-Policy). Fam\'ilias: bancos de
+  experi\^encia (verde-azulado), h\'ibridos (laranja), git-met\'afora
+  (roxo), AST-guiado (rosa), grafo de conhecimento (verde), notas
+  de texto (amarelo), pagina\c{c}\~ao OS (marrom), outros (cinza).}
+  \label{fig:mapa-campo}
+\end{figure}

@@ -1,0 +1,43 @@
+\section{Conclusão}
+\label{sec:conclusao}
+
+Esta revisão sistemática mapeou 28 estudos sobre persistência de
+conhecimento em agentes de codificação baseados em IA, todos
+publicados a partir de 2024.
+O campo é recente e predominantemente composto por preprints (82\%),
+mas já apresenta convergência em torno de padrões arquiteturais e
+de avaliação recorrentes.
+A persistência de memória produz ganhos em todos os cenários
+testados, porém com rendimentos decrescentes, riscos de degradação
+documentados e lacunas persistentes na documentação de custos.
+
+As cinco questões secundárias receberam respostas com diferentes
+graus de certeza.
+Quanto à taxonomia (QS1), bancos de experiência predominam (46\%),
+o LLM atua como controlador em 54\% dos sistemas, e o escopo
+temporal híbrido é o mais frequente (58\%).
+Sobre avaliação (QS2), SWE-bench Verified concentra 67\% dos
+estudos com benchmark, porém a comparabilidade é limitada por
+diferenças de modelo, framework e condições experimentais.
+Os ganhos de desempenho (QS3) são universalmente positivos nas 19
+comparações controladas, com mediana de 6,8~pp e amplitude de
++2,2 a +39,0~pp, e rendimentos decrescentes em baselines acima
+de 65\%.
+Em relação ao custo (QS4), 43\% dos estudos não reportam dados de
+custo, e o impacto da memória é bimodal: sistemas que substituem
+contexto reduzem tokens, enquanto sistemas que adicionam contexto
+elevam o custo em aproximadamente 5 a 21\%.
+Sobre complexidade e eficácia (QS5), 32\% dos estudos reportam
+degradação por memória, com ruído na recuperação como mecanismo
+principal, e não há evidência de que arquiteturas mais complexas
+produzam ganhos sistematicamente superiores.
+
+Nenhum dos 28 estudos compara arquiteturas de persistência
+diretamente.
+Essa ausência, somada à subnotificação de custos e à incerteza
+sobre o papel da complexidade arquitetural, impede decisões
+informadas sobre qual abordagem adotar em cada contexto.
+A segunda etapa desta dissertação endereçará a primeira dessas
+lacunas por meio de um experimento comparativo com ao menos três
+arquiteturas representativas, sob o mesmo benchmark, o mesmo
+modelo e com análise integrada de custo por tarefa.

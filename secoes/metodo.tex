@@ -1,0 +1,237 @@
+\section{Método}
+\label{sec:metodo}
+
+Esta revisão sistemática segue a metodologia de
+\citeonline{kitchenham2007guidelines} para revisões sistemáticas em
+Engenharia de Software, incorporando as atualizações de
+\citeonline{kitchenham2013systematic}.
+O reporte adota as Software Engineering Guidelines for Reporting
+Secondary Studies (SEGRESS)~\cite{kitchenham2023segress}, adaptação do
+PRISMA 2020~\cite{page2021prisma} para estudos secundários em Engenharia
+de Software.
+A estratégia de busca segue a extensão
+PRISMA-S~\cite{rethlefsen2021prismas}, e o reporte completo segue o
+checklist de 27 itens do PRISMA 2020.
+
+\subsection{Protocolo e registro}
+\label{sec:protocolo}
+
+O protocolo foi elaborado antes do início das buscas.
+Seis emendas foram registradas durante a execução, refinando critérios
+de elegibilidade e o formulário de extração.
+
+\subsection{Critérios de elegibilidade}
+\label{sec:criterios}
+
+A formulação dos critérios seguiu o \textit{framework} PICo:
+a \textbf{P}opulação compreende agentes de codificação baseados em IA
+com mecanismos de persistência de conhecimento entre sessões;
+o \textbf{I}nteresse abrange as arquiteturas de persistência, sua
+eficácia e custo-eficiência;
+o \textbf{Co}ntexto inclui avaliações empíricas, benchmarks e propostas
+de ferramentas ou frameworks.
+
+A \autoref{tab:criterios} apresenta os critérios de inclusão e exclusão.
+CI1 exige componente explícito de armazenamento e reutilização de
+conhecimento entre sessões ou tarefas sequenciais;
+sistemas que apenas recuperam contexto dentro de uma única sessão
+não atendem ao critério.
+CI2 estabelece piso mínimo de avaliação empírica com pelo menos duas
+tarefas e métricas quantitativas.
+CE2 opera como regra condicional: papers sobre agentes LLM genéricos
+foram incluídos quando a avaliação continha benchmarks de Engenharia
+de Software.
+O período de cobertura abrange publicações de 2023 a março de 2026.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Critérios de elegibilidade.}
+  \label{tab:criterios}
+  \begin{tabularx}{\textwidth}{l l X}
+    \toprule
+    ID  & Tipo & Descrição \\
+    \midrule
+    CI1 & Inclusão & Propõe ou avalia mecanismo para persistir
+      conhecimento entre sessões em agentes de codificação baseados
+      em IA \\
+    CI2 & Inclusão & Reporta resultados empíricos com pelo menos
+      duas tarefas e métricas quantitativas \\
+    CI3 & Inclusão & Publicado entre 2023 e março de 2026 \\
+    CI4 & Inclusão & Escrito em inglês ou português \\
+    CI5 & Inclusão & Publicação com revisão por pares ou preprint com
+      autores e instituições identificáveis \\
+    \midrule
+    CE1 & Exclusão & Aborda apenas RAG ou recuperação de contexto
+      intra-sessão, sem persistência entre sessões \\
+    CE2 & Exclusão & Aborda apenas tarefas de linguagem natural, sem
+      avaliação em benchmarks de Engenharia de Software \\
+    CE3 & Exclusão & Avaliação limitada a exemplos anedóticos \\
+    CE4 & Exclusão & Tutorial, editorial ou position paper sem
+      contribuição técnica \\
+    CE5 & Exclusão & Versão duplicada ou supersedida por versão posterior
+      dos mesmos autores \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Fontes de informação}
+\label{sec:fontes}
+
+As buscas foram realizadas em duas bases de dados com suporte a busca
+booleana reproduzível: Scopus (via API) e arXiv (via API REST com
+paginação completa).
+A estratégia de duas bases complementada por rastreamento de citações é
+validada empiricamente por \citeonline{mourao2020hybrid}, que demonstraram
+que Scopus combinado com \textit{snowballing} alcança \textit{recall} comparável a buscas em
+quatro ou mais bases para revisões sistemáticas em Engenharia de Software.
+O IEEE Xplore não foi buscado separadamente porque o Scopus indexa
+integralmente seus proceedings e journals.
+
+A busca foi suplementada por rastreamento de citações forward e backward
+via Semantic Scholar a partir de sete artigos-semente selecionados por
+representarem diversidade arquitetural e serem os mais citados no
+subcampo~\cite{du2026memory,joshi2025swebenchcl,wang2026codemem,deng2026memcoder,wu2025gcc,wang2026improving,lindenbauer2025ctimrover}.
+Um dos sete artigos-semente (CodeMEM) não foi capturado pelas strings de
+busca por utilizar terminologia fora do vocabulário das strings;
+sua adição manual ao \textit{pool} de triagem foi registrada como emenda ao
+protocolo.
+
+\subsection{Estratégia de busca}
+\label{sec:busca}
+
+A string de busca combina três blocos conceituais conectados por AND:
+um bloco sobre agentes de IA para código (C1, 12 termos) com um segundo
+sobre memória e persistência (C2, 13 termos), restritos ao domínio de
+engenharia de software por um terceiro bloco (C3, 8 termos).
+A string foi adaptada para a sintaxe de cada base: TITLE-ABS-KEY no
+Scopus com filtro \texttt{PUBYEAR\,>\,2022}, e campos \texttt{abs:}/\texttt{ti:}
+no arXiv com filtro de categorias cs.SE, cs.AI e cs.CL.\footnote{String
+Scopus: \texttt{TITLE-ABS-KEY(("LLM agent" OR "AI coding agent" OR
+"software engineering agent" OR "autonomous coding" OR "code agent" OR
+"LLM-based software" OR "AI-assisted software" OR "coding assistant" OR
+"language agent" OR "code assistant" OR "agentic coding" OR "SWE agent")
+AND ("memory" OR "knowledge persistence" OR "experience" OR "context
+management" OR "long-term memory" OR "episodic memory" OR "knowledge
+reuse" OR "continual learning" OR "experience replay" OR
+"memory-augmented" OR "persistent memory" OR "persistent context" OR
+"cross-task") AND ("software engineering" OR "software development" OR
+"code generation" OR "bug fix" OR "code repair" OR "repository" OR
+"software maintenance" OR "issue resolution")) AND PUBYEAR > 2022}.
+A string completa para o arXiv e o checklist PRISMA-S estão disponíveis
+no material suplementar.}
+
+Antes da execução, as strings passaram por auditoria contra oito SLRs
+comparáveis, 16 sistemas conhecidos e dez formulações alternativas de
+termos, resultando na adição de seis termos e cobertura de seis dos sete
+artigos-semente.
+O único artigo-semente não recuperado (CodeMEM) utiliza terminologia fora
+do vocabulário das strings e foi adicionado manualmente.
+
+A \autoref{tab:busca} apresenta os resultados por fonte.
+As buscas foram executadas em 25 de março de 2026.
+O rastreamento de citações identificou 186 registros únicos (8 forward,
+178 backward).
+Após consolidação e desduplicação, o \textit{pool} inicial contém 1.111 registros
+para triagem.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Resultados das buscas por fonte.}
+  \label{tab:busca}
+  \begin{tabular}{l r}
+    \toprule
+    Fonte & Registros \\
+    \midrule
+    Scopus            &    39 \\
+    arXiv             &   968 \\
+    Citações forward  &     8 \\
+    Citações backward &   178 \\
+    Manual            &     1 \\
+    \midrule
+    Total bruto       & 1.194 \\
+    Duplicatas removidas & $-83$ \\
+    \textbf{Total para triagem} & \textbf{1.111} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Processo de seleção}
+\label{sec:selecao}
+
+A seleção ocorreu em duas fases.
+Os 1.111 registros foram triados por título e resumo pelo
+pesquisador, aplicando os critérios CI/CE.
+Registros classificados como incertos avançaram para a fase seguinte.
+Dos 1.111 triados, 1.060 foram excluídos e 51 avançaram para avaliação
+por texto completo.
+
+A leitura integral dos 51 artigos resultou em 23 exclusões.
+Dos 23 excluídos, 12 foram removidos por CE2 (agentes LLM sem avaliação
+em Engenharia de Software) e 11 pela combinação CI1/CE1 (recuperação
+intra-sessão sem persistência entre sessões).
+Três casos limítrofes foram aceitos com justificativa documentada.
+Ao final, 28 estudos foram incluídos para extração de dados.
+
+\subsection{Extração de dados}
+\label{sec:extracao}
+
+Os dados foram extraídos com formulário de 37 campos organizados em
+sete categorias, com ênfase em arquitetura de persistência (8 campos)
+e custo e eficiência (6 campos), que correspondem diretamente às
+questões de pesquisa.
+Dezesseis campos utilizam vocabulário controlado com valores predefinidos.
+Campos sem dados disponíveis recebem NR (não reportado) quando o paper não
+menciona o dado ou NA (não aplicável) quando o campo não se aplica ao
+sistema, conforme convenção registrada como emenda ao protocolo.
+
+Cada paper foi lido, seus dados registrados no formulário e os valores
+verificados em seguida.
+A validação incluiu verificação programática de 448 valores enum e
+\textit{spot-check} de 40 campos interpretativos em dez papers.
+A taxa de erro final foi inferior a 1\%, correspondente a oito
+correções em 1.036 valores extraídos (28 papers $\times$ 37 campos).
+
+\subsection{Avaliação de qualidade}
+\label{sec:qualidade}
+
+A qualidade dos estudos foi avaliada com checklist de seis itens
+adaptado de \citeonline{kitchenham2007guidelines}: (Q1) objetivos
+claramente definidos, (Q2) método de avaliação adequado, (Q3) ameaças
+à validade discutidas, (Q4) resultados baseados em dados empíricos,
+(Q5) contexto descrito para replicação e (Q6) métricas claramente
+definidas.
+Cada item recebeu pontuação 0, 0,5 ou 1, com máximo de 6,0.
+
+A distribuição das pontuações varia de 2,0 a 6,0, com mediana de 5,0.
+Vinte e seis dos 28 estudos (93\%) obtiveram pontuação igual ou
+superior a 4,0.
+Os dois estudos com pontuação inferior a
+3,0~\cite{bui2026opendev,du2026memory} contribuem apenas descrições
+qualitativas e não impactam os achados quantitativos, conforme
+verificado na análise de sensibilidade (\autoref{sec:resultados}).
+Para calibração, oito papers foram reavaliados após a extração completa.
+
+\subsection{Métodos de síntese}
+\label{sec:sintese}
+
+A síntese é narrativa, organizada tematicamente pelas cinco questões
+secundárias (QS1 a QS5).
+Meta-análise foi descartada pela heterogeneidade de benchmarks, modelos
+base e condições experimentais entre os estudos.
+
+Duas análises de sensibilidade foram conduzidas:
+(S1) re-síntese restrita aos cinco estudos publicados em venues com
+revisão por pares, para verificar se os achados se sustentam sem
+preprints;
+(S2) exclusão dos dois estudos com pontuação inferior a 3,0, avaliando
+o impacto nos achados quantitativos.
+
+A avaliação de viés de publicação formal não é aplicável para síntese
+narrativa~\cite{page2021prisma}.
+O predomínio de preprints no corpus (82\%) é reconhecido como fonte
+potencial de viés e discutido nas limitações.
+A certeza da evidência foi avaliada qualitativamente por achado:
+alta (múltiplos estudos de qualidade $\geq$~4/6 convergem),
+moderada (poucos estudos ou qualidade variável) e
+baixa (achado baseado em estudo único ou de baixa
+qualidade)~\cite{kitchenham2023segress}.

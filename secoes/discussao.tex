@@ -1,0 +1,277 @@
+\section{Discussão}
+\label{sec:discussao}
+
+% PRISMA Item 17: Discussão dos resultados no contexto de outras evidências
+% PRISMA Item 18: Limitações da revisão
+
+\subsection{Principais achados}
+\label{sec:principais-achados}
+
+Os 28 estudos mapeados revelam um campo concentrado em torno de uma
+arquitetura predominante: bancos de experiência que destilam trajetórias
+de resolução em entradas reutilizáveis (46\% dos estudos primários,
+\autoref{tab:arquiteturas}), com o próprio LLM atuando como
+controlador de memória (54\%) e avaliação centrada no SWE-bench
+Verified (67\% dos estudos com benchmark, \autoref{tab:benchmarks}).
+Essa convergência, porém, não implica maturidade.
+O campo permanece dominado por preprints (82\%), e os 28 estudos
+utilizam pelo menos oito LLMs distintos como backbone.
+Comparações controladas entre arquiteturas no mesmo benchmark e
+com o mesmo modelo permanecem ausentes do corpus, de modo que a
+convergência observada reflete escolhas independentes dos autores,
+não uma validação empírica da superioridade dos bancos de
+experiência sobre alternativas como grafos de conhecimento ou
+metáforas git.
+
+Todos os 19 estudos com comparação controlada reportam melhoria
+em relação ao baseline sem memória (\autoref{tab:desempenho}),
+com ganho mediano de 6,8~pp no SWE-bench Verified
+e amplitude de +2,2~pp a +39,0~pp.
+Esses ganhos, contudo, seguem um padrão de rendimentos decrescentes:
+sistemas com baselines abaixo de 35\% obtêm ganhos superiores
+a 10~pp~\cite{li2026traversalaspolicy,zhang2025darwingodel,su2025learnbyinteract},
+enquanto baselines acima de 65\% alcançam ganhos de 2 a
+9~pp~\cite{chen2025sweexp,deng2026memcoder,wu2025gcc}.
+O impacto no custo é bimodal: sistemas que substituem contexto
+por memória reduzem tokens em até
+39\%~\cite{li2026traversalaspolicy}.
+Sistemas que adicionam contexto via retrieval elevam o custo em
++5 a +21\%~\cite{chen2025sweexp,wang2026memgovern,xia2025livesweagent}.
+
+O risco de degradação não é negligenciável.
+Nove dos 28 estudos (32\%) reportam cenários onde a memória
+prejudica o desempenho (\autoref{tab:degradacao}).
+Ruído na recuperação é o mecanismo mais recorrente:
+\citeonline{lindenbauer2025ctimrover} documentam queda de 11~pp
+quando itens ruidosos desviam a exploração do agente,
+\citeonline{chen2025sweexp} documentam degradação com $k > 1$
+experiências recuperadas, e
+\citeonline{deshpande2025memtrack} identificam que backends de
+memória comerciais (Mem0, Zep) não melhoram o desempenho e mantêm
+a redundância de \textit{tool calls} em aproximadamente 21\%, sem
+redução em relação ao baseline sem memória.
+A vulnerabilidade de envenenamento documentada
+por~\citeonline{srivastava2025memorygraft}, na qual 9,1\% de
+experiências maliciosas comprometem 47,9\% dos retrievals,
+reforça que stores de memória abertos constituem superfície de
+ataque persistente.
+
+\subsection{Implicações para a pesquisa}
+\label{sec:implicacoes-pesquisa}
+
+A lacuna central identificada por esta revisão é a ausência de
+comparações head-to-head.
+Nenhum dos 28 estudos avalia três ou mais arquiteturas de
+persistência no mesmo benchmark, com o mesmo modelo e sob o mesmo
+orçamento computacional.
+Cada sistema reporta ganhos contra seu próprio baseline sem memória,
+porém as condições experimentais diferem em modelo, framework,
+subconjunto de instâncias e número de tentativas.
+Essa fragmentação impede qualquer conclusão sobre qual arquitetura
+é superior, pois os ganhos observados podem refletir diferenças
+de implementação tanto quanto diferenças de arquitetura de memória.
+O estudo comparativo planejado como segunda etapa desta dissertação
+preencherá essa lacuna ao avaliar ao menos três arquiteturas
+representativas sob condições controladas.
+
+A subnotificação de custos limita igualmente a utilidade prática
+dos resultados.
+Apenas sete estudos fornecem detalhamento
+completo~\cite{chen2025sweexp,guo2026eet,wang2026memgovern,wu2025gcc,xia2025livesweagent,zhang2025accelopt,zhou2025tomswe},
+e 12 dos 28 (43\%) não reportam nenhum dado de custo.
+Sem métricas padronizadas de custo por tarefa (tokens consumidos,
+custo monetário, tempo de parede), praticantes não conseguem
+avaliar o custo-benefício de adotar persistência.
+A construção de uma fronteira de Pareto entre acurácia e custo,
+ausente em todos os estudos analisados, constitui direção de
+pesquisa com aplicação imediata.
+
+A evidência sobre a relação entre complexidade arquitetural e
+ganho é parcial.
+Os dados indicam que sistemas simples, como
+AccelOpt~\cite{zhang2025accelopt} com fila de experiências e
+EET~\cite{guo2026eet} com terminação antecipada heurística,
+obtêm resultados comparáveis a sistemas multi-tier em seus
+respectivos domínios.
+No entanto, essa comparação é entre estudos distintos: benchmarks e
+modelos diferem entre os sistemas.
+Apenas um estudo controlando a variável complexidade internamente
+poderia confirmar se a simplicidade arquitetural é de fato
+suficiente ou se há cenários onde a sofisticação se justifica.
+
+Três estudos propõem memória como artefato diretamente executável,
+uma tendência emergente com evidência ainda limitada:
+árvores de comportamento~\cite{li2026traversalaspolicy},
+scripts criados em tempo de
+execução~\cite{xia2025livesweagent} e agentes
+inteiros~\cite{zhang2025darwingodel}.
+Os dois primeiros reportam ganhos expressivos (+39,0~pp e +3,2~pp,
+respectivamente), mas a certeza desse achado é baixa dado o
+número reduzido de estudos e a ausência de replicação
+independente.
+
+\subsection{Implicações para a prática}
+\label{sec:implicacoes-pratica}
+
+Para equipes que desejam incorporar persistência de conhecimento em
+agentes de codificação, os dados desta revisão sugerem um ponto de
+partida conservador: bancos de experiência com retrieval
+por similaridade.
+Essa é a arquitetura dominante (46\%), conta com implementações de
+referência em código aberto e produz ganhos de 2 a 9~pp em todos os
+estudos com baselines acima de 65\%.
+Sistemas mais complexos (grafos de conhecimento, memória hierárquica)
+não apresentam, nos dados disponíveis, evidência clara de ganhos
+sistematicamente superiores, embora essa comparação seja limitada
+por diferenças de benchmark e modelo entre os estudos.
+
+Os dados disponíveis sugerem que a calibração do mecanismo de
+recuperação pode importar mais do que a sofisticação da arquitetura.
+\citeonline{chen2025sweexp} reportam que recuperar mais de uma
+experiência ($k > 1$) degrada o desempenho de 42,0\% para 39,0\%,
+e \citeonline{shen2026structurally} reportam que o isolamento por
+categoria supera a recuperação global por 2,3~pp.
+Esses dois resultados apontam na mesma direção: a seletividade na
+recuperação influencia o ganho efetivo, e o excesso de contexto
+recuperado pode introduzir ruído.
+
+Para sistemas já implantados, a terminação antecipada orientada
+por experiência oferece redução de custo com risco mínimo.
+\citeonline{guo2026eet} reportam economia de 31,8\% no custo total
+com perda máxima de 0,2~pp, identificando oportunidades de
+terminação em 11,3\% das instâncias.
+Essa abordagem é independente do agente e não requer alterações na
+arquitetura de memória subjacente.
+
+Dos 24 estudos primários, 17 disponibilizam repositório completo e
+três oferecem acesso parcial, totalizando 83\% com algum grau
+de reprodutibilidade.
+
+\subsection{Limitações desta revisão}
+\label{sec:limitacoes}
+
+As limitações desta revisão são organizadas em quatro categorias
+de ameaça à validade: validade interna (rigor dos processos de
+seleção e extração), validade externa (generalização dos achados
+para fora do corpus), validade de construto (operacionalização
+dos conceitos medidos) e validade de conclusão (robustez das
+inferências cross-study).
+
+\subsubsection{Validade interna}
+
+A triagem foi conduzida por um único pesquisador, o que constitui
+ameaça reconhecida em revisões sistemáticas e impede o cálculo de
+índices formais de concordância como o coeficiente $\kappa$ de
+Cohen.
+Essa limitação foi mitigada por critérios de elegibilidade
+calibrados em estudo piloto e refinados por stress test contra
+cinco revisões sistemáticas comparáveis em
+LLM/ES~\cite{hou2024llmse,zhang2024unifying,jin2024llmagents,wang2024llmagents,liu2024llmagents},
+processo que produziu 17 casos limite documentados e um
+fluxograma de decisão com oito perguntas sequenciais.
+Cada decisão de triagem foi registrada em planilha versionada
+com justificativa por critério, permitindo auditoria retrospectiva
+das exclusões.
+
+A extração de dados foi realizada pelo mesmo pesquisador, o que
+introduz risco de viés na interpretação de campos qualitativos
+como a classificação do tipo de arquitetura e do mecanismo de
+degradação.
+Quatro mitigações reduziram esse risco: (i) verificação
+programática de 448 valores enum (16 campos $\times$ 28 estudos),
+com taxa de erro inferior a 1\% após correções; (ii) spot-check
+de 40 campos interpretativos em 10 estudos selecionados,
+conforme detalhado na \autoref{sec:extracao}; (iii) digests de
+fidelidade factual gerados a partir do texto integral de cada
+estudo, utilizados como referência ao redigir os claims
+interpretativos do manuscrito; (iv) re-verificação dos campos
+\textit{resultado\_negativo} contra o PDF original.
+Mesmo com essas mitigações, a reprodutibilidade formal da
+classificação em campos interpretativos não foi avaliada.
+
+\subsubsection{Validade externa}
+
+A predominância de preprints (82\% do corpus) reduz a confiança
+nos achados desta revisão.
+O campo de persistência de conhecimento para agentes de codificação
+é recente, com publicações concentradas entre 2024 e 2026, e apenas
+cinco estudos foram publicados em venue com revisão por pares: dois
+em conferência~\cite{wang2026improving,zhang2025darwingodel} e três
+em
+workshop~\cite{deshpande2025memtrack,shen2025talm,lindenbauer2025ctimrover}.
+A análise de sensibilidade S1 (\autoref{sec:sensibilidade}) mostra
+que, ao excluir preprints, nenhuma conclusão qualitativa se inverte,
+mas a evidência para custos (QS4) cai de sete para dois estudos e a
+taxonomia detalhada perde sustentação empírica.
+
+As buscas foram limitadas a duas bases de dados (Scopus e arXiv),
+complementadas por rastreamento de citações.
+Estudos publicados exclusivamente em bases não cobertas (por exemplo,
+IEEE Xplore, ACM Digital Library) podem ter sido omitidos.
+A justificativa para essa escolha, baseada
+em~\citeonline{mourao2020hybrid}, está documentada na
+\autoref{sec:fontes}.
+
+\subsubsection{Validade de construto}
+
+Os 14 estudos que utilizam SWE-bench Verified diferem em modelo
+base, framework de agente, subconjunto de instâncias e condições
+de execução (\autoref{sec:qs2}).
+O construto ``desempenho do agente'' não é operacionalizado de
+forma uniforme entre estudos, o que limita a comparabilidade direta
+de percentuais de resolução reportados como se fossem grandezas
+equivalentes.
+A taxonomia proposta nesta revisão para arquiteturas de
+persistência também encerra escolhas interpretativas: famílias
+como ``híbrido'' agrupam mecanismos heterogêneos cuja
+diferenciação fina exigiria metadados ausentes nos textos
+publicados.
+
+\subsubsection{Validade de conclusão}
+
+A heterogeneidade entre estudos impede meta-análise formal e
+restringe as inferências a padrões qualitativos sintetizados de
+forma narrativa.
+A classificação dos achados em tipos A, B e C de evidência
+(\autoref{tab:certeza}) torna explícito o grau de respaldo
+empírico de cada inferência: tipo A para contagens diretas, tipo B
+para padrões cross-study agregados e tipo C para caracterizações
+de mecanismo.
+As duas análises de sensibilidade conduzidas (S1, exclusão de
+preprints; S2, exclusão de estudos com pontuação inferior a 3,0)
+não inverteram nenhum achado quantitativo, o que reforça a
+robustez da síntese frente a critérios alternativos de inclusão.
+
+\subsection{Direções futuras}
+\label{sec:direcoes-futuras}
+
+Os três gaps confirmados por esta revisão motivam diretamente a
+segunda etapa desta dissertação: um estudo comparativo empírico
+que avaliará ao menos três arquiteturas representativas de
+persistência no mesmo benchmark, com o mesmo modelo, sob análise
+integrada de custo.
+Essa próxima etapa produzirá a primeira comparação controlada do
+campo, preenchendo o Gap~1, e construirá uma fronteira de Pareto
+explícita entre acurácia e custo, endereçando o Gap~2.
+
+A padronização de métricas constitui pré-requisito para a
+comparabilidade futura.
+As métricas de aprendizado contínuo propostas
+por~\citeonline{joshi2025swebenchcl} (\textit{CL-Score},
+\textit{forward/backward transfer}, \textit{forgetting}) não foram
+adotadas por nenhum outro estudo
+do corpus.
+A adoção de métricas padronizadas de custo (tokens por tarefa,
+custo monetário, tempo de parede) e de retenção de conhecimento
+permitiria comparações cross-study que hoje são inviáveis.
+
+Apenas um dos 24 estudos primários reporta compartilhamento de
+memória entre agentes~\cite{chen2025sweexp}, e mesmo assim
+limitado à reutilização de experiências dentro do mesmo
+framework.
+Protocolos de compartilhamento entre agentes heterogêneos
+continuam sem avaliação empírica.
+As vulnerabilidades sinalizadas
+por~\citeonline{srivastava2025memorygraft} indicam que qualquer
+protocolo desse tipo precisa endereçar o risco de envenenamento
+de stores abertos antes de ser recomendado para produção.

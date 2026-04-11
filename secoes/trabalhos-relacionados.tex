@@ -1,0 +1,132 @@
+\section{Trabalhos Relacionados}
+\label{sec:trabalhos-relacionados}
+
+% PRISMA Item 3: Rationale - posicionamento contra revisões anteriores
+
+Esta seção posiciona a presente revisão contra duas classes de
+trabalhos secundários: surveys sobre memória para agentes
+baseados em LLMs em geral e revisões sistemáticas sobre LLMs
+aplicados a Engenharia de Software.
+A primeira classe é representada principalmente pelo levantamento
+recente de Du et al.; a segunda agrupa cinco SLRs publicadas
+entre 2024 e 2025.
+Nenhuma das duas classes adota a persistência inter-sessão como
+objeto primário, nem reporta análise de custo operacional por
+tarefa, que são as dimensões críticas avaliadas nesta investigação.
+A \autoref{tab:slrs-previas} sintetiza a comparação por foco
+temático e cobertura dessas duas dimensões.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparação entre trabalhos secundários relacionados e
+esta revisão. As colunas \emph{Persistência?} e \emph{Custo?}
+indicam, respectivamente, se o trabalho aborda explicitamente a
+persistência de conhecimento entre sessões e se reporta análise
+de custo operacional por tarefa.}
+\label{tab:slrs-previas}
+\small
+\begin{tabularx}{\textwidth}{l c X c c}
+\toprule
+\textbf{Trabalho} & \textbf{Ano} & \textbf{Foco principal} &
+  \textbf{Persistência?} & \textbf{Custo?} \\
+\midrule
+Du et al.~\cite{du2026memory} & 2026 &
+  Memória para agentes LLM em geral &
+  Sim & Não \\
+Hou et al.~\cite{hou2024llmse} & 2024 &
+  LLMs para Engenharia de Software (395 estudos) &
+  Não & Não \\
+Zhang et al.~\cite{zhang2024unifying} & 2024 &
+  Modelos de linguagem para código (NLP $\cap$ ES) &
+  Não & Não \\
+Jin et al.~\cite{jin2024llmagents} & 2024 &
+  Evolução de LLMs para agentes em ES &
+  Não & Não \\
+Wang et al.~\cite{wang2024llmagents} & 2024 &
+  Landscape de agentes autônomos para ES &
+  Parcial & Não \\
+Liu et al.~\cite{liu2024llmagents} & 2024 &
+  Agentes LLM para Engenharia de Software (124 estudos) &
+  Parcial & Não \\
+\midrule
+\textbf{Esta revisão} & 2026 &
+  \textbf{Persistência de conhecimento em agentes de codificação
+  baseados em IA (28 estudos)} &
+  \textbf{Sim} & \textbf{Sim} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Surveys sobre memória para agentes LLM}
+\label{sec:rel-memoria}
+
+\citeonline{du2026memory} apresentam o levantamento mais recente
+sobre mecanismos de memória para agentes baseados em LLMs,
+propondo uma taxonomia tridimensional (escopo temporal, substrato
+representacional e política de controle) que esta revisão adota e
+refina como ponto de partida da QS1.
+O survey cataloga cinco famílias de mecanismos de memória:
+compressão de contexto residente, stores aumentados por
+recuperação, memória reflexiva auto-corretiva, contextos
+hierárquicos virtuais e gestão de memória aprendida por política.
+O escopo dos autores é explicitamente amplo, incluindo agentes
+para tarefas gerais como navegação web, raciocínio matemático e
+diálogo, sem restrição ao domínio de codificação.
+Como consequência, a cobertura específica para Engenharia de
+Software no survey de Du et al.\ limita-se a ChatDev e MetaGPT,
+enquanto sistemas centrais para a presente investigação, como
+MemCoder~\cite{deng2026memcoder},
+CodeMEM~\cite{wang2026codemem} e a abordagem de Repository
+Memory de~\citeonline{wang2026improving}, não são mencionados.
+A presente revisão complementa esse trabalho restringindo o
+escopo a agentes de codificação e incorporando análise de custo
+operacional por tarefa, dimensão ausente no survey de Du et al.
+
+\subsection{Revisões sistemáticas sobre LLMs em Engenharia de
+Software}
+\label{sec:rel-llmse}
+
+Cinco revisões sistemáticas recentes mapeiam aplicações de LLMs em
+Engenharia de Software com escopo amplo.
+\citeonline{hou2024llmse} cobrem 395 estudos publicados até 2023,
+organizados por tarefa de engenharia (geração de código, reparo,
+teste, manutenção) e por tipo de modelo, sem subseção dedicada a
+memória ou persistência cross-session.
+\citeonline{zhang2024unifying} unificam perspectivas de
+Processamento de Linguagem Natural e Engenharia de Software sobre
+modelos para código, com ênfase em pré-treinamento e benchmarks de
+avaliação.
+\citeonline{jin2024llmagents} traçam a transição de LLMs para
+agentes baseados em LLMs em Engenharia de Software, mas tratam
+memória como componente arquitetural genérico, sem caracterizar
+arquiteturas de persistência inter-sessão.
+\citeonline{wang2024llmagents} mapeiam o landscape de agentes
+autônomos para Engenharia de Software com foco em pipelines de
+execução, e \citeonline{liu2024llmagents} cobrem 124 estudos com
+discussão parcial sobre módulos de memória, porém sem síntese
+cross-system de eficácia e custo da persistência.
+Nenhuma dessas revisões responde diretamente às questões
+secundárias QS1--QS5 desta investigação: a taxonomia de
+arquiteturas de persistência, a comparabilidade de benchmarks
+específicos para memória, a quantificação de ganhos sobre
+baselines sem memória, a relação custo-eficácia ou os mecanismos
+de degradação por memória.
+
+\subsection{Lacuna posicional desta revisão}
+\label{sec:rel-lacuna}
+
+Esta revisão restringe o escopo aos agentes de codificação
+baseados em IA e adota a persistência de conhecimento entre
+sessões como objeto primário de investigação, não como componente
+arquitetural acessório de uma síntese mais ampla.
+Sobre essa base, incorpora a análise de custo operacional por
+tarefa como dimensão dedicada (QS4), o que constitui o
+diferencial central frente aos trabalhos anteriores: nenhuma das
+SLRs prévias identificadas reúne simultaneamente foco em
+persistência inter-sessão, escopo de agentes de codificação e
+quantificação cross-study de custos.
+Essa configuração permite responder questões que os trabalhos
+secundários anteriores não abordam, sobretudo a ausência de
+comparações head-to-head entre arquiteturas, a subnotificação
+sistemática de custos e os mecanismos pelos quais a memória pode
+prejudicar o desempenho do agente.
