@@ -28,6 +28,13 @@
 % Se um hbox persistir, ajustar a frase localmente.
 
 % =====================================================================
+% Footnotes — small gap after mark to prevent bounding-box overlap
+% in pdftotext analysis (visual-qa.sh Layer 2)
+% =====================================================================
+\usepackage[hang]{footmisc}
+\setlength{\footnotemargin}{0.8em}
+
+% =====================================================================
 % Cores — paleta consistente para todo o manuscrito
 % =====================================================================
 % xcolor com opção table para \rowcolor em tabelas

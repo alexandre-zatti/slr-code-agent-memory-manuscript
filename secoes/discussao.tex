@@ -28,11 +28,12 @@ Todos os 19 estudos com comparação controlada reportam melhoria
 em relação ao baseline sem memória (\autoref{tab:desempenho}),
 com ganho mediano de 6,8~pp no SWE-bench Verified
 e amplitude de +2,2~pp a +39,0~pp.
-Esses ganhos, contudo, seguem um padrão de rendimentos decrescentes:
-sistemas com baselines abaixo de 35\% obtêm ganhos superiores
-a 10~pp~\cite{li2026traversalaspolicy,zhang2025darwingodel,su2025learnbyinteract},
+Os dados indicam um padrão de rendimentos decrescentes:
+no SWE-bench Verified, sistemas com baselines abaixo de 35\% obtêm
+ganhos superiores
+a 10~pp~\cite{li2026traversalaspolicy,zhang2025darwingodel},
 enquanto baselines acima de 65\% alcançam ganhos de 2 a
-9~pp~\cite{chen2025sweexp,deng2026memcoder,wu2025gcc}.
+9~pp~\cite{deng2026memcoder,wu2025gcc,chen2025sweexp}.
 O impacto no custo é bimodal: sistemas que substituem contexto
 por memória reduzem tokens em até
 39\%~\cite{li2026traversalaspolicy}.
@@ -42,9 +43,10 @@ Sistemas que adicionam contexto via retrieval elevam o custo em
 O risco de degradação não é negligenciável.
 Nove dos 28 estudos (32\%) reportam cenários onde a memória
 prejudica o desempenho (\autoref{tab:degradacao}).
-Ruído na recuperação é o mecanismo mais recorrente:
+Ruído na recuperação é o mecanismo citado em pelo menos três dos
+nove estudos com degradação:
 \citeonline{lindenbauer2025ctimrover} documentam queda de 11~pp
-quando itens ruidosos desviam a exploração do agente,
+por injeção não filtrada de itens no contexto,
 \citeonline{chen2025sweexp} documentam degradação com $k > 1$
 experiências recuperadas, e
 \citeonline{deshpande2025memtrack} identificam que backends de
@@ -53,9 +55,10 @@ a redundância de \textit{tool calls} em aproximadamente 21\%, sem
 redução em relação ao baseline sem memória.
 A vulnerabilidade de envenenamento documentada
 por~\citeonline{srivastava2025memorygraft}, na qual 9,1\% de
-experiências maliciosas comprometem 47,9\% dos retrievals,
-reforça que stores de memória abertos constituem superfície de
-ataque persistente.
+experiências maliciosas comprometem 47,9\% dos retrievals em
+configuração de recuperação dual-channel (lexical + vetorial),
+indica que stores de memória sem verificação de proveniência
+podem constituir superfície de ataque.
 
 \subsection{Implicações para a pesquisa}
 \label{sec:implicacoes-pesquisa}
@@ -91,8 +94,8 @@ ganho é parcial.
 Os dados indicam que sistemas simples, como
 AccelOpt~\cite{zhang2025accelopt} com fila de experiências e
 EET~\cite{guo2026eet} com terminação antecipada heurística,
-obtêm resultados comparáveis a sistemas multi-tier em seus
-respectivos domínios.
+obtêm ganhos relevantes em seus respectivos domínios sem recorrer
+a arquiteturas multi-tier.
 No entanto, essa comparação é entre estudos distintos: benchmarks e
 modelos diferem entre os sistemas.
 Apenas um estudo controlando a variável complexidade internamente
@@ -154,7 +157,7 @@ As limitações desta revisão são organizadas em quatro categorias
 de ameaça à validade: validade interna (rigor dos processos de
 seleção e extração), validade externa (generalização dos achados
 para fora do corpus), validade de construto (operacionalização
-dos conceitos medidos) e validade de conclusão (robustez das
+dos conceitos medidos) e validade de conclusão (estabilidade das
 inferências cross-study).
 
 A triagem foi conduzida por um único pesquisador, o que constitui
@@ -232,7 +235,7 @@ de mecanismo.
 As duas análises de sensibilidade conduzidas (S1, exclusão de
 preprints; S2, exclusão de estudos com pontuação inferior a 3,0)
 não inverteram nenhum achado quantitativo, o que reforça a
-robustez da síntese frente a critérios alternativos de inclusão.
+estabilidade da síntese frente a critérios alternativos de inclusão.
 
 \subsection{Agenda de pesquisa}
 \label{sec:agenda-pesquisa}

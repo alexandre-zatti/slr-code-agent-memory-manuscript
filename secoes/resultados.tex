@@ -18,6 +18,9 @@ Das 23 exclusões na fase de texto completo, 12 ocorreram por CE2
 combinação CI1/CE1 (recuperação intra-sessão sem persistência entre
 sessões).
 Três casos limítrofes foram aceitos com justificativa documentada.
+A lista completa dos 23 estudos excluídos na triagem de texto completo,
+com as respectivas razões de exclusão por critério, está disponível no
+pacote de replicação (DOI: 10.5281/zenodo.19463131).
 Ao final, 28 estudos foram incluídos para extração de dados.
 
 % O diagrama PRISMA já contém \begin{figure} e \label{fig:prisma-flow}
@@ -290,8 +293,8 @@ baselines mais fracos:
 \citeonline{li2026traversalaspolicy} parte de 34,6\%,
 \citeonline{zhang2025darwingodel} de 20,0\% e
 \citeonline{su2025learnbyinteract} de 12,4\%.
-Em baselines já fortes (acima de 65\%), os ganhos marginais situam-se
-entre +2 e +9~pp, sugerindo rendimentos decrescentes à medida que o
+No SWE-bench Verified, baselines acima de 65\% obtêm ganhos entre
++2 e +9~pp, sugerindo rendimentos decrescentes à medida que o
 sistema se aproxima do teto do benchmark.
 
 Os ganhos são consistentes entre LLMs.
@@ -428,7 +431,7 @@ A \autoref{tab:degradacao} sumariza esses casos.
   \centering
   \caption{Cenários de degradação por memória.}
   \label{tab:degradacao}
-  \begin{tabularx}{\textwidth}{l l X}
+  \begin{tabularx}{\textwidth}{p{2.8cm} @{\hspace{1em}} p{2.8cm} @{\hspace{1em}} X}
     \toprule
     Estudo & Mecanismo & Cenário \\
     \midrule
@@ -459,17 +462,17 @@ agente~\cite{lindenbauer2025ctimrover,chen2025sweexp,deshpande2025memtrack}; ove
 retrieval não compensa em tarefas simples ou com modelos
 fracos~\cite{shen2025talm,xia2025livesweagent}; envenenamento da
 memória, uma vulnerabilidade de segurança em stores
-abertos~\cite{srivastava2025memorygraft}; e incompatibilidade de
-infraestrutura entre o harness de avaliação e o mecanismo de
-memória~\cite{joshi2025swebenchcl}.
+abertos~\cite{srivastava2025memorygraft}; e incompatibilidade entre o harness de avaliação e a ordenação
+cronológica de tarefas~\cite{joshi2025swebenchcl}, uma limitação
+experimental que o próprio estudo reconhece.
 
 Não há evidência de que maior complexidade arquitetural produza ganhos
 sistematicamente maiores.
 \citeonline{zhang2025accelopt}, com fila simples de experiências, e
-\citeonline{guo2026eet}, com heurística de terminação, obtêm resultados
-comparáveis a sistemas multi-tier como
-KAPSO~\cite{nadafian2026kapso} e GCC~\cite{wu2025gcc} em seus
-respectivos domínios.
+\citeonline{guo2026eet}, com heurística de terminação, obtêm ganhos
+expressivos em seus respectivos domínios sem recorrer a arquiteturas
+multi-tier como KAPSO~\cite{nadafian2026kapso} e
+GCC~\cite{wu2025gcc}.
 O fator com maior associação aparente ao ganho é a distância entre o
 baseline e o
 potencial do benchmark: memória simples aplicada a baseline
@@ -555,3 +558,13 @@ de comparação entre estudos com benchmarks distintos.
     \bottomrule
   \end{tabularx}
 \end{table}
+
+A predominância de preprints no corpus (82\%) introduz risco de viés de
+reporte, particularmente para QS4 (dados de custo, frequentemente
+ausentes em preprints) e QS2 (seleção de benchmarks, menos padronizada
+em trabalhos não revisados por pares).
+A análise de sensibilidade S1, restrita aos cinco estudos publicados em
+venues com revisão por pares, não inverteu nenhum achado, o que sugere
+que o risco de viés está contido para os achados de alta certeza.
+Para os achados de certeza moderada e baixa (\autoref{tab:certeza}),
+a influência de preprints não pode ser descartada.
