@@ -3,7 +3,7 @@
 \label{ap:validacao-busca}
 
 Este apêndice documenta o processo de validação aplicado à estratégia de busca antes da execução das consultas finais nas bases.
-A validação combina três procedimentos: auditoria das strings contra revisões sistemáticas comparáveis, verificação de recall por meio de um conjunto de artigos-semente operando como Quasi-Gold Standard (QGS), e registro do refinamento iterativo dos termos.
+A validação combina dois procedimentos: auditoria das strings contra revisões sistemáticas comparáveis e verificação de recall por meio de um conjunto de artigos-semente operando como Quasi-Gold Standard (QGS).
 A última subseção apresenta o reporte completo do PRISMA-S~\cite{rethlefsen2021prismas}.
 
 \subsection{Auditoria pré-execução}
@@ -41,7 +41,9 @@ As lacunas correspondentes no bloco de memória abrangiam \textit{persistent mem
 
 A validação por Quasi-Gold Standard consiste em verificar se uma estratégia de busca recupera um conjunto pré-selecionado de artigos representativos do escopo, identificados independentemente da estratégia sendo validada~\cite{mourao2020hybrid}.
 Foram definidos sete artigos-semente, escolhidos por cobrirem diferentes arquiteturas de persistência (banco de experiência, memória episódica, memória orientada a commits, contexto inspirado em \textit{git}) e por incluírem ao menos um resultado negativo.
-Após o refinamento documentado em \autoref{ap:refinamentos}, a recuperação alcançou seis dos sete artigos-semente; o caso restante (CodeMEM) foi resgatado pelo rastreamento de citações, conforme descrito na seção de método.
+A estratégia passou por dois ciclos de refinamento documentados no
+protocolo versionado, elevando a recuperação de quatro para seis dos
+sete artigos-semente; o caso restante (CodeMEM) foi resgatado pelo rastreamento de citações, conforme descrito na seção de método.
 A \autoref{tab:qgs-recuperacao} consolida o status de recuperação por base.
 
 \begin{table}[htbp]
@@ -66,39 +68,6 @@ Lindenbauer et al.\ (CTIM-Rover)~\cite{lindenbauer2025ctimrover} & 2025 & não &
 
 A ausência total dos artigos-semente no Scopus reflete uma característica do campo: a maioria dos sistemas analisados é composta de \textit{preprints} de 2025--2026 ainda fora do ciclo de indexação de venues tradicionais.
 Esse diagnóstico foi confirmado por consultas auxiliares no Scopus (busca por nomes próprios de sistemas), que retornaram zero resultados, e justifica a centralidade do rastreamento de citações como terceiro método PRISMA na estratégia adotada.
-
-\subsection{Refinamentos iterativos}
-\label{ap:refinamentos}
-
-A estratégia passou por dois ciclos de refinamento documentados.
-O primeiro ciclo, em 22 de março de 2026, removeu termos que produziam ruído alto (\textit{knowledge base} isolado) e substituiu termos pouco específicos (\textit{AI developer}, \textit{session}) por alternativas calibradas contra os artigos-semente que estavam falhando à recuperação.
-O segundo ciclo, em 25 de março de 2026, decorreu da auditoria descrita em \autoref{ap:auditoria} e endereçou três fontes de erro adicionais: cobertura incompleta de variantes morfológicas, ausência de termos emergentes e assimetria entre as strings de Scopus e arXiv.
-A \autoref{tab:refinamentos-busca} resume os refinamentos com a justificativa e o impacto medido.
-
-\begin{table}[htbp]
-\centering
-\caption{Refinamentos iterativos das strings de busca, com impacto no recall.}
-\label{tab:refinamentos-busca}
-\small
-\begin{tabular}{p{1.8cm}p{1cm}p{4.2cm}p{4.5cm}}
-\toprule
-\textbf{Data} & \textbf{Bloco} & \textbf{Mudança} & \textbf{Justificativa e impacto} \\
-\midrule
-2026-03-22 & C1 & Substituído \textit{AI developer} por \textit{language agent}. & Recupera Repository Memory; reduz ruído de papers sobre produtividade humana. \\
-2026-03-22 & C2 & Substituído \textit{session} por \textit{memory-augmented}. & \textit{Session} demasiado genérico; nova forma captura agentes com memória. \\
-2026-03-22 & C2 & Removido \textit{knowledge base} isolado. & Gerava ruído elevado em domínios não-SE. \\
-2026-03-25 & C1 & Adicionado \textit{code assistant}. & Variante sem \textit{-ing} usada em três sistemas conhecidos. \\
-2026-03-25 & C1 & Adicionado \textit{agentic coding}. & Termo emergente em venues 2025; +19 papers únicos no arXiv. \\
-2026-03-25 & C1 & Adicionado \textit{SWE agent}. & Tornou-se nome de categoria; +12 papers únicos no arXiv. \\
-2026-03-25 & C2 & Adicionados \textit{persistent memory}, \textit{persistent context}, \textit{cross-task}. & Frases recorrentes nos sistemas conhecidos; defendem recall no Scopus. \\
-2026-03-25 & arXiv & Alinhamento de termos C1/C2 ausentes na string arXiv. & Corrigiu assimetria com Scopus; +53 papers. \\
-2026-03-25 & arXiv & Adicionada busca por título (\texttt{ti:}) para termos C1 chave. & Recupera papers que mencionam \textit{coding agent} apenas no título; +13 papers e 2 sementes. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-A recuperação do conjunto de sementes evoluiu de quatro de sete antes do refinamento para seis de sete após o ciclo de 25 de março, e a contagem total de candidatos no arXiv passou de 876 para 973 (incremento de 11,1\%) sem queda perceptível na precisão estimada (mantida entre 40\% e 50\%).
-O artigo-semente CodeMEM, único caso não recuperado por nenhuma das strings finais, é estruturalmente impossível de capturar pelo bloco C1 porque o resumo não contém qualquer termo da família \textit{agent} ou \textit{assistant}; sua inclusão final ocorre por rastreamento de citações forward a partir de Du~\cite{du2026memory}.
 
 \subsection{Conformidade PRISMA-S}
 \label{ap:prisma-s}
@@ -128,7 +97,7 @@ Os itens cobrem nomeação das fontes, plataformas, limites, métodos de busca c
 7 & Outros métodos & Nenhum além dos descritos nos itens 1, 2 e 5. \\
 8 & Estratégias completas & Strings exatas por base documentadas no protocolo de busca, com versionamento em \textit{git}. \\
 9 & Limites e restrições & Scopus: \texttt{PUBYEAR > 2022}; arXiv: categorias \texttt{cs.SE}, \texttt{cs.AI}, \texttt{cs.CL} e filtro pós-busca \texttt{--year-from 2023}; idiomas inglês e português. \\
-10 & Desenvolvimento da estratégia & Mapeamento de três blocos conceituais, construção das strings com OR/AND, validação por sete artigos-semente e dois ciclos de refinamento iterativo (\autoref{ap:refinamentos}). \\
+10 & Desenvolvimento da estratégia & Mapeamento de três blocos conceituais, construção das strings com OR/AND, validação por sete artigos-semente e dois ciclos de refinamento iterativo documentados no protocolo versionado. \\
 11 & Revisão por pares & Estratégia revisada pelo orientador antes da execução final. \\
 12 & Gerenciamento de registros & Zotero com Better BibTeX para gerenciamento; arquivos \texttt{.bib} versionados em \textit{git}. \\
 13 & Total de registros & 1.007 dos bancos (Scopus: 39; arXiv: 968) e 186 únicos por rastreamento de citações; total de 1.193 antes da deduplicação. \\
