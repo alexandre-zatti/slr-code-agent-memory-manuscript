@@ -100,26 +100,77 @@ protocolo.
 \subsection{Estratégia de busca}
 \label{sec:busca}
 
-A string de busca combina três blocos conceituais conectados por AND:
-um bloco sobre agentes de IA para código (C1, 12 termos) com um segundo
-sobre memória e persistência (C2, 13 termos), restritos ao domínio de
-engenharia de software por um terceiro bloco (C3, 8 termos).
-A string foi adaptada para a sintaxe de cada base: TITLE-ABS-KEY no
-Scopus com filtro \texttt{PUBYEAR\,>\,2022}, e campos \texttt{abs:}/\texttt{ti:}
-no arXiv com filtro de categorias cs.SE, cs.AI e cs.CL.\footnote{String
-Scopus: \texttt{TITLE-ABS-KEY(("LLM agent" OR "AI coding agent" OR
-"software engineering agent" OR "autonomous coding" OR "code agent" OR
-"LLM-based software" OR "AI-assisted software" OR "coding assistant" OR
-"language agent" OR "code assistant" OR "agentic coding" OR "SWE agent")
-AND ("memory" OR "knowledge persistence" OR "experience" OR "context
-management" OR "long-term memory" OR "episodic memory" OR "knowledge
-reuse" OR "continual learning" OR "experience replay" OR
-"memory-augmented" OR "persistent memory" OR "persistent context" OR
-"cross-task") AND ("software engineering" OR "software development" OR
-"code generation" OR "bug fix" OR "code repair" OR "repository" OR
-"software maintenance" OR "issue resolution")) AND PUBYEAR > 2022}.
-A string completa para o arXiv e o checklist PRISMA-S estão disponíveis
-no material suplementar.}
+A string de busca combina três blocos conceituais conectados por AND
+(\autoref{tab:strings-busca}): agentes de IA para código (C1, 12 termos),
+memória e persistência (C2, 13 termos) e domínio de engenharia de software
+(C3, 8 termos).
+Termos dentro de cada bloco são conectados por OR.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Termos de busca organizados por bloco conceitual.
+           Combinação entre blocos: C1~AND~C2~AND~C3;
+           dentro de cada bloco: OR.}
+  \label{tab:strings-busca}
+  \small
+  \begin{tabularx}{\textwidth}{@{}
+    >{\raggedright\arraybackslash}p{2.8cm}
+    X @{}}
+    \toprule
+    Bloco & Termos \\
+    \midrule
+    C1 --- Agentes de IA para código (12)
+    & \texttt{"LLM agent"},
+      \texttt{"AI coding agent"},
+      \texttt{"software engineering agent"},
+      \texttt{"autonomous coding"},
+      \texttt{"code agent"},
+      \texttt{"LLM-based software"},
+      \texttt{"AI-assisted software"},
+      \texttt{"coding assistant"},
+      \texttt{"language agent"},
+      \texttt{"code assistant"},
+      \texttt{"agentic coding"},
+      \texttt{"SWE agent"} \\
+    \addlinespace
+    C2 --- Memória e persistência (13)
+    & \texttt{"memory"},
+      \texttt{"knowledge persistence"},
+      \texttt{"experience"},
+      \texttt{"context management"},
+      \texttt{"long-term memory"},
+      \texttt{"episodic memory"},
+      \texttt{"knowledge reuse"},
+      \texttt{"continual learning"},
+      \texttt{"experience replay"},
+      \texttt{"memory-augmented"},
+      \texttt{"persistent memory"},
+      \texttt{"persistent context"},
+      \texttt{"cross-task"} \\
+    \addlinespace
+    C3 --- Engenharia de software (8)
+    & \texttt{"software engineering"},
+      \texttt{"software development"},
+      \texttt{"code generation"},
+      \texttt{"bug fix"},
+      \texttt{"code repair"},
+      \texttt{"repository"},
+      \texttt{"software maintenance"},
+      \texttt{"issue resolution"} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+No Scopus, os três blocos operam sobre título, resumo e palavras-chave
+(\texttt{TITLE-ABS-KEY}) com filtro temporal
+\texttt{PUBYEAR\,>\,2022}.
+No arXiv, C1 e C2 operam sobre resumo (\texttt{abs:}) e, para quatro
+termos de C1, também sobre título (\texttt{ti:}); o bloco C3 é
+substituído pelo filtro de categorias \texttt{cs.SE}, \texttt{cs.AI} e
+\texttt{cs.CL}, com filtro pós-busca \texttt{--year-from\,2023}.
+As strings exatas por base, na sintaxe nativa de cada API, estão
+disponíveis no pacote de replicação
+(DOI: 10.5281/zenodo.19463131).
 
 Antes da execução, as strings passaram por auditoria contra oito SLRs
 comparáveis, 16 sistemas conhecidos e dez formulações alternativas de
