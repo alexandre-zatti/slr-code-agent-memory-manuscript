@@ -1,5 +1,3 @@
-% Diagrama de fluxo PRISMA 2020
-% Adaptado do template de Page et al. (2021) para revisões sistemáticas
 % Requer: tikz, calc
 \begin{figure}[!htbp]
 \centering
@@ -11,30 +9,17 @@
     minimum height=1.0cm, align=center, font=\small},
   boxgray/.style={rectangle, draw=black, thick, fill=gray!15,
     text width=5.5cm, minimum height=1.2cm, align=center, font=\small},
-  % Phase labels: rotate=90 swaps dimensions on page:
-  %   minimum_height → page horizontal width (keep SMALL = narrow strip)
-  %   minimum_width  → page vertical height  (set per-node = phase span)
   phaselabel/.style={rectangle, draw=black, thick, fill=blue!10,
     minimum height=1.0cm, align=center,
     font=\small\bfseries, rotate=90, inner sep=3pt},
   arrow/.style={->, thick, >=stealth},
 ]
-
-% === Column centers ===
-% Left column:  x = 2
-% Right column:  x = 11
-% Labels: x = -1 (narrow 1cm strip; right edge at -0.5, content left at ~-0.87)
-
-% === PHASE LABELS (left side) ===
-% minimum_width sets vertical span (after 90° rotation)
 \node[phaselabel, minimum width=3.0cm] (l1) at (-2, -0.5)
   {Identificação};
 \node[phaselabel, minimum width=6.0cm] (l2) at (-2, -7.0)
   {Triagem};
 \node[phaselabel, minimum width=3.5cm] (l3) at (-2, -13.0)
   {Inclusão};
-
-% === IDENTIFICATION ===
 
 \node[box] (db) at (2, 0)
   {Registros identificados em\\bases de dados ($n = 1.007$):\\
@@ -53,9 +38,6 @@
 \draw[arrow] (db) -- (dedup);
 \draw[arrow] (other) -- (dedup);
 
-% === SCREENING ===
-
-% Title/abstract screening
 \node[box] (ta) at (2, -5.0)
   {Registros triados por\\título e resumo\\($n = 1.111$)};
 
@@ -65,11 +47,9 @@
 \draw[arrow] (dedup) -- (ta);
 \draw[arrow] (ta) -- (ta_excl);
 
-% Not retrieved
 \node[boxgray] (nr) at (11, -7.0)
   {Relatórios não recuperados\\($n = 0$)};
 
-% Full-text screening
 \node[box] (ft) at (2, -9.0)
   {Relatórios avaliados por\\texto completo\\($n = 51$)};
 
@@ -79,13 +59,9 @@
    CE2 (sem avaliação em Eng.\ Soft.): $n = 12$\\[2pt]
    CI1/CE1 (sem persistência): $n = 11$}};
 
-% Vertical flow
 \draw[arrow] (ta) -- (ft);
-% Branch from vertical flow to "not retrieved" box
 \draw[arrow] (2, -7.0) -- (nr.west);
 \draw[arrow] (ft) -- (ft_excl);
-
-% === INCLUSION ===
 
 \node[box, fill=green!10] (incl) at (2, -11.8)
   {Estudos incluídos na\\revisão ($n = 28$)};

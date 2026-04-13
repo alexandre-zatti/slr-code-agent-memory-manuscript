@@ -1,6 +1,5 @@
-% fig:custo — Bimodality diagram: cost impact of memory
-% Left side: substitution (cost reduction). Right side: addition (cost increase).
 % Requer: tikz (já carregado em main.tex)
+% Source: extracao/dados-extraidos.tsv (study, cost_impact, cost_mechanism)
 \begin{tikzpicture}[
   font=\small,
   system box/.style={
@@ -14,17 +13,12 @@
   },
   arrow down/.style={-Stealth, thick, black!60},
 ]
-
-% --- Títulos ---
 \node[group label, text=posGain] at (-3.5, 0)
   {Substituição\\[-2pt]{\footnotesize (reduz custo)}};
 \node[group label, text=negLoss] at (3.5, 0)
   {Adição\\[-2pt]{\footnotesize (aumenta custo)}};
 
-% Linha divisória
 \draw[dashed, black!30, thick] (0, 0.5) -- (0, -7.5);
-
-% --- Lado esquerdo: sistemas que reduzem custo ---
 \node[system box=posGain] at (-3.5, -1.0)
   {EET: $-31{,}8$\% custo};
 \node[system box=posGain] at (-3.5, -2.0)
@@ -39,10 +33,6 @@
   {CCA: $-11$k tok./tarefa};
 \node[system box=posGain] at (-3.5, -7.0)
   {AccelOpt: $26\times$ mais barato};
-
-% --- Lado direito: sistemas que aumentam custo ---
-% Centralizado verticalmente no span do lado esquerdo (-1 a -7)
-% Centro = -4.0; 4 itens com espaçamento 1.0 → -2.5 a -5.5
 \node[system box=negLoss] at (3.5, -2.5)
   {SWE-Exp: $+7{,}5$\% tokens};
 \node[system box=negLoss] at (3.5, -3.5)
@@ -51,8 +41,6 @@
   {Live-SWE: $+4$--$21$\%};
 \node[system box=negLoss] at (3.5, -5.5)
   {RepoMem: custo $\uparrow$ em tarefas difíceis};
-
-% --- Mecanismo explicativo ---
 \node[font=\scriptsize, text=black!60, align=center,
   text width=3.5cm] at (-3.5, -8.2)
   {Memória substitui contexto\\redundante ou evita\\retrabalho};

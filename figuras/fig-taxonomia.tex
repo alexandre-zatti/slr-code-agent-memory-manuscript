@@ -1,6 +1,5 @@
-% fig:taxonomia — Bubble chart: escopo temporal × substrato × política
-% Cada célula mostra a contagem de estudos; cor indica política dominante.
 % Requer: tikz (já carregado em main.tex)
+% Source: extracao/dados-extraidos.tsv (study, temporal_scope, substrate, policy)
 \begin{tikzpicture}[
   font=\small,
   cell/.style={
@@ -8,89 +7,57 @@
     align=center, inner sep=2pt,
   },
 ]
+\colorlet{polLLM}{archBanco}
+\colorlet{polHeur}{archHibrido}
+\colorlet{polApre}{archGit}
+\colorlet{polMix}{neutGray}
 
-% --- Cores de política (aliases de cores definidas em main.tex) ---
-\colorlet{polLLM}{archBanco}          % self_control_llm
-\colorlet{polHeur}{archHibrido}       % heurística
-\colorlet{polApre}{archGit}           % aprendida
-\colorlet{polMix}{neutGray}           % célula sem maioria (empate)
-
-% --- Eixos ---
-% Colunas: substrato (texto, estruturado, híbrido, executável)
-% Linhas: escopo (híbrida, procedural, episódica, semântica)
-
-% Cabeçalhos de coluna
 \node[cell, font=\small\bfseries] at (0, 0) {};
 \node[cell, font=\small\bfseries] at (2.2, 0) {Texto};
 \node[cell, font=\small\bfseries] at (4.4, 0) {Estruturado};
 \node[cell, font=\small\bfseries] at (6.6, 0) {Híbrido};
 \node[cell, font=\small\bfseries] at (8.8, 0) {Executável};
 
-% Cabeçalhos de linha
 \node[cell, font=\small\bfseries, anchor=east] at (-0.2, -1.6) {Híbrida};
 \node[cell, font=\small\bfseries, anchor=east] at (-0.2, -3.2) {Procedural};
 \node[cell, font=\small\bfseries, anchor=east] at (-0.2, -4.8) {Episódica};
 \node[cell, font=\small\bfseries, anchor=east] at (-0.2, -6.4) {Semântica};
-
-% --- Labels de eixo ---
 \node[rotate=90, font=\footnotesize\bfseries, anchor=south]
   at (-2.8, -4.0) {Escopo temporal};
 \node[font=\footnotesize\bfseries] at (5.5, 0.8)
   {Substrato representacional};
-
-% --- Indicadores de célula vazia (ponto sutil) ---
 \foreach \cx/\cy in {
   6.6/-3.2, 8.8/-1.6, 8.8/-4.8, 8.8/-6.4,
   2.2/-6.4, 6.6/-4.8, 6.6/-6.4} {
   \node[circle, fill=black!8, minimum size=0.15cm] at (\cx, \cy) {};
 }
 
-% --- Bolhas ---
-% Tamanho do círculo proporcional a N; cor = política majoritária na célula
-
-% Híbrida × texto = 5 (Bui, Hosain, Vasilopoulos, Wong, Wu)
-% Majoritária LLM (4/5): bui, hosain, wong, wu; heurística: vasilopoulos
 \node[circle, fill=polLLM!50, draw=polLLM, minimum size=0.9cm]
   at (2.2, -1.6) {\textbf{5}};
 
-% Híbrida × estruturado = 4 (Chen, Deng, Dong, Zhou)
-% Majoritária LLM (3/4): chen, deng, zhou; aprendida: dong
 \node[circle, fill=polLLM!50, draw=polLLM, minimum size=0.8cm]
   at (4.4, -1.6) {\textbf{4}};
 
-% Híbrida × híbrido = 5
-% (Nadafian, Shen TALM, Tablan, Wang RepoMem, Wang CodeMEM)
-% Majoritária LLM (3/5): nadafian, tablan, wang2026codemem;
-% heurística: shen2025talm, wang2025repositorymemory
 \node[circle, fill=polLLM!50, draw=polLLM, minimum size=0.9cm]
   at (6.6, -1.6) {\textbf{5}};
 
-% Procedural × texto = 1 (Qian) — heurística
 \node[circle, fill=polHeur!50, draw=polHeur, minimum size=0.45cm]
   at (2.2, -3.2) {\textbf{1}};
 
-% Procedural × estruturado = 1 (Shen Struct.) — heurística
 \node[circle, fill=polHeur!50, draw=polHeur, minimum size=0.45cm]
   at (4.4, -3.2) {\textbf{1}};
 
-% Procedural × executável = 3 (Li GBT, Xia Live-SWE, Zhang DGM)
-% Empate: 1 heurística (li), 1 LLM (xia), 1 aprendida (zhang DGM)
 \node[circle, fill=polMix!40, draw=polMix, minimum size=0.7cm]
   at (8.8, -3.2) {\textbf{3}};
 
-% Episódica × texto = 3 (Lindenbauer, Su, Zhang AccelOpt) — heurística (3/3)
 \node[circle, fill=polHeur!50, draw=polHeur, minimum size=0.7cm]
   at (2.2, -4.8) {\textbf{3}};
 
-% Episódica × estruturado = 1 (Guo EET) — LLM
 \node[circle, fill=polLLM!50, draw=polLLM, minimum size=0.45cm]
   at (4.4, -4.8) {\textbf{1}};
 
-% Semântica × estruturado = 1 (Wang MemGovern) — LLM
 \node[circle, fill=polLLM!50, draw=polLLM, minimum size=0.45cm]
   at (4.4, -6.4) {\textbf{1}};
-
-% --- Legenda ---
 \node[anchor=west] at (0.0, -7.8) {
   \begin{tikzpicture}[font=\footnotesize, baseline=-0.5ex]
     \node[circle, fill=polLLM!50, draw=polLLM,
