@@ -169,6 +169,14 @@
 % - Trocar abntex2cite para natbib ou biblatex
 % - Trocar template do documentclass conforme venue
 
+% Relaxar constraints de floats para evitar páginas dedicadas a uma
+% única figura com excesso de espaço em branco.  Permite que figuras
+% maiores fiquem no topo de páginas de texto, com texto fluindo abaixo.
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.70}
+\renewcommand{\floatpagefraction}{0.80}
+\renewcommand{\textfraction}{0.10}
+
 \begin{document}
 
 \title{Arquiteturas de Persistência de Conhecimento para Agentes de
@@ -177,8 +185,7 @@ Codificação Baseados em IA: Uma Revisão Sistemática da Literatura}
 \author{
   Alexandre Zatti\thanks{Programa de Pós-Graduação em Computação
   Aplicada (PPGPCA), Universidade Federal da Fronteira Sul (UFFS).
-  Autor correspondente.} \\
-  Samuel Feitosa\thanks{PPGPCA/UFFS. Orientador.}
+  Autor correspondente.}
 }
 
 \date{}
@@ -236,6 +243,7 @@ persistência de conhecimento; memória para agentes; custo-eficiência.
 \input{secoes/conclusao}
 
 \input{secoes/apendice-validacao-busca}
+\input{secoes/apendice-prisma-checklist}
 
 % =====================================================================
 % Metadados do manuscrito (PRISMA 2020 itens 24-27)
@@ -244,7 +252,7 @@ persistência de conhecimento; memória para agentes; custo-eficiência.
 O protocolo desta revisão está disponível no pacote de replicação
 (DOI: 10.5281/zenodo.19463131).
 A pesquisa não recebeu financiamento específico.
-Os autores declaram não haver conflitos de interesse.
+O autor declara não haver conflitos de interesse.
 
 \section*{Disponibilidade de dados e materiais}
 O protocolo, as planilhas de triagem (título/resumo e texto
