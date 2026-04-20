@@ -1,6 +1,6 @@
 \Needspace{14\baselineskip}
 \section{Method}
-\label{sec:metodo}
+\label{sec:method}
 
 This systematic review follows the methodology of
 \citet{kitchenham2007guidelines} for systematic reviews in software
@@ -15,14 +15,14 @@ extension~\citep{rethlefsen2021prismas}, and the full report follows the
 27-item PRISMA 2020 checklist.
 
 \subsection{Protocol and registration}
-\label{sec:protocolo}
+\label{sec:protocol}
 
 The protocol was drafted before the searches began.
 Six amendments were logged during execution, refining eligibility
 criteria and the extraction form.
 
 \subsection{Eligibility criteria}
-\label{sec:criterios}
+\label{sec:criteria}
 
 Criteria were formulated under the PICo framework:
 the \textbf{P}opulation comprises AI-based coding agents with mechanisms
@@ -32,7 +32,7 @@ effectiveness, and their cost-efficiency;
 the \textbf{Co}ntext includes empirical evaluations, benchmarks, and
 proposals of tools or frameworks.
 
-\autoref{tab:criterios} lists the inclusion and exclusion criteria.
+\autoref{tab:criteria} lists the inclusion and exclusion criteria.
 IC1 requires an explicit component that stores and reuses knowledge
 across sessions or sequential tasks;
 systems that merely retrieve context within a single session do not
@@ -46,7 +46,7 @@ The coverage period spans publications from 2023 to March 2026.
 \begin{table}[htbp]
   \centering
   \caption{Eligibility criteria.}
-  \label{tab:criterios}
+  \label{tab:criteria}
   \begin{tabularx}{\textwidth}{l l X}
     \toprule
     ID  & Type & Description \\
@@ -95,10 +95,10 @@ its manual addition to the screening pool was recorded as a protocol
 amendment.
 
 \subsection{Search strategy}
-\label{sec:busca}
+\label{sec:search}
 
 The search string combines three conceptual blocks joined by AND
-(\autoref{tab:strings-busca}): AI agents for code (C1, 12 terms),
+(\autoref{tab:search-strings}): AI agents for code (C1, 12 terms),
 memory and persistence (C2, 13 terms), and the software engineering
 domain (C3, 8 terms).
 Terms within each block are joined by OR.
@@ -108,7 +108,7 @@ Terms within each block are joined by OR.
   \caption{Search terms organised by conceptual block.
            Inter-block operator: C1~AND~C2~AND~C3;
            intra-block operator: OR.}
-  \label{tab:strings-busca}
+  \label{tab:search-strings}
   \small
   \begin{tabularx}{\textwidth}{@{}
     >{\raggedright\arraybackslash}p{2.8cm}
@@ -176,7 +176,7 @@ papers.
 The single unretrieved seed paper (CodeMEM) uses vocabulary outside the
 string terms and was added manually.
 
-\autoref{tab:busca} lists results per source.
+\autoref{tab:search} lists results per source.
 Searches ran on 25 March 2026.
 Citation chasing identified 186 unique records (8 forward, 178 backward).
 After consolidation and deduplication, the initial screening pool
@@ -185,7 +185,7 @@ contains 1,111 records.
 \begin{table}[htbp]
   \centering
   \caption{Search results per source.}
-  \label{tab:busca}
+  \label{tab:search}
   \begin{tabular}{l r}
     \toprule
     Source & Records \\
@@ -221,7 +221,7 @@ Three borderline cases were accepted with documented rationale.
 At the end, 28 studies were included for data extraction.
 
 \subsection{Data extraction}
-\label{sec:extracao}
+\label{sec:extraction}
 
 Data were extracted using a 37-field form organised into seven
 categories, with emphasis on persistence architecture (8 fields) and
@@ -240,7 +240,7 @@ The final error rate was below 1\%, corresponding to eight corrections
 out of 1{,}036 extracted values (28 papers $\times$ 37 fields).
 
 \subsection{Quality assessment}
-\label{sec:qualidade}
+\label{sec:quality}
 
 Study quality was assessed with a six-item checklist adapted from
 \citet{kitchenham2007guidelines}: (Q1) clearly defined objectives,
@@ -254,11 +254,11 @@ Twenty-six of the 28 studies (93\%) scored at or above 4.0.
 The two studies scoring below
 3.0~\citep{bui2026opendev,du2026memory} contribute only qualitative
 descriptions and do not affect the quantitative findings, as verified in
-the sensitivity analysis (\autoref{sec:resultados}).
+the sensitivity analysis (\autoref{sec:results}).
 For calibration, eight papers were re-assessed after the full extraction.
 
 \subsection{Synthesis methods}
-\label{sec:sintese}
+\label{sec:synthesis}
 
 The synthesis is narrative, organised thematically by the five secondary
 questions (SQ1 through SQ5).

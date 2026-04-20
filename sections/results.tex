@@ -1,9 +1,9 @@
 \Needspace{14\baselineskip}
 \section{Results}
-\label{sec:resultados}
+\label{sec:results}
 
 \subsection{Study selection}
-\label{sec:selecao-estudos}
+\label{sec:study-selection}
 
 \autoref{fig:prisma-flow} shows the PRISMA flow diagram.
 Searches in Scopus and arXiv, supplemented by citation chasing and one
@@ -23,13 +23,13 @@ per-criterion exclusion reasons, is available in the replication package
 (DOI: 10.5281/zenodo.19463131).
 Ultimately, 28 studies were included for data extraction.
 
-\input{figuras/diagrama-fluxo-prisma}
+\input{figures/prisma-flow-diagram}
 
 \FloatBarrier
 \subsection{Characteristics of the included studies}
-\label{sec:caracteristicas}
+\label{sec:characteristics}
 
-\autoref{tab:caracteristicas} summarises the 28 included studies.
+\autoref{tab:characteristics} summarises the 28 included studies.
 All were published between 2024 and 2026; no 2023 study met the
 eligibility criteria.
 Preprints account for 82\% of the corpus (23/28), with two conference
@@ -55,8 +55,8 @@ analysed in the following subsections.
 \begin{longtable}{l c l l l S[table-format=1.1]}
   \caption{Characteristics of the 28 included studies.
     Score: quality score (0--6 scale, per
-    \autoref{sec:qualidade-resultados}).}
-  \label{tab:caracteristicas} \\
+    \autoref{sec:quality-results}).}
+  \label{tab:characteristics} \\
   \toprule
   Study & Year & Venue & Type & Architecture & {Score} \\
   \midrule
@@ -97,16 +97,16 @@ analysed in the following subsections.
   Zhou (ToM-SWE) & 2025 & arXiv & preprint & hybrid & 5.5 \\
 \end{longtable}
 
-\autoref{fig:mapa-campo} offers a complementary chronological view of
+\autoref{fig:field-map} offers a complementary chronological view of
 the corpus, laying out the 28 studies by publication year and
 architectural family, with markers for the seven seed papers and for
 the three systems whose persistence substrate is executable.
 
-\input{figuras/fig-mapa-campo}
+\input{figures/fig-field-map}
 
 \FloatBarrier
 \subsection{Quality assessment}
-\label{sec:qualidade-resultados}
+\label{sec:quality-results}
 
 Quality scores range from 2.0 to 6.0, with a median of 5.0.
 Twenty-six of the 28 studies (93\%) scored at or above 4.0.
@@ -117,9 +117,9 @@ alter any quantitative finding.
 
 \FloatBarrier
 \subsection{Taxonomy of persistence architectures (SQ1)}
-\label{sec:qs1}
+\label{sec:sq1}
 
-\autoref{tab:arquiteturas} shows the distribution of the 24 primary
+\autoref{tab:architectures} shows the distribution of the 24 primary
 studies by architecture type.
 Eleven studies (46\%) distil resolution trajectories into reusable
 entries, making experience banks the most frequent type
@@ -135,7 +135,7 @@ graph~\citep{dong2026kernelblaster} have one study each.
 \begin{table}[htbp]
   \centering
   \caption{Distribution of primary studies by architecture type.}
-  \label{tab:arquiteturas}
+  \label{tab:architectures}
   \begin{tabular}{l r r}
     \toprule
     Architecture type & $N$ & \% \\
@@ -178,13 +178,13 @@ The predominant granularity is task (16 studies, 67\%), aligned with
 benchmark structure in which each issue corresponds to a task.
 Only one of the 24 primary studies reports memory sharing across
 agents~\citep{chen2025sweexp}.
-\autoref{fig:taxonomia} visualises the distribution of studies in the
+\autoref{fig:taxonomy} visualises the distribution of studies in the
 temporal scope $\times$ substrate space, with colour indicating the
 dominant control policy.
 
 \begin{figure}[!htbp]
   \centering
-  \resizebox{\textwidth}{!}{\input{figuras/fig-taxonomia}}
+  \resizebox{\textwidth}{!}{\input{figures/fig-taxonomy}}
   \caption{Distribution of the 24 primary studies in the space of
     temporal scope (rows) $\times$ representational substrate
     (columns).
@@ -195,12 +195,12 @@ dominant control policy.
     with hybrid temporal scope, the cell with the largest number
     of proposals, while substrates such as AST-guided, knowledge
     graphs, and Git metaphors remain at isolated adoption.}
-  \label{fig:taxonomia}
+  \label{fig:taxonomy}
 \end{figure}
 
 \FloatBarrier
 \subsection{Evaluation methods and benchmarks (SQ2)}
-\label{sec:qs2}
+\label{sec:sq2}
 
 Of the 28 studies, 21 use benchmarks, three use case studies, and one
 combines both.
@@ -251,11 +251,11 @@ benchmark with the same model, confirming Gap~1.
 
 \FloatBarrier
 \subsection{Performance results (SQ3)}
-\label{sec:qs3}
+\label{sec:sq3}
 
 Nineteen studies present a controlled comparison against a baseline
 without memory persistence, all with positive gains.
-\autoref{tab:desempenho} lists the 17 whose gain is measurable in
+\autoref{tab:performance} lists the 17 whose gain is measurable in
 percentage points (pp); the remaining two use non-comparable metrics
 (speedup and qualitative score).
 Magnitudes range from +2.2~pp~\citep{chen2025sweexp} to
@@ -266,7 +266,7 @@ Magnitudes range from +2.2~pp~\citep{chen2025sweexp} to
   \centering
   \caption{Performance gains over the no-persistence baseline, sorted
     by absolute gain.}
-  \label{tab:desempenho}
+  \label{tab:performance}
   \begin{tabular}{l l r r r}
     \toprule
     Study & Benchmark & Base (\%) & Mem. (\%) & Gain \\
@@ -307,12 +307,12 @@ four distinct LLMs, and \citet{wang2026memgovern} reports +4.65~pp
 across seven LLMs.
 In multi-model studies, persistence improves performance across every
 LLM tested.
-\autoref{fig:ganhos} visualises per-study gains, with colour indicating
+\autoref{fig:gains} visualises per-study gains, with colour indicating
 architecture type.
 
 \begin{figure}[!htbp]
   \centering
-  \input{figuras/fig-ganhos}
+  \input{figures/fig-gains}
   \caption{Gain in percentage points ($\Delta$~pp) over the
     no-persistence baseline, for the 17 studies with comparable
     metrics.
@@ -325,7 +325,7 @@ architecture type.
     Dong (KernelBlaster) and Tablan (Spark) are omitted because
     they use non-comparable metrics (speedup and qualitative
     score, respectively).}
-  \label{fig:ganhos}
+  \label{fig:gains}
 \end{figure}
 
 Five studies do not present a controlled
@@ -335,7 +335,7 @@ study, or incomparable baseline.
 
 \FloatBarrier
 \subsection{Cost and efficiency (SQ4)}
-\label{sec:qs4}
+\label{sec:sq4}
 
 Cost reporting is heterogeneous.
 Only seven studies provide a complete breakdown with tokens, monetary
@@ -344,7 +344,7 @@ Another nine report partial data (cost or tokens, but not both).
 The remaining 12 studies (43\%) provide no cost data at all, confirming
 Gap~2.
 
-\autoref{tab:custo} shows monetary cost per task in the studies that
+\autoref{tab:cost} shows monetary cost per task in the studies that
 publish it.
 Variation is wide: from \$0.01 per
 task~\citep{guo2026eet} to \$7.27~\citep{wang2026memgovern},
@@ -358,7 +358,7 @@ reflecting differences in LLM, benchmark, and architecture.
     Wu, Xia, Zhang AccelOpt, and Zhou) have at least one row; Wang
     RepoMem is included despite partial detail because it reports
     monetary cost per task.}
-  \label{tab:custo}
+  \label{tab:cost}
   \begin{tabular}{l r l l}
     \toprule
     Study & Cost/task & LLM & Benchmark \\
@@ -390,11 +390,11 @@ marginally:
 \citet{wang2026memgovern} $+4.8$\% with Claude 4 Sonnet.
 The performance gains in these cases are proportional to the added
 cost.
-\autoref{fig:custo} illustrates this duality.
+\autoref{fig:cost} illustrates this duality.
 
 \begin{figure}[!htbp]
   \centering
-  \resizebox{\textwidth}{!}{\input{figuras/fig-custo}}
+  \resizebox{\textwidth}{!}{\input{figures/fig-cost}}
   \caption{Two opposite patterns of memory impact on operating cost,
     observed in the studies with complete cost data.
     On the left, systems that replace redundant context with
@@ -406,7 +406,7 @@ cost.
     Each bar represents the percentage variation in tokens or
     monetary cost relative to the study's own baseline without
     memory.}
-  \label{fig:custo}
+  \label{fig:cost}
 \end{figure}
 
 \citet{guo2026eet} presents the best cost-performance balance among
@@ -424,16 +424,16 @@ efficient frontier can still be improved.
 
 \FloatBarrier
 \subsection{Complexity versus effectiveness (SQ5)}
-\label{sec:qs5}
+\label{sec:sq5}
 
 Nine of the 28 studies (32\%) report scenarios where memory degrades
 performance.
-\autoref{tab:degradacao} summarises these cases.
+\autoref{tab:degradation} summarises these cases.
 
 \begin{table}[htbp]
   \centering
   \caption{Memory-induced degradation scenarios.}
-  \label{tab:degradacao}
+  \label{tab:degradation}
   \begin{tabularx}{\textwidth}{p{2.8cm} @{\hspace{1em}} p{2.8cm} @{\hspace{1em}} X}
     \toprule
     Study & Mechanism & Scenario \\
@@ -488,7 +488,7 @@ global retrieval by +2.3~pp.
 
 \FloatBarrier
 \subsection{Sensitivity analyses and certainty}
-\label{sec:sensibilidade}
+\label{sec:sensitivity}
 
 Two sensitivity analyses verified the stability of the findings.
 The first (S1) kept only the five studies published in peer-reviewed
@@ -502,7 +502,7 @@ The second (S2) excluded the two studies scoring below 3.0;
 the removal did not alter any quantitative finding, since both
 contribute only qualitative descriptions.
 
-\autoref{tab:certeza} presents the per-finding certainty assessment.
+\autoref{tab:certainty} presents the per-finding certainty assessment.
 Each row also receives an evidence-type classification:
 \textbf{A} for direct data extracted from the TSV or JSON (counts,
 percentages, exhaustive checks), \textbf{B} for cross-study patterns
@@ -526,7 +526,7 @@ work).
 Sensitivity analysis S1, restricted to the five studies published in
 peer-reviewed venues, did not invert any finding, which suggests that
 reporting-bias risk is contained for the high-certainty findings.
-For findings with moderate or low certainty (\autoref{tab:certeza}),
+For findings with moderate or low certainty (\autoref{tab:certainty}),
 preprint influence cannot be ruled out.
 
 \FloatBarrier
@@ -536,7 +536,7 @@ preprint influence cannot be ruled out.
   \caption{Certainty and evidence type per finding. Type A: direct
   data (counts, percentages). Type B: aggregated cross-study pattern.
   Type C: mechanism characterisation or causal inference.}
-  \label{tab:certeza}
+  \label{tab:certainty}
   \begin{tabularx}{\textwidth}{l c l X}
     \toprule
     Finding & Type & Certainty & Rationale \\

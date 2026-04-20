@@ -1,6 +1,6 @@
 \Needspace{14\baselineskip}
 \section{Discussion}
-\label{sec:discussao}
+\label{sec:discussion}
 
 % PRISMA Item 17: Discussion of results in the context of other evidence
 % PRISMA Item 18: Limitations of the review
@@ -11,7 +11,7 @@
 The 28 mapped studies reveal a field concentrated around one dominant
 architecture: experience banks that distil resolution trajectories into
 reusable entries (46\% of primary studies,
-\autoref{tab:arquiteturas}), with the LLM itself acting as the memory
+\autoref{tab:architectures}), with the LLM itself acting as the memory
 controller (54\%) and evaluation centred on SWE-bench Verified (67\% of
 studies with a benchmark, \autoref{tab:benchmarks}).
 This convergence, however, does not imply maturity.
@@ -24,7 +24,7 @@ of experience banks over alternatives such as knowledge graphs or Git
 metaphors.
 
 All 19 studies with controlled comparison report improvements over the
-no-memory baseline (\autoref{tab:desempenho}), with a median gain of
+no-memory baseline (\autoref{tab:performance}), with a median gain of
 6.8~pp on SWE-bench Verified and an amplitude of +2.2~pp to +39.0~pp.
 The data indicate a diminishing-returns pattern:
 on SWE-bench Verified, systems with baselines below 35\% obtain gains
@@ -40,7 +40,7 @@ Systems that add context via retrieval raise cost by +5 to
 
 The risk of degradation is not negligible.
 Nine of the 28 studies (32\%) report scenarios where memory hurts
-performance (\autoref{tab:degradacao}).
+performance (\autoref{tab:degradation}).
 Retrieval noise is the mechanism cited in at least three of the nine
 studies with degradation:
 \citet{lindenbauer2025ctimrover} document a drop of 11~pp from unfiltered
@@ -172,7 +172,7 @@ classification and degradation mechanism.
 Four mitigations reduced this risk: (i) programmatic validation of 448
 enum values (16 fields $\times$ 28 studies), with error rate below 1\%
 after corrections; (ii) spot-check of 40 interpretive fields across 10
-selected studies, as detailed in \autoref{sec:extracao}; (iii) factual
+selected studies, as detailed in \autoref{sec:extraction}; (iii) factual
 fidelity digests generated from the full text of each study, used as
 reference when drafting the manuscript's interpretive claims; and (iv)
 re-verification of the \textit{negative\_result} fields against the
@@ -187,7 +187,7 @@ publications concentrated between 2024 and 2026, and only five studies
 have been published in peer-reviewed venues: two at
 conferences~\citep{wang2026improving,zhang2025darwingodel} and three at
 workshops~\citep{deshpande2025memtrack,shen2025talm,lindenbauer2025ctimrover}.
-Sensitivity analysis S1 (\autoref{sec:sensibilidade}) shows that,
+Sensitivity analysis S1 (\autoref{sec:sensitivity}) shows that,
 when preprints are excluded, no qualitative conclusion inverts, but the
 evidence base for cost (SQ4) drops from seven to two studies and the
 detailed taxonomy loses empirical support.
@@ -200,7 +200,7 @@ The rationale for this choice, based on \citet{mourao2020hybrid}, is
 documented in \autoref{sec:fontes}.
 
 The 14 studies that use SWE-bench Verified differ in base model, agent
-framework, instance subset, and run conditions (\autoref{sec:qs2}).
+framework, instance subset, and run conditions (\autoref{sec:sq2}).
 The construct ``agent performance'' is not operationalised uniformly
 across studies, which limits direct comparability of resolution
 percentages reported as if they were equivalent quantities.
@@ -212,7 +212,7 @@ metadata absent from published texts.
 Heterogeneity across studies precludes formal meta-analysis and limits
 inferences to qualitative patterns synthesised narratively.
 Classifying findings into evidence types A, B, and C
-(\autoref{tab:certeza}) makes the empirical support of each inference
+(\autoref{tab:certainty}) makes the empirical support of each inference
 explicit: type A for direct counts, type B for aggregated cross-study
 patterns, and type C for mechanism characterisations.
 The two sensitivity analyses conducted (S1, preprint exclusion;
