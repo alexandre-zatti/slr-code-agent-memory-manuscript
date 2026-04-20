@@ -11,9 +11,10 @@
 The 28 mapped studies reveal a field concentrated around one dominant
 architecture: experience banks that distil resolution trajectories into
 reusable entries (46\% of primary studies,
-\autoref{tab:architectures}), with the LLM itself acting as the memory
-controller (54\%) and evaluation centred on SWE-bench Verified (67\% of
-studies with a benchmark, \autoref{tab:benchmarks}).
+\autoref{tab:architectures}).
+The LLM itself acts as the memory controller in 54\% of systems.
+Evaluation is centred on SWE-bench Verified, which appears in 67\% of
+studies with a benchmark (\autoref{tab:benchmarks}).
 This convergence, however, does not imply maturity.
 The field remains dominated by preprints (82\%), and the 28 studies use
 at least eight distinct LLMs as backbones.
@@ -147,11 +148,14 @@ reproducibility.
 \label{sec:limitacoes}
 
 The limitations of this review are organised into four categories of
-validity threat: internal validity (rigour of the selection and
-extraction processes), external validity (generalisation of the
-findings beyond the corpus), construct validity (operationalisation of
-the measured concepts), and conclusion validity (stability of
-cross-study inferences).
+validity threat.
+Internal validity covers the rigour of the selection and extraction
+processes.
+External validity concerns generalisation of the findings beyond the
+corpus.
+Construct validity addresses the operationalisation of the measured
+concepts.
+Conclusion validity covers the stability of cross-study inferences.
 
 Screening was conducted by a single researcher, which is an
 acknowledged threat in systematic reviews and precludes the computation
@@ -211,7 +215,7 @@ metadata absent from published texts.
 
 Heterogeneity across studies precludes formal meta-analysis and limits
 inferences to qualitative patterns synthesised narratively.
-Classifying findings into evidence types A, B, and C
+Classifying findings into evidence types A through C
 (\autoref{tab:certainty}) makes the empirical support of each inference
 explicit: type A for direct counts, type B for aggregated cross-study
 patterns, and type C for mechanism characterisations.
@@ -225,13 +229,12 @@ alternative inclusion criteria.
 
 The three gaps confirmed by this review define the field's immediate
 agenda.
-Gap~1 --- the absence of head-to-head comparisons --- calls for an
-experiment that evaluates at least three representative architectures
-on the same benchmark, with the same model, and under the same compute
-budget.
-Gap~2 --- cost underreporting --- requires that such an experiment
-include an integrated cost-per-task analysis, producing an explicit
-Pareto frontier between accuracy and cost.
+Gap~1, the absence of head-to-head comparisons, calls for an experiment
+that evaluates at least three representative architectures on a shared
+benchmark, with a fixed model, and under a matching compute budget.
+Gap~2, cost underreporting, requires that such an experiment include
+an integrated cost-per-task analysis, producing an explicit Pareto
+frontier between accuracy and cost.
 
 Metric standardisation is a prerequisite for future comparability.
 The continual-learning metrics proposed by

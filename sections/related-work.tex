@@ -67,15 +67,15 @@ The survey catalogues five families of memory mechanisms: resident
 context compression, retrieval-augmented stores, self-correcting
 reflective memory, virtual hierarchical contexts, and policy-learned
 memory management.
-The authors' scope is explicitly broad, including agents for general
-tasks such as web navigation, mathematical reasoning, and dialogue,
-without restriction to the coding domain.
-As a consequence, the specific coverage of software engineering in the
-Du et al.\ survey is limited to ChatDev and MetaGPT, while systems
-central to the present investigation, such as
+The authors' scope is explicitly broad.
+It covers general agents for web navigation, mathematical reasoning and
+dialogue, without restriction to the coding domain.
+The coverage of software engineering in the Du et al.\ survey is
+therefore limited to ChatDev and MetaGPT.
+Systems central to the present investigation are not mentioned:
 MemCoder~\citep{deng2026memcoder},
 CodeMEM~\citep{wang2026codemem}, and the Repository Memory approach of
-\citet{wang2026improving}, are not mentioned.
+\citet{wang2026improving}.
 The present review complements that work by restricting the scope to
 coding agents and by incorporating per-task operational cost analysis,
 a dimension absent from the Du et al.\ survey.
@@ -96,16 +96,16 @@ pre-training and evaluation benchmarks.
 agents in software engineering but treat memory as a generic
 architectural component, without characterising cross-session
 persistence architectures.
-\citet{wang2024llmagents} map the autonomous-agents landscape in
-software engineering with a focus on execution pipelines, and
+\citet{wang2024llmagents} survey autonomous agents in software
+engineering with a focus on execution pipelines, and
 \citet{liu2024llmagents} cover 124 studies with partial discussion of
 memory modules, but without cross-system synthesis of persistence
 effectiveness and cost.
-None of these reviews directly answers the secondary questions SQ1--SQ5
-of this investigation: the taxonomy of persistence architectures, the
-comparability of memory-specific benchmarks, the quantification of
-gains over no-memory baselines, the cost-effectiveness relationship, or
-the memory-induced degradation mechanisms.
+None of these reviews directly answers SQ1--SQ5 of this investigation.
+The missing dimensions are the taxonomy of persistence architectures,
+the comparability of memory-specific benchmarks, the quantification of
+gains over no-memory baselines, the cost-effectiveness relationship,
+and the mechanisms by which memory can degrade performance.
 
 \subsection{Positional gap of this review}
 \label{sec:rel-lacuna}
@@ -115,11 +115,13 @@ cross-session knowledge persistence as the primary object of
 investigation, not as an ancillary architectural component of a broader
 synthesis.
 On this basis, it incorporates per-task operational cost analysis as a
-dedicated dimension (SQ4), which constitutes the central differential
-relative to prior work: none of the previously identified SLRs
-simultaneously gathers a focus on cross-session persistence, a coding-
-agent scope, and cross-study cost quantification.
-This configuration enables answers to questions that earlier secondary
-work does not address, chiefly the absence of head-to-head comparisons
-between architectures, the systematic underreporting of costs, and the
+dedicated dimension (SQ4).
+That cost dimension is the central differential relative to prior work.
+None of the previously identified SLRs simultaneously gathers a focus
+on cross-session persistence, a coding-agent scope, and cross-study cost
+quantification.
+The configuration enables answers to questions that earlier secondary
+work does not address.
+Chief among them are the absence of head-to-head comparisons between
+architectures, the systematic underreporting of costs, and the
 mechanisms by which memory can harm agent performance.

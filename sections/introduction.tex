@@ -14,9 +14,9 @@ Coding agents based on large language models (LLMs) have achieved
 growing adoption in software engineering tasks such as automated issue
 resolution, code generation, and repository
 maintenance~\citep{du2026memory}.
-Systems such as SWE-Agent, OpenHands, and Agentless interact
-iteratively with the source code, execute tests, and propose fixes
-without direct human intervention.
+Systems such as SWE-Agent and OpenHands, together with Agentless,
+interact iteratively with the source code; they run tests and propose
+fixes without direct human intervention.
 Agent capability, however, remains limited by a basic constraint:
 every session starts from scratch.
 
@@ -90,8 +90,8 @@ which the gain depends on specific experimental conditions.
 
 \noindent\textbf{SQ4.} Which cost and efficiency metrics are reported,
 and what is the relationship between cost and effectiveness?
-Persistence adds overhead in storage, retrieval, and the agent's
-effective context.
+Persistence adds overhead in storage and retrieval, and it also
+consumes the agent's effective context budget.
 Without cost data, any accuracy gain is incomplete for practical
 adoption, and the cost-effectiveness relationship remains inaccessible
 to the reader.
