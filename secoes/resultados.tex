@@ -1,220 +1,220 @@
 \Needspace{14\baselineskip}
-\section{Resultados}
+\section{Results}
 \label{sec:resultados}
 
-\subsection{Seleção de estudos}
+\subsection{Study selection}
 \label{sec:selecao-estudos}
 
-A \autoref{fig:prisma-flow} apresenta o diagrama de fluxo PRISMA.
-As buscas em Scopus e arXiv, complementadas por rastreamento de citações
-e uma adição manual, identificaram 1.194 registros.
-Após remoção de 83 duplicatas, 1.111 registros foram triados por título
-e resumo.
-Dessa triagem, 1.060 foram excluídos e 51 avançaram para leitura de
-texto completo.
+\autoref{fig:prisma-flow} shows the PRISMA flow diagram.
+Searches in Scopus and arXiv, supplemented by citation chasing and one
+manual addition, identified 1,194 records.
+After removing 83 duplicates, 1,111 records were screened by title and
+abstract.
+From this screening, 1,060 were excluded and 51 advanced to full-text
+reading.
 
-Das 23 exclusões na fase de texto completo, 12 ocorreram por CE2
-(agentes LLM sem avaliação em Engenharia de Software) e 11 pela
-combinação CI1/CE1 (recuperação intra-sessão sem persistência entre
-sessões).
-Três casos limítrofes foram aceitos com justificativa documentada.
-A lista completa dos 23 estudos excluídos na triagem de texto completo,
-com as respectivas razões de exclusão por critério, está disponível no
-pacote de replicação (DOI: 10.5281/zenodo.19463131).
-Ao final, 28 estudos foram incluídos para extração de dados.
+Of the 23 exclusions at the full-text stage, 12 were excluded under EC2
+(LLM agents without software engineering evaluation) and 11 under the
+IC1/EC1 combination (intra-session retrieval without cross-session
+persistence).
+Three borderline cases were accepted with documented rationale.
+The full list of the 23 studies excluded at full-text screening, with
+per-criterion exclusion reasons, is available in the replication package
+(DOI: 10.5281/zenodo.19463131).
+Ultimately, 28 studies were included for data extraction.
 
 \input{figuras/diagrama-fluxo-prisma}
 
 \FloatBarrier
-\subsection{Características dos estudos incluídos}
+\subsection{Characteristics of the included studies}
 \label{sec:caracteristicas}
 
-A \autoref{tab:caracteristicas} sumariza os 28 estudos incluídos.
-Todos foram publicados entre 2024 e 2026; nenhum estudo de 2023
-atendeu aos critérios de elegibilidade.
-Preprints representam 82\% do corpus (23/28), com duas publicações em
-conferência~\cite{wang2026improving,zhang2025darwingodel} e três em
-workshop~\cite{deshpande2025memtrack,shen2025talm,lindenbauer2025ctimrover}.
+\autoref{tab:caracteristicas} summarises the 28 included studies.
+All were published between 2024 and 2026; no 2023 study met the
+eligibility criteria.
+Preprints account for 82\% of the corpus (23/28), with two conference
+publications~\citep{wang2026improving,zhang2025darwingodel} and three
+workshop
+publications~\citep{deshpande2025memtrack,shen2025talm,lindenbauer2025ctimrover}.
 
-Quanto ao código-fonte, 17 dos 24 estudos primários disponibilizam repositório aberto e
-três oferecem acesso parcial.
-Os frameworks de agente mais recorrentes são implementações customizadas,
-seguidas por SWE-Agent e OpenHands.
-Os LLMs utilizados incluem GPT-4o, Claude 3.5/4/4.5 Sonnet,
-DeepSeek-V3 e Gemini 2.5/3 Pro.
+Regarding source code, 17 of the 24 primary studies share an open
+repository and three offer partial access.
+The most recurring agent frameworks are custom implementations, followed
+by SWE-Agent and OpenHands.
+The LLMs used include GPT-4o, Claude 3.5/4/4.5 Sonnet, DeepSeek-V3,
+and Gemini 2.5/3 Pro.
 
-Quatro estudos não propõem arquiteturas primárias de persistência:
-\citeonline{du2026memory} é survey,
-\citeonline{deshpande2025memtrack} e \citeonline{joshi2025swebenchcl}
-propõem benchmarks, e
-\citeonline{srivastava2025memorygraft} investiga segurança de memória.
-Os 24 estudos restantes propõem ou implementam arquiteturas e são
-analisados nas subseções seguintes.
+Four studies do not propose primary persistence architectures:
+\citet{du2026memory} is a survey,
+\citet{deshpande2025memtrack} and \citet{joshi2025swebenchcl}
+propose benchmarks, and
+\citet{srivastava2025memorygraft} investigates memory security.
+The remaining 24 studies propose or implement architectures and are
+analysed in the following subsections.
 
 \begin{longtable}{l c l l l S[table-format=1.1]}
-  \caption{Características dos 28 estudos incluídos.
-    Score: pontuação de qualidade (escala 0--6, conforme
+  \caption{Characteristics of the 28 included studies.
+    Score: quality score (0--6 scale, per
     \autoref{sec:qualidade-resultados}).}
   \label{tab:caracteristicas} \\
   \toprule
-  Estudo & Ano & Venue & Tipo & Arquitetura & {Score} \\
+  Study & Year & Venue & Type & Architecture & {Score} \\
   \midrule
   \endfirsthead
   \toprule
-  Estudo & Ano & Venue & Tipo & Arquitetura & {Score} \\
+  Study & Year & Venue & Type & Architecture & {Score} \\
   \midrule
   \endhead
   \bottomrule
   \endfoot
-  Bui (OpenDev) & 2026 & arXiv & preprint & notas texto & 2.0 \\
-  Chen (SWE-Exp) & 2025 & arXiv & preprint & banco exp. & 6.0 \\
-  Deng (MemCoder) & 2026 & arXiv & preprint & banco exp. & 4.5 \\
+  Bui (OpenDev) & 2026 & arXiv & preprint & text notes & 2.0 \\
+  Chen (SWE-Exp) & 2025 & arXiv & preprint & experience bank & 6.0 \\
+  Deng (MemCoder) & 2026 & arXiv & preprint & experience bank & 4.5 \\
   Deshpande (MemTrack) & 2025 & NeurIPS-W & workshop & benchmark & 4.5 \\
-  Dong (KernelBlaster) & 2026 & arXiv & preprint & grafo conh. & 4.5 \\
+  Dong (KernelBlaster) & 2026 & arXiv & preprint & knowledge graph & 4.5 \\
   Du (survey) & 2026 & arXiv & preprint & survey & 2.5 \\
-  Guo (EET) & 2026 & arXiv & preprint & banco exp. & 5.5 \\
-  Hosain (Xolver) & 2025 & arXiv & preprint & híbrido & 5.5 \\
+  Guo (EET) & 2026 & arXiv & preprint & experience bank & 5.5 \\
+  Hosain (Xolver) & 2025 & arXiv & preprint & hybrid & 5.5 \\
   Joshi (SWE-Bench-CL) & 2025 & arXiv & preprint & benchmark & 5.0 \\
-  Li (GBT) & 2026 & arXiv & preprint & outro & 5.5 \\
-  Lindenbauer (CTIM-Rover) & 2025 & REALM-W & workshop & banco exp. & 4.0 \\
-  Nadafian (KAPSO) & 2026 & arXiv & preprint & híbrido & 5.5 \\
-  Qian (IER) & 2024 & arXiv & preprint & banco exp. & 4.0 \\
-  Shen (TALM) & 2025 & AGENT-W & workshop & banco exp. & 4.5 \\
-  Shen (Structurally) & 2026 & arXiv & preprint & banco exp. & 5.0 \\
-  Srivastava (MemoryGraft) & 2025 & arXiv & preprint & segurança & 4.0 \\
-  Su (Learn-by-Interact) & 2025 & arXiv & preprint & banco exp. & 5.0 \\
-  Tablan (Spark) & 2025 & arXiv & preprint & banco exp. & 5.0 \\
-  Vasilopoulos (Codified) & 2026 & arXiv & preprint & híbrido & 5.0 \\
-  Wang (RepoMem) & 2026 & ICLR & conferência & git metáf. & 5.0 \\
-  Wang (CodeMEM) & 2026 & arXiv & preprint & AST guiado & 5.0 \\
-  Wang (MemGovern) & 2026 & arXiv & preprint & banco exp. & 5.5 \\
-  Wong (CCA) & 2025 & arXiv & preprint & híbrido & 5.5 \\
-  Wu (GCC) & 2025 & arXiv & preprint & git metáf. & 5.5 \\
-  Xia (Live-SWE-Agent) & 2025 & arXiv & preprint & outro & 5.5 \\
-  Zhang (AccelOpt) & 2025 & arXiv & preprint & banco exp. & 5.5 \\
-  Zhang (Darwin-Gödel) & 2025 & ICLR & conferência & outro & 5.0 \\
-  Zhou (ToM-SWE) & 2025 & arXiv & preprint & híbrido & 5.5 \\
+  Li (GBT) & 2026 & arXiv & preprint & other & 5.5 \\
+  Lindenbauer (CTIM-Rover) & 2025 & REALM-W & workshop & experience bank & 4.0 \\
+  Nadafian (KAPSO) & 2026 & arXiv & preprint & hybrid & 5.5 \\
+  Qian (IER) & 2024 & arXiv & preprint & experience bank & 4.0 \\
+  Shen (TALM) & 2025 & AGENT-W & workshop & experience bank & 4.5 \\
+  Shen (Structurally) & 2026 & arXiv & preprint & experience bank & 5.0 \\
+  Srivastava (MemoryGraft) & 2025 & arXiv & preprint & security & 4.0 \\
+  Su (Learn-by-Interact) & 2025 & arXiv & preprint & experience bank & 5.0 \\
+  Tablan (Spark) & 2025 & arXiv & preprint & experience bank & 5.0 \\
+  Vasilopoulos (Codified) & 2026 & arXiv & preprint & hybrid & 5.0 \\
+  Wang (RepoMem) & 2026 & ICLR & conference & Git metaphor & 5.0 \\
+  Wang (CodeMEM) & 2026 & arXiv & preprint & AST-guided & 5.0 \\
+  Wang (MemGovern) & 2026 & arXiv & preprint & experience bank & 5.5 \\
+  Wong (CCA) & 2025 & arXiv & preprint & hybrid & 5.5 \\
+  Wu (GCC) & 2025 & arXiv & preprint & Git metaphor & 5.5 \\
+  Xia (Live-SWE-Agent) & 2025 & arXiv & preprint & other & 5.5 \\
+  Zhang (AccelOpt) & 2025 & arXiv & preprint & experience bank & 5.5 \\
+  Zhang (Darwin-Gödel) & 2025 & ICLR & conference & other & 5.0 \\
+  Zhou (ToM-SWE) & 2025 & arXiv & preprint & hybrid & 5.5 \\
 \end{longtable}
 
-A \autoref{fig:mapa-campo} oferece uma visão cronológica complementar
-do corpus, distribuindo os 28 estudos por ano de publicação e
-família arquitetural, com destaque para os sete artigos-semente e
-para os três sistemas cujo substrato de persistência é executável.
+\autoref{fig:mapa-campo} offers a complementary chronological view of
+the corpus, laying out the 28 studies by publication year and
+architectural family, with markers for the seven seed papers and for
+the three systems whose persistence substrate is executable.
 
 \input{figuras/fig-mapa-campo}
 
 \FloatBarrier
-\subsection{Avaliação de qualidade}
+\subsection{Quality assessment}
 \label{sec:qualidade-resultados}
 
-As pontuações de qualidade variam de 2,0 a 6,0, com mediana de 5,0.
-Vinte e seis dos 28 estudos (93\%) obtiveram pontuação igual ou
-superior a 4,0.
-Os dois estudos com pontuação inferior a
-3,0~\cite{bui2026opendev,du2026memory} contribuem apenas descrições
-qualitativas; sua exclusão na análise de sensibilidade S2 não altera
-nenhum achado quantitativo.
+Quality scores range from 2.0 to 6.0, with a median of 5.0.
+Twenty-six of the 28 studies (93\%) scored at or above 4.0.
+The two studies scoring below
+3.0~\citep{bui2026opendev,du2026memory} contribute only qualitative
+descriptions; their exclusion in sensitivity analysis S2 does not
+alter any quantitative finding.
 
 \FloatBarrier
-\subsection{Taxonomia de arquiteturas de persistência (QS1)}
+\subsection{Taxonomy of persistence architectures (SQ1)}
 \label{sec:qs1}
 
-A \autoref{tab:arquiteturas} apresenta a distribuição dos 24 estudos
-primários por tipo de arquitetura.
-Onze estudos (46\%) destilam trajetórias de resolução em entradas
-reutilizáveis, tornando bancos de experiência o tipo mais frequente
-(e.g.,~\cite{chen2025sweexp,deng2026memcoder,guo2026eet,shen2026structurally,su2025learnbyinteract}).
-Arquiteturas híbridas respondem por cinco estudos (21\%), tipicamente
-combinando memória episódica com
-semântica~\cite{hosain2025xolver,nadafian2026kapso,wong2025confucius}.
-Duas implementações adotam metáfora
-git~\cite{wang2026improving,wu2025gcc}, e categorias como AST
-guiado~\cite{wang2026codemem} e grafo de
-conhecimento~\cite{dong2026kernelblaster} contam com um estudo cada.
+\autoref{tab:arquiteturas} shows the distribution of the 24 primary
+studies by architecture type.
+Eleven studies (46\%) distil resolution trajectories into reusable
+entries, making experience banks the most frequent type
+(e.g.,~\citep{chen2025sweexp,deng2026memcoder,guo2026eet,shen2026structurally,su2025learnbyinteract}).
+Hybrid architectures account for five studies (21\%), typically
+combining episodic with semantic
+memory~\citep{hosain2025xolver,nadafian2026kapso,wong2025confucius}.
+Two implementations adopt a Git
+metaphor~\citep{wang2026improving,wu2025gcc}, and categories such as
+AST-guided~\citep{wang2026codemem} and knowledge
+graph~\citep{dong2026kernelblaster} have one study each.
 
 \begin{table}[htbp]
   \centering
-  \caption{Distribuição dos estudos primários por tipo de arquitetura.}
+  \caption{Distribution of primary studies by architecture type.}
   \label{tab:arquiteturas}
   \begin{tabular}{l r r}
     \toprule
-    Tipo de arquitetura & $N$ & \% \\
+    Architecture type & $N$ & \% \\
     \midrule
-    Banco de experiência   & 11 & 46 \\
-    Híbrido                &  5 & 21 \\
-    Outro                  &  3 & 12 \\
-    Git metáfora           &  2 &  8 \\
-    AST guiado             &  1 &  4 \\
-    Grafo de conhecimento  &  1 &  4 \\
-    Notas de texto         &  1 &  4 \\
+    Experience bank     & 11 & 46 \\
+    Hybrid              &  5 & 21 \\
+    Other               &  3 & 12 \\
+    Git metaphor        &  2 &  8 \\
+    AST-guided          &  1 &  4 \\
+    Knowledge graph     &  1 &  4 \\
+    Text notes          &  1 &  4 \\
     \midrule
-    \textbf{Total}         & \textbf{24} & \\
+    \textbf{Total}      & \textbf{24} & \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-A classificação tridimensional proposta por
-\citeonline{du2026memory} permite análise mais granular.
-Quanto ao escopo temporal, 14 estudos (58\%) adotam escopo híbrido,
-combinando memória de curto e longo prazo; cinco (21\%) adotam escopo
-procedural e quatro (17\%) escopo episódico.
-Apenas \citeonline{wang2026memgovern} utiliza escopo puramente semântico.
-O substrato representacional mais frequente é texto em contexto (9
-estudos, 38\%), seguido por estruturado (7, 29\%) e híbrido (5, 21\%).
-Três estudos~\cite{li2026traversalaspolicy,xia2025livesweagent,zhang2025darwingodel} utilizam substratos executáveis, onde a memória
-assume a forma de árvores de comportamento, scripts ou agentes inteiros,
-contrastando com o padrão predominante de dados passivos para
-recuperação.
-Quanto à política de controle, 13 estudos (54\%) delegam ao próprio LLM
-as decisões de escrita e leitura da memória, nove (38\%) empregam
-heurísticas fixas e dois (8\%) adotam políticas aprendidas.
+The three-dimensional classification proposed by
+\citet{du2026memory} enables a more granular analysis.
+On temporal scope, 14 studies (58\%) adopt a hybrid scope combining
+short- and long-term memory; five (21\%) adopt a procedural scope and
+four (17\%) an episodic scope.
+Only \citet{wang2026memgovern} uses a purely semantic scope.
+The most frequent representational substrate is text-in-context (9
+studies, 38\%), followed by structured (7, 29\%) and hybrid (5, 21\%).
+Three
+studies~\citep{li2026traversalaspolicy,xia2025livesweagent,zhang2025darwingodel}
+use executable substrates, where memory takes the form of behaviour
+trees, scripts, or entire agents, in contrast with the dominant pattern
+of passive data for retrieval.
+On control policy, 13 studies (54\%) delegate memory read/write
+decisions to the LLM itself, nine (38\%) use fixed heuristics, and two
+(8\%) adopt learned policies.
 
-A recuperação híbrida, combinando BM25, embeddings e heurísticas, é o
-método dominante (11 estudos, 46\%).
-Carga total da memória no contexto ocorre apenas quando o volume é
-compacto~\cite{xia2025livesweagent,zhang2025accelopt}.
-A granularidade predominante é tarefa (16 estudos, 67\%), alinhada com
-a estrutura dos benchmarks em que cada issue equivale a uma tarefa.
-Apenas um dos 24 estudos primários reporta compartilhamento de
-memória entre agentes~\cite{chen2025sweexp}.
-A \autoref{fig:taxonomia} visualiza a distribuição dos estudos no espaço
-escopo temporal $\times$ substrato, com cor indicando a política de
-controle dominante.
+Hybrid retrieval, combining BM25, embeddings, and heuristics, is the
+dominant method (11 studies, 46\%).
+Full-context memory loading is used only when volume is
+compact~\citep{xia2025livesweagent,zhang2025accelopt}.
+The predominant granularity is task (16 studies, 67\%), aligned with
+benchmark structure in which each issue corresponds to a task.
+Only one of the 24 primary studies reports memory sharing across
+agents~\citep{chen2025sweexp}.
+\autoref{fig:taxonomia} visualises the distribution of studies in the
+temporal scope $\times$ substrate space, with colour indicating the
+dominant control policy.
 
 \begin{figure}[!htbp]
   \centering
   \resizebox{\textwidth}{!}{\input{figuras/fig-taxonomia}}
-  \caption{Distribuição dos 24 estudos primários no espaço
-    escopo temporal (linhas) $\times$ substrato representacional
-    (colunas).
-    O tamanho da bolha é proporcional ao número de estudos em
-    cada célula, e a cor indica a política de controle
-    majoritária da célula; células sem maioria aparecem em
-    cinza.
-    A figura evidencia a concentração em bancos de experiência
-    com escopo temporal híbrido, célula que reúne o maior número
-    de propostas, enquanto substratos como AST-guiado, grafos de
-    conhecimento e metáforas git permanecem com adoção isolada.}
+  \caption{Distribution of the 24 primary studies in the space of
+    temporal scope (rows) $\times$ representational substrate
+    (columns).
+    Bubble size is proportional to the number of studies in each
+    cell, and colour indicates the cell's majority control policy;
+    cells without a majority appear in grey.
+    The figure highlights the concentration on experience banks
+    with hybrid temporal scope, the cell with the largest number
+    of proposals, while substrates such as AST-guided, knowledge
+    graphs, and Git metaphors remain at isolated adoption.}
   \label{fig:taxonomia}
 \end{figure}
 
 \FloatBarrier
-\subsection{Métodos de avaliação e benchmarks (QS2)}
+\subsection{Evaluation methods and benchmarks (SQ2)}
 \label{sec:qs2}
 
-Dos 28 estudos, 21 utilizam benchmarks, três adotam estudos de caso e
-um combina ambos.
-A \autoref{tab:benchmarks} lista os benchmarks identificados.
-SWE-bench Verified é o benchmark dominante, utilizado por 14 dos 21
-estudos com avaliação por benchmark (67\%), o que cria um ponto natural
-de comparabilidade entre sistemas.
-Em contrapartida, sete estudos empregam benchmarks únicos não
-compartilhados por nenhum outro
-estudo~\cite{deshpande2025memtrack,dong2026kernelblaster,qian2024iterative,tablan2025smarter,zhang2025accelopt,nadafian2026kapso,wang2026codemem}, o que limita comparações diretas.
+Of the 28 studies, 21 use benchmarks, three use case studies, and one
+combines both.
+\autoref{tab:benchmarks} lists the identified benchmarks.
+SWE-bench Verified is the dominant benchmark, used by 14 of the 21
+studies with benchmark evaluation (67\%), which creates a natural
+comparability point across systems.
+By contrast, seven studies use unique benchmarks not shared by any other
+study~\citep{deshpande2025memtrack,dong2026kernelblaster,qian2024iterative,tablan2025smarter,zhang2025accelopt,nadafian2026kapso,wang2026codemem},
+which limits direct comparisons.
 
 \begin{table}[htbp]
   \centering
-  \caption{Benchmarks e frequência de uso.}
+  \caption{Benchmarks and usage frequency.}
   \label{tab:benchmarks}
   \begin{tabular}{l r}
     \toprule
@@ -230,352 +230,341 @@ estudo~\cite{deshpande2025memtrack,dong2026kernelblaster,qian2024iterative,tabla
     DS-1000               &  1 \\
     \midrule
     \multicolumn{2}{l}{\footnotesize
-      Outros 4 benchmarks de uso único omitidos.} \\
+      Four other single-use benchmarks omitted.} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Pass@1 (ou Resolve Rate) é a métrica universal, adotada por 18 dos 21
-estudos com benchmark.
-Métricas de aprendizado contínuo, como forgetting e backward transfer,
-foram propostas por \citeonline{joshi2025swebenchcl} mas ainda não
-adotadas por outros estudos.
+Pass@1 (or Resolve Rate) is the universal metric, adopted by 18 of the
+21 studies with benchmarks.
+Continual-learning metrics, such as forgetting and backward transfer,
+were proposed by \citet{joshi2025swebenchcl} but have not yet been
+adopted by other studies.
 
-A comparabilidade direta entre sistemas permanece limitada.
-Embora 14 estudos utilizem SWE-bench Verified, as condições
-experimentais diferem: pelo menos oito LLMs distintos servem como
-backbone, os subsets variam entre 300 e 500 instâncias, e parâmetros
-como temperatura e timeout raramente são reportados.
-Nenhum estudo compara três ou mais arquiteturas de persistência no mesmo
-benchmark com o mesmo modelo, confirmando o Gap~1.
+Direct comparability across systems remains limited.
+Although 14 studies use SWE-bench Verified, experimental conditions
+differ: at least eight distinct LLMs serve as the backbone, subsets
+vary between 300 and 500 instances, and parameters such as temperature
+and timeout are rarely reported.
+No study compares three or more persistence architectures on the same
+benchmark with the same model, confirming Gap~1.
 
 \FloatBarrier
-\subsection{Resultados de desempenho (QS3)}
+\subsection{Performance results (SQ3)}
 \label{sec:qs3}
 
-Dezenove estudos apresentam comparação controlada contra baseline sem
-persistência de memória, todos com ganhos positivos.
-A \autoref{tab:desempenho} lista os 17 cujo ganho é mensurável em
-pontos percentuais (pp); os dois restantes usam métricas não
-comparáveis (\textit{speedup} e score qualitativo).
-A magnitude varia de +2,2~pp~\cite{chen2025sweexp} a
-+39,0~pp~\cite{li2026traversalaspolicy}, com mediana de
-aproximadamente +6,8~pp no SWE-bench Verified.
+Nineteen studies present a controlled comparison against a baseline
+without memory persistence, all with positive gains.
+\autoref{tab:desempenho} lists the 17 whose gain is measurable in
+percentage points (pp); the remaining two use non-comparable metrics
+(speedup and qualitative score).
+Magnitudes range from +2.2~pp~\citep{chen2025sweexp} to
++39.0~pp~\citep{li2026traversalaspolicy}, with a median of about
++6.8~pp on SWE-bench Verified.
 
 \begin{table}[htbp]
   \centering
-  \caption{Ganhos de desempenho em relação ao baseline sem persistência.
-    Ordenados por ganho absoluto.}
+  \caption{Performance gains over the no-persistence baseline, sorted
+    by absolute gain.}
   \label{tab:desempenho}
   \begin{tabular}{l l r r r}
     \toprule
-    Estudo & Benchmark & Base (\%) & Mem. (\%) & Ganho \\
+    Study & Benchmark & Base (\%) & Mem. (\%) & Gain \\
     \midrule
-    Li (GBT) & SWE-b. V. & 34,6 & 73,6 & +39,0~pp \\
-    Zhang (DGM) & SWE-b. V. & 20,0 & 50,0 & +30,0~pp \\
-    Nadafian (KAPSO) & MLE-Bench & 35,1 & 50,7 & +15,6~pp \\
-    Wang (CodeMEM) & CodeIF-B. & $\sim$73 & 85,2 & +12,2~pp \\
-    Zhou (ToM-SWE) & Ambig. SWE & 51,9 & 63,4 & +11,5~pp \\
-    Su (LbI) & OSWorld & 12,4 & 22,5 & +10,1~pp \\
-    Deng (MemCoder) & SWE-b. V. & 68,4 & 77,8 & +9,4~pp \\
-    Wang (MemGovern) & SWE-b. V. & 23,2 & 32,6 & +9,4~pp \\
-    Su (LbI) & SWE-b. V. & 51,2 & 60,0 & +8,8~pp \\
-    Shen (Struct.) & SWE-b. V. & 53,5 & 60,3 & +6,8~pp \\
-    Wu (GCC) & SWE-b. V. & 74,0 & 80,2 & +6,2~pp \\
-    Wang (RepoMem) & SWE-b. V. & 37,0 & 40,4 & +3,4~pp \\
-    Shen (TALM) & BigCodeB. & 50,1 & 53,3 & +3,2~pp \\
-    Xia (Live-SWE) & SWE-b. V. & 74,2 & 77,4 & +3,2~pp \\
-    Wong (CCA) & SWE-b. Pro & $\sim$56 & 59,0 & +3,0~pp \\
-    Guo (EET) & SWE-b. V. & $\sim$32 & $\sim$35 & +2,7~pp \\
-    Chen (SWE-Exp) & SWE-b. V. & 70,8 & 73,0 & +2,2~pp \\
+    Li (GBT) & SWE-b. V. & 34.6 & 73.6 & +39.0~pp \\
+    Zhang (DGM) & SWE-b. V. & 20.0 & 50.0 & +30.0~pp \\
+    Nadafian (KAPSO) & MLE-Bench & 35.1 & 50.7 & +15.6~pp \\
+    Wang (CodeMEM) & CodeIF-B. & $\sim$73 & 85.2 & +12.2~pp \\
+    Zhou (ToM-SWE) & Ambig. SWE & 51.9 & 63.4 & +11.5~pp \\
+    Su (LbI) & OSWorld & 12.4 & 22.5 & +10.1~pp \\
+    Deng (MemCoder) & SWE-b. V. & 68.4 & 77.8 & +9.4~pp \\
+    Wang (MemGovern) & SWE-b. V. & 23.2 & 32.6 & +9.4~pp \\
+    Su (LbI) & SWE-b. V. & 51.2 & 60.0 & +8.8~pp \\
+    Shen (Struct.) & SWE-b. V. & 53.5 & 60.3 & +6.8~pp \\
+    Wu (GCC) & SWE-b. V. & 74.0 & 80.2 & +6.2~pp \\
+    Wang (RepoMem) & SWE-b. V. & 37.0 & 40.4 & +3.4~pp \\
+    Shen (TALM) & BigCodeB. & 50.1 & 53.3 & +3.2~pp \\
+    Xia (Live-SWE) & SWE-b. V. & 74.2 & 77.4 & +3.2~pp \\
+    Wong (CCA) & SWE-b. Pro & $\sim$56 & 59.0 & +3.0~pp \\
+    Guo (EET) & SWE-b. V. & $\sim$32 & $\sim$35 & +2.7~pp \\
+    Chen (SWE-Exp) & SWE-b. V. & 70.8 & 73.0 & +2.2~pp \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Os maiores ganhos (acima de +10~pp) ocorrem em sistemas que partem de
-baselines mais fracos:
-\citeonline{li2026traversalaspolicy} parte de 34,6\%,
-\citeonline{zhang2025darwingodel} de 20,0\% e
-\citeonline{su2025learnbyinteract} de 12,4\%.
-No SWE-bench Verified, baselines acima de 65\% obtêm ganhos entre
-+2 e +9~pp, sugerindo rendimentos decrescentes à medida que o
-sistema se aproxima do teto do benchmark.
+The largest gains (above +10~pp) occur in systems that start from
+weaker baselines:
+\citet{li2026traversalaspolicy} starts at 34.6\%,
+\citet{zhang2025darwingodel} at 20.0\%, and
+\citet{su2025learnbyinteract} at 12.4\%.
+On SWE-bench Verified, baselines above 65\% obtain gains between
++2 and +9~pp, which suggests diminishing returns as the system
+approaches the benchmark ceiling.
 
-Os ganhos são consistentes entre LLMs.
-\citeonline{shen2026structurally} reporta ganho médio de +4,7~pp em
-quatro LLMs distintos, e \citeonline{wang2026memgovern} reporta
-+4,65~pp em sete LLMs.
-Nos estudos com avaliação multi-modelo, a persistência melhora o
-desempenho em todos os LLMs testados.
-A \autoref{fig:ganhos} visualiza os ganhos por estudo, com cor
-indicando o tipo de arquitetura.
+Gains are consistent across LLMs.
+\citet{shen2026structurally} reports an average gain of +4.7~pp across
+four distinct LLMs, and \citet{wang2026memgovern} reports +4.65~pp
+across seven LLMs.
+In multi-model studies, persistence improves performance across every
+LLM tested.
+\autoref{fig:ganhos} visualises per-study gains, with colour indicating
+architecture type.
 
 \begin{figure}[!htbp]
   \centering
   \input{figuras/fig-ganhos}
-  \caption{Ganho em pontos percentuais ($\Delta$~pp) sobre o
-    baseline sem persistência, para os 17 estudos com métricas
-    comparáveis.
-    Cada barra corresponde a um estudo, com cor indicando o tipo
-    de arquitetura de memória.
-    A mediana cross-study é de 6,8~pp; os maiores ganhos (acima
-    de 10~pp) concentram-se em sistemas que partem de baselines
-    abaixo de 35\%, enquanto baselines acima de 65\% apresentam
-    ganhos entre 2 e 9~pp, padrão consistente com rendimentos
-    decrescentes.
-    Os estudos Dong (KernelBlaster) e Tablan (Spark) são
-    omitidos por usarem métricas não comparáveis (speedup e
-    score qualitativo, respectivamente).}
+  \caption{Gain in percentage points ($\Delta$~pp) over the
+    no-persistence baseline, for the 17 studies with comparable
+    metrics.
+    Each bar corresponds to a study, with colour indicating the
+    memory-architecture type.
+    The cross-study median is 6.8~pp; the largest gains (above
+    10~pp) concentrate in systems starting from baselines below
+    35\%, while baselines above 65\% show gains between 2 and
+    9~pp, a pattern consistent with diminishing returns.
+    Dong (KernelBlaster) and Tablan (Spark) are omitted because
+    they use non-comparable metrics (speedup and qualitative
+    score, respectively).}
   \label{fig:ganhos}
 \end{figure}
 
-Cinco estudos não apresentam comparação
-controlada~\cite{bui2026opendev,vasilopoulos2026codified,qian2024iterative,hosain2025xolver,zhang2025accelopt}, por razões
-como ausência de benchmark formal, natureza observacional do estudo
-de caso ou baseline incomparável.
+Five studies do not present a controlled
+comparison~\citep{bui2026opendev,vasilopoulos2026codified,qian2024iterative,hosain2025xolver,zhang2025accelopt},
+for reasons such as absence of a formal benchmark, observational case
+study, or incomparable baseline.
 
 \FloatBarrier
-\subsection{Custo e eficiência (QS4)}
+\subsection{Cost and efficiency (SQ4)}
 \label{sec:qs4}
 
-O reporte de dados de custo é heterogêneo.
-Apenas sete estudos fornecem breakdown completo com tokens, custo
-monetário e comparação com baseline.
-Outros nove reportam dados parciais (custo ou tokens, sem ambos).
-Os 12 estudos restantes (43\%) não disponibilizam nenhum dado de custo,
-confirmando o Gap~2.
+Cost reporting is heterogeneous.
+Only seven studies provide a complete breakdown with tokens, monetary
+cost, and baseline comparison.
+Another nine report partial data (cost or tokens, but not both).
+The remaining 12 studies (43\%) provide no cost data at all, confirming
+Gap~2.
 
-A \autoref{tab:custo} apresenta o custo monetário por tarefa nos
-estudos que disponibilizam essa informação.
-A variação é ampla: de US\$\,0,01 por
-tarefa~\cite{guo2026eet} a US\$\,7,27~\cite{wang2026memgovern},
-refletindo diferenças de LLM, benchmark e arquitetura.
+\autoref{tab:custo} shows monetary cost per task in the studies that
+publish it.
+Variation is wide: from \$0.01 per
+task~\citep{guo2026eet} to \$7.27~\citep{wang2026memgovern},
+reflecting differences in LLM, benchmark, and architecture.
 
 \begin{table}[htbp]
   \centering
-  \caption{Custo monetário por tarefa nos estudos que reportam
-    dados monetários, agrupados por configuração de LLM quando o
-    estudo apresenta múltiplas. Os sete estudos com detalhamento
-    completo de custo (Chen, Guo, MemGovern, Wu, Xia, Zhang
-    AccelOpt e Zhou) aparecem com pelo menos uma linha; Wang
-    RepoMem é incluído apesar do detalhamento parcial por
-    apresentar custo monetário por tarefa.}
+  \caption{Monetary cost per task in studies that report monetary data,
+    grouped by LLM configuration where the study presents several.
+    The seven studies with full cost breakdown (Chen, Guo, MemGovern,
+    Wu, Xia, Zhang AccelOpt, and Zhou) have at least one row; Wang
+    RepoMem is included despite partial detail because it reports
+    monetary cost per task.}
   \label{tab:custo}
   \begin{tabular}{l r l l}
     \toprule
-    Estudo & Custo/tarefa & LLM & Benchmark \\
+    Study & Cost/task & LLM & Benchmark \\
     \midrule
-    Guo (EET) & US\$\,0,01 & GPT-5-mini & SWE-b. V. \\
-    Zhou (ToM-SWE) & US\$\,0,02 & GPT-5-nano & Stateful SWE \\
-    Xia (Live-SWE) & US\$\,0,05--0,73 & vários & SWE-b. V./Pro \\
-    Wang (MemGov., Qwen) & US\$\,0,07 & Qwen3-30B & SWE-b. V. \\
-    Chen (SWE-Exp) & US\$\,0,13 & DeepSeek-V3 & SWE-b. V. \\
-    Wu (GCC) & US\$\,0,57--1,21 & vários & SWE-b. Lite \\
-    Wang (RepoMem) & US\$\,0,58--0,89 & n/d & SWE-b. V. \\
-    Zhang (AccelOpt) & US\$\,6,87--15,95 & open-source & NKIBench \\
-    Wang (MemGov., Claude) & US\$\,7,27 & Claude 4 S. & SWE-b. V. \\
+    Guo (EET) & \$0.01 & GPT-5-mini & SWE-b. V. \\
+    Zhou (ToM-SWE) & \$0.02 & GPT-5-nano & Stateful SWE \\
+    Xia (Live-SWE) & \$0.05--0.73 & various & SWE-b. V./Pro \\
+    Wang (MemGov., Qwen) & \$0.07 & Qwen3-30B & SWE-b. V. \\
+    Chen (SWE-Exp) & \$0.13 & DeepSeek-V3 & SWE-b. V. \\
+    Wu (GCC) & \$0.57--1.21 & various & SWE-b. Lite \\
+    Wang (RepoMem) & \$0.58--0.89 & n/r & SWE-b. V. \\
+    Zhang (AccelOpt) & \$6.87--15.95 & open-source & NKIBench \\
+    Wang (MemGov., Claude) & \$7.27 & Claude 4 S. & SWE-b. V. \\
     \midrule
-    \multicolumn{4}{l}{\footnotesize n/d: não declarado no paper original.} \\
+    \multicolumn{4}{l}{\footnotesize n/r: not reported in the original paper.} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-A relação entre memória e custo segue dois padrões distintos.
-Sistemas que usam memória para substituir contexto redundante reduzem
-custos: \citeonline{guo2026eet} obtém $-31{,}8$\% no custo total,
-\citeonline{li2026traversalaspolicy} reduz tokens em 39\% e
-\citeonline{shen2025talm} consome aproximadamente metade dos tokens de
-seu baseline no ClassEval.
-Em contrapartida, sistemas que adicionam contexto via retrieval
-aumentam custos marginalmente:
-\citeonline{chen2025sweexp} reporta $+7{,}5$\% em tokens e
-\citeonline{wang2026memgovern} $+4{,}8$\% com Claude 4 Sonnet.
-Os ganhos de desempenho nesses casos são proporcionais ao custo
-adicional.
-A \autoref{fig:custo} ilustra essa dualidade.
+The relationship between memory and cost follows two distinct patterns.
+Systems that use memory to replace redundant context reduce costs:
+\citet{guo2026eet} achieves $-31.8$\% in total cost,
+\citet{li2026traversalaspolicy} cuts tokens by 39\%, and
+\citet{shen2025talm} consumes roughly half the tokens of its baseline
+on ClassEval.
+By contrast, systems that add context via retrieval increase costs
+marginally:
+\citet{chen2025sweexp} reports $+7.5$\% in tokens and
+\citet{wang2026memgovern} $+4.8$\% with Claude 4 Sonnet.
+The performance gains in these cases are proportional to the added
+cost.
+\autoref{fig:custo} illustrates this duality.
 
 \begin{figure}[!htbp]
   \centering
   \resizebox{\textwidth}{!}{\input{figuras/fig-custo}}
-  \caption{Dois padrões opostos de impacto da memória no custo
-    operacional, observados nos estudos com dados de custo
-    completos.
-    À esquerda, sistemas que substituem contexto redundante por
-    memória condensada (EET, Traversal-as-Policy, TALM) reduzem
-    o custo total entre 32\% e 50\%.
-    À direita, sistemas que adicionam contexto via retrieval
-    (SWE-Exp, MemGovern com Claude~4~Sonnet) elevam o custo
-    entre 5\% e 21\%.
-    Cada barra representa a variação percentual de tokens ou
-    custo monetário em relação ao baseline sem memória do
-    próprio estudo.}
+  \caption{Two opposite patterns of memory impact on operating cost,
+    observed in the studies with complete cost data.
+    On the left, systems that replace redundant context with
+    condensed memory (EET, Traversal-as-Policy, TALM) reduce total
+    cost by between 32\% and 50\%.
+    On the right, systems that add context via retrieval (SWE-Exp,
+    MemGovern with Claude~4~Sonnet) raise cost by between 5\% and
+    21\%.
+    Each bar represents the percentage variation in tokens or
+    monetary cost relative to the study's own baseline without
+    memory.}
   \label{fig:custo}
 \end{figure}
 
-\citeonline{guo2026eet} apresenta o melhor equilíbrio custo-desempenho
-entre os estudos com dados disponíveis:
-$-31{,}8$\% de custo com perda máxima de $-0{,}2$~pp, ao identificar
-oportunidades de terminação antecipada em 11,3\% das issues.
-\citeonline{zhang2025accelopt} é 26 vezes mais barato que Claude
-Sonnet~4 com desempenho equivalente em seu domínio.
-Nenhum estudo constrói fronteira de Pareto explícita entre acurácia e
-custo.
-Os dados disponíveis indicam que alguns
-sistemas~\cite{guo2026eet,li2026traversalaspolicy} superam outros
-simultaneamente em custo e desempenho, sugerindo que a fronteira
-eficiente atual ainda pode ser melhorada.
+\citet{guo2026eet} presents the best cost-performance balance among
+studies with available data:
+$-31.8$\% cost with a maximum loss of $-0.2$~pp, by identifying
+early-termination opportunities in 11.3\% of issues.
+\citet{zhang2025accelopt} is 26 times cheaper than Claude Sonnet~4
+with equivalent performance in its domain.
+No study constructs an explicit Pareto frontier between accuracy and
+cost.
+Available data indicate that some
+systems~\citep{guo2026eet,li2026traversalaspolicy} dominate others
+simultaneously on cost and performance, suggesting that the current
+efficient frontier can still be improved.
 
 \FloatBarrier
-\subsection{Complexidade versus eficácia (QS5)}
+\subsection{Complexity versus effectiveness (SQ5)}
 \label{sec:qs5}
 
-Nove dos 28 estudos (32\%) reportam cenários onde a memória degrada
-o desempenho.
-A \autoref{tab:degradacao} sumariza esses casos.
+Nine of the 28 studies (32\%) report scenarios where memory degrades
+performance.
+\autoref{tab:degradacao} summarises these cases.
 
 \begin{table}[htbp]
   \centering
-  \caption{Cenários de degradação por memória.}
+  \caption{Memory-induced degradation scenarios.}
   \label{tab:degradacao}
   \begin{tabularx}{\textwidth}{p{2.8cm} @{\hspace{1em}} p{2.8cm} @{\hspace{1em}} X}
     \toprule
-    Estudo & Mecanismo & Cenário \\
+    Study & Mechanism & Scenario \\
     \midrule
-    Deshpande & ruído & Mem0 e Zep mantêm redundância de
-      \textit{tool calls} em $\sim$21\%, sem melhoria sobre baseline \\
-    Joshi & infraestrutura & Harness incompatível com mecanismo de
-      memória \\
-    Lindenbauer & ruído & Itens ruidosos desviam exploração
-      ($-11$~pp) \\
-    Chen & ruído & $k > 1$ experiências degrada (42,0\% para
-      39,0\%) \\
-    Shen (TALM) & overhead & Retrieval não compensa em tarefas
-      simples \\
-    Vasilopoulos & manutenção & Knowledge-to-code ratio de 24\% requer
-      1--2h/semana \\
-    Xia & overhead & LLMs fracos degradam $-68{,}2$\% com
-      \textit{tool creation} \\
-    Srivastava & envenenamento & 9,1\% de experiências envenenadas
-      comprometem 47,9\% dos retrievals \\
-    Zhou & viés & User simulator introduz over-compliance \\
+    Deshpande & noise & Mem0 and Zep retain tool-call redundancy at
+      $\sim$21\%, with no improvement over the baseline \\
+    Joshi & infrastructure & Evaluation harness incompatible with the
+      memory mechanism \\
+    Lindenbauer & noise & Noisy items divert exploration ($-11$~pp) \\
+    Chen & noise & $k > 1$ experiences degrades (42.0\% to 39.0\%) \\
+    Shen (TALM) & overhead & Retrieval does not pay off on simple tasks \\
+    Vasilopoulos & maintenance & Knowledge-to-code ratio of 24\%
+      requires 1--2 h/week \\
+    Xia & overhead & Weak LLMs degrade $-68.2$\% under tool creation \\
+    Srivastava & poisoning & 9.1\% of poisoned experiences compromise
+      47.9\% of retrievals \\
+    Zhou & bias & User simulator introduces over-compliance \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-Quatro mecanismos de degradação emergem dos dados: ruído na recuperação,
-onde experiências irrelevantes ou excessivas desviam o
-agente~\cite{lindenbauer2025ctimrover,chen2025sweexp,deshpande2025memtrack}; overhead desnecessário, onde o custo do
-retrieval não compensa em tarefas simples ou com modelos
-fracos~\cite{shen2025talm,xia2025livesweagent}; envenenamento da
-memória, uma vulnerabilidade de segurança em stores
-abertos~\cite{srivastava2025memorygraft}; e incompatibilidade entre o harness de avaliação e a ordenação
-cronológica de tarefas~\cite{joshi2025swebenchcl}, uma limitação
-experimental que o próprio estudo reconhece.
+Four degradation mechanisms emerge from the data: retrieval noise,
+where irrelevant or excessive experiences divert the
+agent~\citep{lindenbauer2025ctimrover,chen2025sweexp,deshpande2025memtrack};
+unnecessary overhead, where retrieval does not pay off on simple tasks
+or with weak models~\citep{shen2025talm,xia2025livesweagent}; memory
+poisoning, a security vulnerability in open
+stores~\citep{srivastava2025memorygraft}; and incompatibility between
+the evaluation harness and the chronological ordering of
+tasks~\citep{joshi2025swebenchcl}, an experimental limitation the
+study itself acknowledges.
 
-Não há evidência de que maior complexidade arquitetural produza ganhos
-sistematicamente maiores.
-\citeonline{zhang2025accelopt}, com fila simples de experiências, e
-\citeonline{guo2026eet}, com heurística de terminação, obtêm ganhos
-expressivos em seus respectivos domínios sem recorrer a arquiteturas
-multi-tier como KAPSO~\cite{nadafian2026kapso} e
-GCC~\cite{wu2025gcc}.
-O fator com maior associação aparente ao ganho é a distância entre o
-baseline e o
-potencial do benchmark: memória simples aplicada a baseline
-fraco~\cite{zhang2025darwingodel} produz +30~pp, enquanto memória
-sofisticada em baseline forte~\cite{chen2025sweexp} resulta em
-+2,2~pp.
+There is no evidence that greater architectural complexity yields
+systematically larger gains.
+\citet{zhang2025accelopt}, with a simple experience queue, and
+\citet{guo2026eet}, with a termination heuristic, obtain substantial
+gains in their respective domains without resorting to multi-tier
+architectures such as KAPSO~\citep{nadafian2026kapso} and
+GCC~\citep{wu2025gcc}.
+The factor with the strongest apparent association to gain is the
+distance between the baseline and the benchmark's potential ceiling:
+simple memory applied to a weak
+baseline~\citep{zhang2025darwingodel} produces +30~pp, while
+sophisticated memory on a strong
+baseline~\citep{chen2025sweexp} yields +2.2~pp.
 
-A calibração do retrieval é determinante.
-\citeonline{chen2025sweexp} reporta que recuperar mais de uma
-experiência degrada o resultado (42,0\% para 39,0\% com $k = 4$), e
-\citeonline{shen2026structurally} mostra que isolamento por categoria supera
-retrieval global por +2,3~pp.
+Retrieval calibration is decisive.
+\citet{chen2025sweexp} reports that retrieving more than one experience
+degrades the result (42.0\% to 39.0\% with $k = 4$), and
+\citet{shen2026structurally} shows that category isolation outperforms
+global retrieval by +2.3~pp.
 
 \FloatBarrier
-\subsection{Análises de sensibilidade e certeza}
+\subsection{Sensitivity analyses and certainty}
 \label{sec:sensibilidade}
 
-Duas análises de sensibilidade verificaram a estabilidade dos achados.
-A primeira (S1) reteve apenas os cinco estudos publicados em venues com
-revisão por pares.
-Os achados principais (ganhos positivos, rendimentos decrescentes,
-degradação por ruído) se sustentam qualitativamente, porém a base
-empírica de QS4 cai de sete para dois estudos ao excluir
-EET~\cite{guo2026eet}, MemGovern~\cite{wang2026memgovern} e
-GCC~\cite{wu2025gcc}.
-A segunda (S2) excluiu os dois estudos com pontuação inferior a 3,0;
-a remoção não alterou nenhum achado quantitativo, pois ambos contribuem
-apenas descrições qualitativas.
+Two sensitivity analyses verified the stability of the findings.
+The first (S1) kept only the five studies published in peer-reviewed
+venues.
+The main findings (positive gains, diminishing returns, degradation
+from noise) hold qualitatively; however, the empirical base of SQ4
+drops from seven to two studies when
+EET~\citep{guo2026eet}, MemGovern~\citep{wang2026memgovern}, and
+GCC~\citep{wu2025gcc} are excluded.
+The second (S2) excluded the two studies scoring below 3.0;
+the removal did not alter any quantitative finding, since both
+contribute only qualitative descriptions.
 
-A \autoref{tab:certeza} apresenta a avaliação de certeza por achado.
-Cada linha recebe também uma classificação de tipo de evidência:
-\textbf{A} para dados diretos extraídos do TSV ou JSON (contagens,
-percentuais, verificação exaustiva), \textbf{B} para padrões
-cross-study agregados a partir de múltiplos estudos e \textbf{C}
-para caracterizações de mecanismo ou inferências causais cuja base
-empírica é inerentemente interpretativa.
-Dos 19 achados codificados, 13 recebem certeza alta, cinco recebem
-certeza moderada e um recebe certeza baixa; em paralelo, 13 são
-classificados no tipo A, quatro no tipo B e dois no tipo C.
-O único achado de certeza baixa é QS1-D (substratos executáveis,
-baseado em apenas três estudos), enquanto QS5-B (relação
-complexidade versus ganho) recebe certeza moderada por depender
-de comparação entre estudos com benchmarks distintos.
+\autoref{tab:certeza} presents the per-finding certainty assessment.
+Each row also receives an evidence-type classification:
+\textbf{A} for direct data extracted from the TSV or JSON (counts,
+percentages, exhaustive checks), \textbf{B} for cross-study patterns
+aggregated from multiple studies, and \textbf{C} for mechanism
+characterisations or causal inferences whose empirical base is
+inherently interpretive.
+Of the 19 coded findings, 13 receive high certainty, five receive
+moderate certainty, and one receives low certainty; in parallel, 13 are
+classified as type A, four as type B, and two as type C.
+The only low-certainty finding is SQ1-D (executable substrates, based
+on only three studies), while SQ5-B (relation between complexity and
+gain) receives moderate certainty because it relies on comparison
+across studies with different benchmarks.
 
 \FloatBarrier
 
-A predominância de preprints no corpus (82\%) introduz risco de viés de
-reporte, particularmente para QS4 (dados de custo, frequentemente
-ausentes em preprints) e QS2 (seleção de benchmarks, menos padronizada
-em trabalhos não revisados por pares).
-A análise de sensibilidade S1, restrita aos cinco estudos publicados em
-venues com revisão por pares, não inverteu nenhum achado, o que sugere
-que o risco de viés está contido para os achados de alta certeza.
-Para os achados de certeza moderada e baixa (\autoref{tab:certeza}),
-a influência de preprints não pode ser descartada.
+Preprints dominate the corpus (82\%), which introduces reporting-bias
+risk, particularly for SQ4 (cost data, frequently absent in preprints)
+and SQ2 (benchmark selection, less standardised in non-peer-reviewed
+work).
+Sensitivity analysis S1, restricted to the five studies published in
+peer-reviewed venues, did not invert any finding, which suggests that
+reporting-bias risk is contained for the high-certainty findings.
+For findings with moderate or low certainty (\autoref{tab:certeza}),
+preprint influence cannot be ruled out.
 
 \FloatBarrier
 
 \begin{table}[htbp]
   \centering
-  \caption{Certeza e tipo de evidência por achado. Tipo A: dados
-  diretos (contagens, percentuais). Tipo B: padrão cross-study
-  agregado. Tipo C: caracterização de mecanismo ou inferência causal.}
+  \caption{Certainty and evidence type per finding. Type A: direct
+  data (counts, percentages). Type B: aggregated cross-study pattern.
+  Type C: mechanism characterisation or causal inference.}
   \label{tab:certeza}
   \begin{tabularx}{\textwidth}{l c l X}
     \toprule
-    Achado & Tipo & Certeza & Justificativa \\
+    Finding & Type & Certainty & Rationale \\
     \midrule
-    QS1-A: bancos dominam (46\%) & A & alta & 11 estudos, contagem direta \\
-    QS1-B: escopo híbrido (58\%) & A & alta & 14 estudos \\
-    QS1-C: LLM controla memória (54\%) & A & alta & 13 estudos,
-      classificação direta \\
-    QS1-E: recuperação híbrida (46\%) & A & alta & 11 estudos \\
-    QS1-F: compartilhamento inexplorado & A & alta & 23/24 reportam
-      ausência \\
-    QS2-A: SWE-bench V. dominante & A & alta & 14/21 estudos \\
-    QS2-D: Gap~1 confirmado & A & alta & verificação exaustiva \\
-    QS3-A: ganhos universais & B & alta & 19 comparações, zero
-      inversões \\
-    QS4-A: 43\% sem custo & A & alta & contagem direta \\
-    QS4-D: ausência de fronteira de Pareto & A & alta & verificação
-      exaustiva \\
-    QS5-A: 32\% degradação & A & alta & 9 estudos com evidência \\
-    T-A: campo dominado por preprints (82\%) & A & alta & contagem
-      direta \\
-    T-C: Gap~1 permanece confirmado & A & alta & verificação exaustiva \\
+    SQ1-A: banks dominate (46\%) & A & high & 11 studies, direct count \\
+    SQ1-B: hybrid scope (58\%) & A & high & 14 studies \\
+    SQ1-C: LLM controls memory (54\%) & A & high & 13 studies, direct
+      classification \\
+    SQ1-E: hybrid retrieval (46\%) & A & high & 11 studies \\
+    SQ1-F: sharing unexplored & A & high & 23/24 report absence \\
+    SQ2-A: SWE-bench V. dominant & A & high & 14/21 studies \\
+    SQ2-D: Gap~1 confirmed & A & high & exhaustive check \\
+    SQ3-A: universal gains & B & high & 19 comparisons, zero inversions \\
+    SQ4-A: 43\% without cost & A & high & direct count \\
+    SQ4-D: no Pareto frontier & A & high & exhaustive check \\
+    SQ5-A: 32\% degradation & A & high & 9 studies with evidence \\
+    T-A: field dominated by preprints (82\%) & A & high & direct count \\
+    T-C: Gap~1 remains confirmed & A & high & exhaustive check \\
     \midrule
-    QS3-B: rendimentos decrescentes & B & moderada & padrão observado,
-      não testado formalmente \\
-    QS3-C: consistência cross-LLM & B & moderada & 2 estudos
-      multi-LLM \\
-    QS4-B: dois padrões de custo & B & moderada & 12 estudos parciais \\
-    QS5-B: complexidade $\neq$ ganho & C & moderada & inferência
-      cross-study, benchmarks heterogêneos \\
-    QS5-D: calibração retrieval & C & moderada & 2 estudos diretos \\
+    SQ3-B: diminishing returns & B & moderate & observed pattern,
+      not formally tested \\
+    SQ3-C: cross-LLM consistency & B & moderate & 2 multi-LLM studies \\
+    SQ4-B: two cost patterns & B & moderate & 12 partial studies \\
+    SQ5-B: complexity $\neq$ gain & C & moderate & cross-study
+      inference, heterogeneous benchmarks \\
+    SQ5-D: retrieval calibration & C & moderate & 2 direct studies \\
     \midrule
-    QS1-D: substratos executáveis & A & baixa & 3 estudos apenas \\
+    SQ1-D: executable substrates & A & low & only 3 studies \\
     \bottomrule
   \end{tabularx}
 \end{table}

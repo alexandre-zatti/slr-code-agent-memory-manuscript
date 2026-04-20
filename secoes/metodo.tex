@@ -1,125 +1,122 @@
 \Needspace{14\baselineskip}
-\section{Método}
+\section{Method}
 \label{sec:metodo}
 
-Esta revisão sistemática segue a metodologia de
-\citeonline{kitchenham2007guidelines} para revisões sistemáticas em
-Engenharia de Software, incorporando as atualizações de
-\citeonline{kitchenham2013systematic}.
-O reporte adota as Software Engineering Guidelines for Reporting
-Secondary Studies (SEGRESS)~\cite{kitchenham2023segress}, adaptação do
-PRISMA 2020~\cite{page2021prisma} para estudos secundários em Engenharia
-de Software.
-A estratégia de busca segue a extensão
-PRISMA-S~\cite{rethlefsen2021prismas}, e o reporte completo segue o
-checklist de 27 itens do PRISMA 2020.
+This systematic review follows the methodology of
+\citet{kitchenham2007guidelines} for systematic reviews in software
+engineering, incorporating the updates of
+\citet{kitchenham2013systematic}.
+Reporting adopts the Software Engineering Guidelines for Reporting
+Secondary Studies (SEGRESS)~\citep{kitchenham2023segress}, an adaptation
+of PRISMA 2020~\citep{page2021prisma} for secondary studies in software
+engineering.
+The search strategy follows the PRISMA-S
+extension~\citep{rethlefsen2021prismas}, and the full report follows the
+27-item PRISMA 2020 checklist.
 
-\subsection{Protocolo e registro}
+\subsection{Protocol and registration}
 \label{sec:protocolo}
 
-O protocolo foi elaborado antes do início das buscas.
-Seis emendas foram registradas durante a execução, refinando critérios
-de elegibilidade e o formulário de extração.
+The protocol was drafted before the searches began.
+Six amendments were logged during execution, refining eligibility
+criteria and the extraction form.
 
-\subsection{Critérios de elegibilidade}
+\subsection{Eligibility criteria}
 \label{sec:criterios}
 
-A formulação dos critérios seguiu o \textit{framework} PICo:
-a \textbf{P}opulação compreende agentes de codificação baseados em IA
-com mecanismos de persistência de conhecimento entre sessões;
-o \textbf{I}nteresse abrange as arquiteturas de persistência, sua
-eficácia e custo-eficiência;
-o \textbf{Co}ntexto inclui avaliações empíricas, benchmarks e propostas
-de ferramentas ou frameworks.
+Criteria were formulated under the PICo framework:
+the \textbf{P}opulation comprises AI-based coding agents with mechanisms
+for persisting knowledge across sessions;
+the \textbf{I}nterest covers persistence architectures, their
+effectiveness, and their cost-efficiency;
+the \textbf{Co}ntext includes empirical evaluations, benchmarks, and
+proposals of tools or frameworks.
 
-A \autoref{tab:criterios} apresenta os critérios de inclusão e exclusão.
-CI1 exige componente explícito de armazenamento e reutilização de
-conhecimento entre sessões ou tarefas sequenciais;
-sistemas que apenas recuperam contexto dentro de uma única sessão
-não atendem ao critério.
-CI2 estabelece piso mínimo de avaliação empírica com pelo menos duas
-tarefas e métricas quantitativas.
-CE2 opera como regra condicional: papers sobre agentes LLM genéricos
-foram incluídos quando a avaliação continha benchmarks de Engenharia
-de Software.
-O período de cobertura abrange publicações de 2023 a março de 2026.
+\autoref{tab:criterios} lists the inclusion and exclusion criteria.
+IC1 requires an explicit component that stores and reuses knowledge
+across sessions or sequential tasks;
+systems that merely retrieve context within a single session do not
+satisfy this criterion.
+IC2 sets a minimum floor for empirical evaluation: at least two tasks
+and quantitative metrics.
+EC2 acts as a conditional rule: papers on generic LLM agents were
+included when the evaluation contained software engineering benchmarks.
+The coverage period spans publications from 2023 to March 2026.
 
 \begin{table}[htbp]
   \centering
-  \caption{Critérios de elegibilidade.}
+  \caption{Eligibility criteria.}
   \label{tab:criterios}
   \begin{tabularx}{\textwidth}{l l X}
     \toprule
-    ID  & Tipo & Descrição \\
+    ID  & Type & Description \\
     \midrule
-    CI1 & Inclusão & Propõe ou avalia mecanismo para persistir
-      conhecimento entre sessões em agentes de codificação baseados
-      em IA \\
-    CI2 & Inclusão & Reporta resultados empíricos com pelo menos
-      duas tarefas e métricas quantitativas \\
-    CI3 & Inclusão & Publicado entre 2023 e março de 2026 \\
-    CI4 & Inclusão & Escrito em inglês ou português \\
-    CI5 & Inclusão & Publicação com revisão por pares ou preprint com
-      autores e instituições identificáveis \\
+    IC1 & Inclusion & Proposes or evaluates a mechanism to persist
+      knowledge across sessions in AI-based coding agents \\
+    IC2 & Inclusion & Reports empirical results with at least two
+      tasks and quantitative metrics \\
+    IC3 & Inclusion & Published between 2023 and March 2026 \\
+    IC4 & Inclusion & Written in English or Portuguese \\
+    IC5 & Inclusion & Peer-reviewed publication or preprint with
+      identifiable authors and institutions \\
     \midrule
-    CE1 & Exclusão & Aborda apenas RAG ou recuperação de contexto
-      intra-sessão, sem persistência entre sessões \\
-    CE2 & Exclusão & Aborda apenas tarefas de linguagem natural, sem
-      avaliação em benchmarks de Engenharia de Software \\
-    CE3 & Exclusão & Avaliação limitada a exemplos anedóticos \\
-    CE4 & Exclusão & Tutorial, editorial ou position paper sem
-      contribuição técnica \\
-    CE5 & Exclusão & Versão duplicada ou supersedida por versão posterior
-      dos mesmos autores \\
+    EC1 & Exclusion & Addresses only RAG or intra-session context
+      retrieval, with no cross-session persistence \\
+    EC2 & Exclusion & Addresses only natural-language tasks, with no
+      evaluation on software engineering benchmarks \\
+    EC3 & Exclusion & Evaluation limited to anecdotal examples \\
+    EC4 & Exclusion & Tutorial, editorial, or position paper without
+      technical contribution \\
+    EC5 & Exclusion & Duplicate version or superseded by a later
+      version from the same authors \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-\subsection{Fontes de informação}
+\subsection{Information sources}
 \label{sec:fontes}
 
-As buscas foram realizadas em duas bases de dados com suporte a busca
-booleana reproduzível: Scopus (via API) e arXiv (via API REST com
-paginação completa).
-A estratégia de duas bases complementada por rastreamento de citações é
-validada empiricamente por \citeonline{mourao2020hybrid}, que demonstraram
-que Scopus combinado com \textit{snowballing} alcança \textit{recall} comparável a buscas em
-quatro ou mais bases para revisões sistemáticas em Engenharia de Software.
-O IEEE Xplore não foi buscado separadamente porque o Scopus indexa
-integralmente seus proceedings e journals.
+Searches ran on two databases that support reproducible Boolean queries:
+Scopus (via API) and arXiv (via REST API with full pagination).
+The two-database strategy complemented by citation chasing is empirically
+validated by \citet{mourao2020hybrid}, who showed that Scopus combined
+with snowballing achieves recall comparable to searches across four or
+more databases for software engineering systematic reviews.
+IEEE Xplore was not searched separately because Scopus fully indexes its
+proceedings and journals.
 
-A busca foi suplementada por rastreamento de citações forward e backward
-via Semantic Scholar a partir de sete artigos-semente selecionados por
-representarem diversidade arquitetural e serem os mais citados no
-subcampo~\cite{du2026memory,joshi2025swebenchcl,wang2026codemem,deng2026memcoder,wu2025gcc,wang2026improving,lindenbauer2025ctimrover}.
-Um dos sete artigos-semente (CodeMEM) não foi capturado pelas strings de
-busca por utilizar terminologia fora do vocabulário das strings;
-sua adição manual ao \textit{pool} de triagem foi registrada como emenda ao
-protocolo.
+The search was supplemented by forward and backward citation chasing via
+Semantic Scholar, starting from seven seed papers chosen for their
+architectural diversity and for being the most cited in the
+subfield~\citep{du2026memory,joshi2025swebenchcl,wang2026codemem,deng2026memcoder,wu2025gcc,wang2026improving,lindenbauer2025ctimrover}.
+One of the seven seed papers (CodeMEM) was not captured by the search
+strings because it uses vocabulary outside the string terms;
+its manual addition to the screening pool was recorded as a protocol
+amendment.
 
-\subsection{Estratégia de busca}
+\subsection{Search strategy}
 \label{sec:busca}
 
-A string de busca combina três blocos conceituais conectados por AND
-(\autoref{tab:strings-busca}): agentes de IA para código (C1, 12 termos),
-memória e persistência (C2, 13 termos) e domínio de engenharia de software
-(C3, 8 termos).
-Termos dentro de cada bloco são conectados por OR.
+The search string combines three conceptual blocks joined by AND
+(\autoref{tab:strings-busca}): AI agents for code (C1, 12 terms),
+memory and persistence (C2, 13 terms), and the software engineering
+domain (C3, 8 terms).
+Terms within each block are joined by OR.
 
 \begin{table}[htbp]
   \centering
-  \caption{Termos de busca organizados por bloco conceitual.
-           Combinação entre blocos: C1~AND~C2~AND~C3;
-           dentro de cada bloco: OR.}
+  \caption{Search terms organised by conceptual block.
+           Inter-block operator: C1~AND~C2~AND~C3;
+           intra-block operator: OR.}
   \label{tab:strings-busca}
   \small
   \begin{tabularx}{\textwidth}{@{}
     >{\raggedright\arraybackslash}p{2.8cm}
     X @{}}
     \toprule
-    Bloco & Termos \\
+    Block & Terms \\
     \midrule
-    C1 --- Agentes de IA para código (12)
+    C1 --- AI agents for code (12)
     & \texttt{"LLM agent"},
       \texttt{"AI coding agent"},
       \texttt{"software engineering agent"},
@@ -133,7 +130,7 @@ Termos dentro de cada bloco são conectados por OR.
       \texttt{"agentic coding"},
       \texttt{"SWE agent"} \\
     \addlinespace
-    C2 --- Memória e persistência (13)
+    C2 --- Memory and persistence (13)
     & \texttt{"memory"},
       \texttt{"knowledge persistence"},
       \texttt{"experience"},
@@ -148,7 +145,7 @@ Termos dentro de cada bloco são conectados por OR.
       \texttt{"persistent context"},
       \texttt{"cross-task"} \\
     \addlinespace
-    C3 --- Engenharia de software (8)
+    C3 --- Software engineering (8)
     & \texttt{"software engineering"},
       \texttt{"software development"},
       \texttt{"code generation"},
@@ -161,133 +158,130 @@ Termos dentro de cada bloco são conectados por OR.
   \end{tabularx}
 \end{table}
 
-No Scopus, os três blocos operam sobre título, resumo e palavras-chave
-(\texttt{TITLE-ABS-KEY}) com filtro temporal
+In Scopus, the three blocks operate on title, abstract, and keywords
+(\texttt{TITLE-ABS-KEY}) with the temporal filter
 \texttt{PUBYEAR\,>\,2022}.
-No arXiv, C1 e C2 operam sobre resumo (\texttt{abs:}) e, para quatro
-termos de C1, também sobre título (\texttt{ti:}); o bloco C3 é
-substituído pelo filtro de categorias \texttt{cs.SE}, \texttt{cs.AI} e
-\texttt{cs.CL}, com filtro pós-busca \texttt{--year-from\,2023}.
-As strings exatas por base, na sintaxe nativa de cada API, estão
-disponíveis no pacote de replicação
+In arXiv, C1 and C2 operate on the abstract (\texttt{abs:}) and, for
+four terms of C1, also on the title (\texttt{ti:}); block C3 is
+replaced by the category filter \texttt{cs.SE}, \texttt{cs.AI}, and
+\texttt{cs.CL}, with post-search filter \texttt{--year-from\,2023}.
+The exact strings per database, in each API's native syntax, are
+available in the replication package
 (DOI: 10.5281/zenodo.19463131).
 
-Antes da execução, as strings passaram por auditoria contra oito SLRs
-comparáveis, 16 sistemas conhecidos e dez formulações alternativas de
-termos, resultando na adição de seis termos e cobertura de seis dos sete
-artigos-semente.
-O único artigo-semente não recuperado (CodeMEM) utiliza terminologia fora
-do vocabulário das strings e foi adicionado manualmente.
+Before execution, the strings underwent audit against eight comparable
+SLRs, 16 known systems, and ten alternative term formulations, resulting
+in the addition of six terms and coverage of six of the seven seed
+papers.
+The single unretrieved seed paper (CodeMEM) uses vocabulary outside the
+string terms and was added manually.
 
-A \autoref{tab:busca} apresenta os resultados por fonte.
-As buscas foram executadas em 25 de março de 2026.
-O rastreamento de citações identificou 186 registros únicos (8 forward,
-178 backward).
-Após consolidação e desduplicação, o \textit{pool} inicial contém 1.111 registros
-para triagem.
+\autoref{tab:busca} lists results per source.
+Searches ran on 25 March 2026.
+Citation chasing identified 186 unique records (8 forward, 178 backward).
+After consolidation and deduplication, the initial screening pool
+contains 1,111 records.
 
 \begin{table}[htbp]
   \centering
-  \caption{Resultados das buscas por fonte.}
+  \caption{Search results per source.}
   \label{tab:busca}
   \begin{tabular}{l r}
     \toprule
-    Fonte & Registros \\
+    Source & Records \\
     \midrule
-    Scopus            &    39 \\
-    arXiv             &   968 \\
-    Citações forward  &     8 \\
-    Citações backward &   178 \\
-    Manual            &     1 \\
+    Scopus              &    39 \\
+    arXiv               &   968 \\
+    Forward citations   &     8 \\
+    Backward citations  &   178 \\
+    Manual              &     1 \\
     \midrule
-    Total bruto       & 1.194 \\
-    Duplicatas removidas & $-83$ \\
-    \textbf{Total para triagem} & \textbf{1.111} \\
+    Raw total           & 1,194 \\
+    Duplicates removed  & $-83$ \\
+    \textbf{Screening pool} & \textbf{1,111} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\subsection{Processo de seleção}
+\subsection{Selection process}
 \label{sec:selecao}
 
-A seleção ocorreu em duas fases.
-Os 1.111 registros foram triados por título e resumo pelo
-pesquisador, aplicando os critérios CI/CE.
-Registros classificados como incertos avançaram para a fase seguinte.
-Dos 1.111 triados, 1.060 foram excluídos e 51 avançaram para avaliação
-por texto completo.
+Selection proceeded in two phases.
+The researcher screened the 1,111 records by title and abstract,
+applying the IC/EC criteria.
+Uncertain records advanced to the next phase.
+Of the 1,111 screened records, 1,060 were excluded and 51 advanced to
+full-text assessment.
 
-A leitura integral dos 51 artigos resultou em 23 exclusões.
-Dos 23 excluídos, 12 foram removidos por CE2 (agentes LLM sem avaliação
-em Engenharia de Software) e 11 pela combinação CI1/CE1 (recuperação
-intra-sessão sem persistência entre sessões).
-Três casos limítrofes foram aceitos com justificativa documentada.
-Ao final, 28 estudos foram incluídos para extração de dados.
+Full-text reading of the 51 candidates yielded 23 exclusions.
+Of the 23 excluded, 12 were removed under EC2 (LLM agents without
+software engineering evaluation) and 11 under the combined IC1/EC1 rule
+(intra-session retrieval without cross-session persistence).
+Three borderline cases were accepted with documented rationale.
+At the end, 28 studies were included for data extraction.
 
-\subsection{Extração de dados}
+\subsection{Data extraction}
 \label{sec:extracao}
 
-Os dados foram extraídos com formulário de 37 campos organizados em
-sete categorias, com ênfase em arquitetura de persistência (8 campos)
-e custo e eficiência (6 campos), que correspondem diretamente às
-questões de pesquisa.
-Dezesseis campos utilizam vocabulário controlado com valores predefinidos.
-Campos sem dados disponíveis recebem NR (não reportado) quando o paper não
-menciona o dado ou NA (não aplicável) quando o campo não se aplica ao
-sistema, conforme convenção registrada como emenda ao protocolo.
+Data were extracted using a 37-field form organised into seven
+categories, with emphasis on persistence architecture (8 fields) and
+cost and efficiency (6 fields), which map directly to the research
+questions.
+Sixteen fields use a controlled vocabulary with predefined values.
+Fields with no available data receive NR (not reported) when the paper
+does not mention the datum or NA (not applicable) when the field does
+not apply to the system, a convention recorded as a protocol amendment.
 
-Cada paper foi lido, seus dados registrados no formulário e os valores
-verificados em seguida.
-A validação incluiu verificação programática de 448 valores enum e
-\textit{spot-check} de 40 campos interpretativos em dez papers.
-A taxa de erro final foi inferior a 1\%, correspondente a oito
-correções em 1.036 valores extraídos (28 papers $\times$ 37 campos).
+Each paper was read, its data logged on the form, and the values
+verified afterwards.
+Validation included programmatic checks on 448 enum values and a
+spot-check of 40 interpretive fields across ten papers.
+The final error rate was below 1\%, corresponding to eight corrections
+out of 1{,}036 extracted values (28 papers $\times$ 37 fields).
 
-\subsection{Avaliação de qualidade}
+\subsection{Quality assessment}
 \label{sec:qualidade}
 
-A qualidade dos estudos foi avaliada com checklist de seis itens
-adaptado de \citeonline{kitchenham2007guidelines}: (Q1) objetivos
-claramente definidos, (Q2) método de avaliação adequado, (Q3) ameaças
-à validade discutidas, (Q4) resultados baseados em dados empíricos,
-(Q5) contexto descrito para replicação e (Q6) métricas claramente
-definidas.
-Cada item recebeu pontuação 0, 0,5 ou 1, com máximo de 6,0.
+Study quality was assessed with a six-item checklist adapted from
+\citet{kitchenham2007guidelines}: (Q1) clearly defined objectives,
+(Q2) appropriate evaluation method, (Q3) threats to validity discussed,
+(Q4) results based on empirical data, (Q5) context described for
+replication, and (Q6) clearly defined metrics.
+Each item received a score of 0, 0.5, or 1, up to a maximum of 6.0.
 
-A distribuição das pontuações varia de 2,0 a 6,0, com mediana de 5,0.
-Vinte e seis dos 28 estudos (93\%) obtiveram pontuação igual ou
-superior a 4,0.
-Os dois estudos com pontuação inferior a
-3,0~\cite{bui2026opendev,du2026memory} contribuem apenas descrições
-qualitativas e não impactam os achados quantitativos, conforme
-verificado na análise de sensibilidade (\autoref{sec:resultados}).
-Para calibração, oito papers foram reavaliados após a extração completa.
+Scores range from 2.0 to 6.0, with a median of 5.0.
+Twenty-six of the 28 studies (93\%) scored at or above 4.0.
+The two studies scoring below
+3.0~\citep{bui2026opendev,du2026memory} contribute only qualitative
+descriptions and do not affect the quantitative findings, as verified in
+the sensitivity analysis (\autoref{sec:resultados}).
+For calibration, eight papers were re-assessed after the full extraction.
 
-\subsection{Métodos de síntese}
+\subsection{Synthesis methods}
 \label{sec:sintese}
 
-A síntese é narrativa, organizada tematicamente pelas cinco questões
-secundárias (QS1 a QS5).
-Meta-análise foi descartada pela heterogeneidade de benchmarks, modelos
-base e condições experimentais entre os estudos.
-Por tratar-se de síntese narrativa, não se aplicam medidas de efeito
-formais (e.g., odds ratio, diferença padronizada de médias).
-As medidas reportadas restringem-se a Pass@1 e variação absoluta em
-pontos percentuais (\textit{delta-pp}).
+The synthesis is narrative, organised thematically by the five secondary
+questions (SQ1 through SQ5).
+Meta-analysis was ruled out because of heterogeneity in benchmarks,
+base models, and experimental conditions across studies.
+Since the synthesis is narrative, formal effect measures (e.g., odds
+ratio, standardized mean difference) do not apply.
+Reported measures are limited to Pass@1 and absolute variation in
+percentage points (\textit{delta-pp}).
 
-Duas análises de sensibilidade foram conduzidas:
-(S1) re-síntese restrita aos cinco estudos publicados em venues com
-revisão por pares, para verificar se os achados se sustentam sem
+Two sensitivity analyses were conducted:
+(S1) re-synthesis restricted to the five studies published in
+peer-reviewed venues, to check whether the findings hold without
 preprints;
-(S2) exclusão dos dois estudos com pontuação inferior a 3,0, avaliando
-o impacto nos achados quantitativos.
+(S2) exclusion of the two studies scoring below 3.0, to gauge the
+impact on quantitative findings.
 
-A avaliação de viés de publicação formal não é aplicável para síntese
-narrativa~\cite{page2021prisma}.
-O predomínio de preprints no corpus (82\%) é reconhecido como fonte
-potencial de viés e discutido nas limitações.
-A certeza da evidência foi avaliada qualitativamente por achado:
-alta (múltiplos estudos de qualidade $\geq$~4/6 convergem),
-moderada (poucos estudos ou qualidade variável) e
-baixa (achado baseado em estudo único ou de baixa
-qualidade)~\cite{kitchenham2023segress}.
+Formal publication-bias assessment is not applicable to narrative
+synthesis~\citep{page2021prisma}.
+The preprint-dominated corpus (82\%) is acknowledged as a potential
+source of bias and discussed in the limitations.
+Certainty of evidence was rated qualitatively per finding:
+high (multiple studies with quality $\geq$~4/6 converge),
+moderate (few studies or variable quality), and
+low (finding based on a single or low-quality
+study)~\citep{kitchenham2023segress}.

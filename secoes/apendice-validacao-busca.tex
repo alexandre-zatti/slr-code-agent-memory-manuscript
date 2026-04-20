@@ -1,107 +1,133 @@
 \appendix
-\section{Validação da estratégia de busca}
+\section{Search Strategy Validation}
 \label{ap:validacao-busca}
 
-Este apêndice documenta o processo de validação aplicado à estratégia de busca antes da execução das consultas finais nas bases.
-A validação combina dois procedimentos: auditoria das strings contra revisões sistemáticas comparáveis e verificação de recall por meio de um conjunto de artigos-semente operando como Quasi-Gold Standard (QGS).
-A última subseção apresenta o reporte completo do PRISMA-S~\cite{rethlefsen2021prismas}.
+This appendix documents the validation process applied to the search strategy before
+executing the final queries against the databases.
+The validation combines two procedures: auditing the strings against comparable systematic
+reviews and checking recall by means of a seed-paper set operating as a Quasi-Gold Standard
+(QGS).
+The last subsection presents the full PRISMA-S report~\citep{rethlefsen2021prismas}.
 
-\subsection{Auditoria pré-execução}
+\subsection{Pre-execution audit}
 \label{ap:auditoria}
 
-A auditoria pré-execução consultou seis revisões sistemáticas e mapeamentos publicados entre 2024 e 2026 sobre agentes de codificação baseados em \textit{Large Language Models} (LLM), agentes de software autônomos e técnicas de memória em agentes de IA.
-Para cada revisão foram extraídos: as strings completas (quando disponíveis), o conjunto de termos do bloco de agentes e do bloco de memória, e os sistemas representativos catalogados.
-Em paralelo, foi compilada uma lista de 16 sistemas conhecidos da literatura corrente como casos-teste de recall, e dez formulações alternativas de termos foram testadas individualmente em consultas exploratórias no Scopus e no arXiv.
-A \autoref{tab:auditoria-slrs} resume as revisões consultadas e a contribuição de cada uma para o refinamento dos blocos.
+The pre-execution audit consulted six systematic reviews and mapping studies published
+between 2024 and 2026 on \textit{Large Language Model} (LLM)-based coding agents, autonomous
+software agents, and memory techniques in AI agents.
+For each review we extracted: the full strings (when available), the term sets in the agent
+block and the memory block, and the representative systems catalogued.
+In parallel, a list of 16 systems known from current literature was compiled as recall
+test cases, and ten alternative term formulations were tested individually in exploratory
+queries on Scopus and arXiv.
+\autoref{tab:auditoria-slrs} summarises the reviews consulted and each one's contribution
+to the block refinement.
 
 \begin{table}[htbp]
 \centering
-\caption{Revisões sistemáticas auditadas para calibração das strings de busca.}
+\caption{Systematic reviews audited to calibrate the search strings.}
 \label{tab:auditoria-slrs}
 \small
 \begin{tabular}{p{3.2cm}p{1cm}p{2.2cm}p{1cm}p{4.5cm}}
 \toprule
-\textbf{Revisão} & \textbf{Ano} & \textbf{Venue} & \textbf{N} & \textbf{Contribuição ao refinamento} \\
+\textbf{Review} & \textbf{Year} & \textbf{Venue} & \textbf{N} & \textbf{Contribution to refinement} \\
 \midrule
-Hou et al.~\cite{hou2024llmse} & 2024 & TOSEM & 395 & Termos de bloco \textit{coding}/\textit{software engineering}; cobertura de venues. \\
-Liu et al.~\cite{liu2024llmagents} & 2024 & TOSEM & 117 & Vocabulário de agentes de software autônomos. \\
-Zhang et al.~\cite{zhang2024unifying} & 2024 & SCIS & 52 & Termos de planejamento e memória em agentes LLM. \\
-Jin et al.~\cite{jin2024llmagents} & 2024 & arXiv & 90 & Variantes de \textit{LLM-based agent}; sinônimos de bloco C1. \\
-Wang et al.~\cite{wang2024llmagents} & 2024 & ASE & 106 & Confirmação do termo \textit{language agent}; vocabulário de papéis. \\
-Du et al.~\cite{du2026memory} & 2026 & arXiv & --- & Taxonomia de memória em agentes de IA; vocabulário de bloco C2. \\
+Hou et al.~\citep{hou2024llmse} & 2024 & TOSEM & 395 & Terms in the \textit{coding}/\textit{software engineering} block; venue coverage. \\
+Liu et al.~\citep{liu2024llmagents} & 2024 & TOSEM & 117 & Vocabulary for autonomous software agents. \\
+Zhang et al.~\citep{zhang2024unifying} & 2024 & SCIS & 52 & Planning and memory terms in LLM agents. \\
+Jin et al.~\citep{jin2024llmagents} & 2024 & arXiv & 90 & Variants of \textit{LLM-based agent}; synonyms for block C1. \\
+Wang et al.~\citep{wang2024llmagents} & 2024 & ASE & 106 & Confirmation of the term \textit{language agent}; role vocabulary. \\
+Du et al.~\citep{du2026memory} & 2026 & arXiv & --- & Memory taxonomy for AI agents; vocabulary for block C2. \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-A auditoria identificou três lacunas no rascunho inicial das strings: ausência de variantes sem sufixo \textit{-ing} (\textit{code assistant}), ausência do termo emergente \textit{agentic coding} (já adotado como categoria de venue em 2025) e ausência da forma \textit{SWE agent} como nome próprio de classe.
-As lacunas correspondentes no bloco de memória abrangiam \textit{persistent memory}, \textit{persistent context} e \textit{cross-task}, recorrentes nos papers-semente e nas revisões auditadas.
+The audit identified three gaps in the initial string draft: absence of variants without the
+\textit{-ing} suffix (\textit{code assistant}), absence of the emerging term \textit{agentic
+coding} (already adopted as a venue category in 2025), and absence of the \textit{SWE agent}
+form as a proper-name class label.
+The corresponding gaps in the memory block covered \textit{persistent memory},
+\textit{persistent context}, and \textit{cross-task}, which recur in the seed papers and in
+the audited reviews.
 
-\subsection{Recuperação de artigos-semente (Quasi-Gold Standard)}
+\subsection{Seed-paper recovery (Quasi-Gold Standard)}
 \label{ap:qgs}
 
-A validação por Quasi-Gold Standard consiste em verificar se uma estratégia de busca recupera um conjunto pré-selecionado de artigos representativos do escopo, identificados independentemente da estratégia sendo validada~\cite{mourao2020hybrid}.
-Foram definidos sete artigos-semente, escolhidos por cobrirem diferentes arquiteturas de persistência (banco de experiência, memória episódica, memória orientada a commits, contexto inspirado em \textit{git}) e por incluírem ao menos um resultado negativo.
-A estratégia passou por dois ciclos de refinamento documentados no
-protocolo versionado, elevando a recuperação de quatro para seis dos
-sete artigos-semente; o caso restante (CodeMEM) foi resgatado pelo rastreamento de citações, conforme descrito na seção de método.
-A \autoref{tab:qgs-recuperacao} consolida o status de recuperação por base.
+Quasi-Gold Standard validation consists in checking whether a search strategy recovers a
+pre-selected set of papers representative of the scope, identified independently of the
+strategy being validated~\citep{mourao2020hybrid}.
+Seven seed papers were defined, chosen for covering different persistence architectures
+(experience bank, episodic memory, commit-oriented memory, \textit{git}-inspired context)
+and for including at least one negative result.
+The strategy underwent two refinement cycles documented in the versioned protocol, raising
+recovery from four to six of the seven seed papers; the remaining case (CodeMEM) was
+rescued by citation chasing, as described in the Method section.
+\autoref{tab:qgs-recuperacao} consolidates the per-database recovery status.
 
 \begin{table}[htbp]
 \centering
-\caption{Recuperação dos artigos-semente por base e método. \textit{Cit.} indica resgate via rastreamento de citações.}
+\caption{Seed-paper recovery by database and method. \textit{Cit.} indicates rescue via
+citation chasing.}
 \label{tab:qgs-recuperacao}
 \small
 \begin{tabular}{p{3.5cm}p{1cm}p{1.5cm}p{1.2cm}p{1.5cm}p{2cm}}
 \toprule
-\textbf{Artigo-semente} & \textbf{Ano} & \textbf{Scopus} & \textbf{arXiv} & \textbf{S2 ID} & \textbf{Recuperado} \\
+\textbf{Seed paper} & \textbf{Year} & \textbf{Scopus} & \textbf{arXiv} & \textbf{S2 ID} & \textbf{Recovered} \\
 \midrule
-Du (survey de memória)~\cite{du2026memory} & 2026 & não & sim & sim & Sim (string) \\
-Joshi et al.\ (SWE-Bench-CL)~\cite{joshi2025swebenchcl} & 2025 & não & sim & sim & Sim (string) \\
-Wang et al.\ (CodeMEM)~\cite{wang2026codemem} & 2026 & não & não & sim & Sim (Cit.) \\
-Deng et al.\ (MemCoder)~\cite{deng2026memcoder} & 2026 & não & sim & sim & Sim (string) \\
-Wu et al.\ (GCC)~\cite{wu2025gcc} & 2025 & não & sim & sim & Sim (string) \\
-Wang et al.\ (Repository Memory)~\cite{wang2026improving} & 2026 & não & sim & sim & Sim (string) \\
-Lindenbauer et al.\ (CTIM-Rover)~\cite{lindenbauer2025ctimrover} & 2025 & não & sim & sim & Sim (string) \\
+Du (memory survey)~\citep{du2026memory} & 2026 & no & yes & yes & Yes (string) \\
+Joshi et al.\ (SWE-Bench-CL)~\citep{joshi2025swebenchcl} & 2025 & no & yes & yes & Yes (string) \\
+Wang et al.\ (CodeMEM)~\citep{wang2026codemem} & 2026 & no & no & yes & Yes (Cit.) \\
+Deng et al.\ (MemCoder)~\citep{deng2026memcoder} & 2026 & no & yes & yes & Yes (string) \\
+Wu et al.\ (GCC)~\citep{wu2025gcc} & 2025 & no & yes & yes & Yes (string) \\
+Wang et al.\ (Repository Memory)~\citep{wang2026improving} & 2026 & no & yes & yes & Yes (string) \\
+Lindenbauer et al.\ (CTIM-Rover)~\citep{lindenbauer2025ctimrover} & 2025 & no & yes & yes & Yes (string) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-A ausência total dos artigos-semente no Scopus reflete uma característica do campo: a maioria dos sistemas analisados é composta de \textit{preprints} de 2025--2026 ainda fora do ciclo de indexação de venues tradicionais.
-Esse diagnóstico foi confirmado por consultas auxiliares no Scopus (busca por nomes próprios de sistemas), que retornaram zero resultados, e justifica a centralidade do rastreamento de citações como terceiro método PRISMA na estratégia adotada.
+The complete absence of the seed papers from Scopus reflects a characteristic of the field:
+most analysed systems are 2025--2026 \textit{preprints} still outside the indexing cycle of
+traditional venues.
+This diagnosis was confirmed by auxiliary Scopus queries (searches on system proper names),
+which returned zero results, and justifies the centrality of citation chasing as a third
+PRISMA method in the adopted strategy.
 
-\subsection{Conformidade PRISMA-S}
+\subsection{PRISMA-S compliance}
 \label{ap:prisma-s}
 
-A \autoref{tab:prisma-s} apresenta o reporte da estratégia de busca segundo os 16 itens da extensão PRISMA-S~\cite{rethlefsen2021prismas} ao PRISMA 2020~\cite{page2021prisma}.
-Os itens cobrem nomeação das fontes, plataformas, limites, métodos de busca complementares, gerenciamento de referências e atualizações.
+\autoref{tab:prisma-s} presents the report of the search strategy following the 16 items of
+the PRISMA-S extension~\citep{rethlefsen2021prismas} to PRISMA
+2020~\citep{page2021prisma}.
+The items cover source naming, platforms, limits, supplementary search methods, reference
+management, and updates.
 
 \begin{longtable}{p{0.5cm}p{4cm}p{9cm}}
-\caption{Reporte PRISMA-S (16 itens) da estratégia de busca.}
+\caption{PRISMA-S report (16 items) of the search strategy.}
 \label{tab:prisma-s} \\
 \toprule
-\textbf{\#} & \textbf{Item} & \textbf{Descrição} \\
+\textbf{\#} & \textbf{Item} & \textbf{Description} \\
 \midrule
 \endfirsthead
 \toprule
-\textbf{\#} & \textbf{Item} & \textbf{Descrição} \\
+\textbf{\#} & \textbf{Item} & \textbf{Description} \\
 \midrule
 \endhead
 \bottomrule
 \endfoot
-1 & Nomes das bases & Scopus e arXiv. \\
-2 & Plataforma/interface & Scopus via API Elsevier (\texttt{scopus-mcp}); arXiv via API REST com paginação completa (\texttt{fetch\_arxiv.py}). \\
-3 & Registros de estudos & Nenhum registro de estudos (por exemplo, PROSPERO) consultado. \\
-4 & Recursos online & Nenhum site organizacional consultado separadamente. \\
-5 & Rastreamento de citações & Forward e backward via Semantic Scholar a partir de sete artigos-semente; ResearchRabbit como alternativa manual. \\
-6 & Contato com autores & Nenhum autor contactado. \\
-7 & Outros métodos & Nenhum além dos descritos nos itens 1, 2 e 5. \\
-8 & Estratégias completas & Termos por bloco conceitual na \autoref{tab:strings-busca}; strings exatas por base no pacote de replicação (DOI: 10.5281/zenodo.19463131), com versionamento em \textit{git}. \\
-9 & Limites e restrições & Scopus: \texttt{PUBYEAR > 2022}; arXiv: categorias \texttt{cs.SE}, \texttt{cs.AI}, \texttt{cs.CL} e filtro pós-busca \texttt{--year-from 2023}; idiomas inglês e português. \\
-10 & Desenvolvimento da estratégia & Mapeamento de três blocos conceituais, construção das strings com OR/AND, validação por sete artigos-semente e dois ciclos de refinamento iterativo documentados no protocolo versionado. \\
-11 & Revisão por pares & Estratégia revisada pelo orientador antes da execução final. \\
-12 & Gerenciamento de registros & Zotero com Better BibTeX para gerenciamento; arquivos \texttt{.bib} versionados em \textit{git}. \\
-13 & Total de registros & 1.007 dos bancos (Scopus: 39; arXiv: 968) e 186 únicos por rastreamento de citações; total de 1.193 antes da deduplicação. \\
-14 & Desduplicação & Elicit Pro deduplica automaticamente na importação; remoção manual subsequente totalizando 83 duplicatas. \\
-15 & Ferramentas de automação & Scopus via MCP, arXiv via script Python, triagem assistida por Elicit Pro, rastreamento via Semantic Scholar MCP. \\
-16 & Atualizações & Busca a ser re-executada antes da submissão se decorridos mais de três meses desde a execução inicial. \\
+1 & Database names & Scopus and arXiv. \\
+2 & Platform/interface & Scopus via the Elsevier API (\texttt{scopus-mcp}); arXiv via REST API with full pagination (\texttt{fetch\_arxiv.py}). \\
+3 & Study registers & No study registers (for example, PROSPERO) were consulted. \\
+4 & Online resources & No organisational websites were consulted separately. \\
+5 & Citation chasing & Forward and backward via Semantic Scholar from seven seed papers; ResearchRabbit as a manual alternative. \\
+6 & Author contact & No author was contacted. \\
+7 & Other methods & None beyond those described in items 1, 2, and 5. \\
+8 & Full strategies & Terms by conceptual block in \autoref{tab:strings-busca}; exact per-database strings in the replication package (DOI: 10.5281/zenodo.19463131), versioned in \textit{git}. \\
+9 & Limits and restrictions & Scopus: \texttt{PUBYEAR > 2022}; arXiv: categories \texttt{cs.SE}, \texttt{cs.AI}, \texttt{cs.CL} and post-search filter \texttt{--year-from 2023}; English and Portuguese languages. \\
+10 & Strategy development & Mapping of three conceptual blocks, string construction with OR/AND, validation against seven seed papers, and two iterative refinement cycles documented in the versioned protocol. \\
+11 & Peer review & Strategy reviewed by the supervisor before final execution. \\
+12 & Record management & Zotero with Better BibTeX for management; \texttt{.bib} files versioned in \textit{git}. \\
+13 & Total records & 1,007 from the databases (Scopus: 39; arXiv: 968) and 186 unique from citation chasing; total of 1,193 before deduplication. \\
+14 & Deduplication & Elicit Pro deduplicates automatically on import; subsequent manual removal totalled 83 duplicates. \\
+15 & Automation tools & Scopus via MCP, arXiv via Python script, assisted screening via Elicit Pro, citation chasing via Semantic Scholar MCP. \\
+16 & Updates & Search to be re-run before submission if more than three months have elapsed since the initial execution. \\
 \end{longtable}

@@ -2,7 +2,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[brazilian]{babel}
+\usepackage[english]{babel}
 \usepackage{times}
 
 \usepackage[protrusion=true, expansion=true, tracking=false,
@@ -40,8 +40,8 @@
 
 \usepackage{siunitx}
 \sisetup{
-  output-decimal-marker = {,},
-  group-separator = {.},
+  output-decimal-marker = {.},
+  group-separator = {,},
   group-minimum-digits = 4,
   detect-all,
 }
@@ -96,7 +96,7 @@
   urlcolor=black!80!blue,
   bookmarksdepth=3,
 }
-\usepackage[alf,abnt-etal-list=3]{abntex2cite}
+\usepackage[round,authoryear]{natbib}
 
 \usepackage[left=3cm,right=2cm,top=3cm,bottom=2cm]{geometry}
 \usepackage[section]{placeins}
@@ -109,13 +109,13 @@
 
 \begin{document}
 
-\title{Arquiteturas de Persistência de Conhecimento para Agentes de
-Codificação Baseados em IA: Uma Revisão Sistemática da Literatura}
+\title{Knowledge Persistence Architectures for AI-Based Coding Agents:
+A Systematic Literature Review}
 
 \author{
-  Alexandre Zatti\thanks{Programa de Pós-Graduação em Computação
-  Aplicada (PPGPCA), Universidade Federal da Fronteira Sul (UFFS).
-  Autor correspondente.}
+  Alexandre Zatti\thanks{Graduate Programme in Applied Computing (PPGPCA),
+  Federal University of the Southern Frontier (UFFS).
+  Corresponding author.}
 }
 
 \date{}
@@ -123,47 +123,43 @@ Codificação Baseados em IA: Uma Revisão Sistemática da Literatura}
 \maketitle
 
 \begin{abstract}
-\textbf{Contexto.}
-Agentes de codificação baseados em Modelos de Linguagem de Grande
-Escala (LLMs) sofrem de volatilidade de conhecimento entre sessões:
-a cada nova tarefa, o agente perde o contexto acumulado em
-resoluções anteriores.
-Diversas arquiteturas de persistência foram propostas para mitigar
-essa limitação, mas o campo permanece fragmentado, sem comparação
-sistemática entre alternativas nem análise cruzada de custos.
-\textbf{Objetivo.}
-Mapear a literatura sobre persistência de conhecimento em agentes
-de codificação baseados em Inteligência Artificial (IA) e responder
-a cinco questões secundárias que cobrem taxonomia, avaliação,
-desempenho, custo e complexidade arquitetural.
-\textbf{Método.}
-Revisão sistemática conduzida conforme o PRISMA 2020.
-Buscas em Scopus e arXiv, complementadas por rastreamento de
-citações via Semantic Scholar, identificaram 1.194 registros
-publicados entre 2023 e março de 2026.
-Após remoção de duplicatas e triagem por título, resumo e texto
-completo, 28 estudos foram incluídos para extração estruturada
-de 37 campos.
-\textbf{Resultados.}
-Bancos de experiência respondem por 46\% dos estudos primários,
-com o próprio LLM atuando como controlador de leitura e escrita
-em 54\% dos casos e escopo temporal híbrido em 58\%.
-Os 19 estudos com comparação controlada reportam ganhos universais
-sobre o baseline sem persistência, com mediana de 6,8 pontos
-percentuais no SWE-bench Verified e amplitude de +2,2 a +39,0
-pontos percentuais.
-Apesar desses ganhos, 43\% dos estudos omitem dados de custo, 32\%
-documentam cenários de degradação por memória e nenhum compara três
-ou mais arquiteturas no mesmo benchmark com o mesmo modelo.
-\textbf{Conclusão.}
-A ausência de comparações diretas e a subnotificação de custos
-limitam tanto a escolha arquitetural quanto a avaliação prática.
-Esses achados apontam para a necessidade de um estudo comparativo
-empírico controlado como próximo passo natural do campo.
+\textbf{Context.}
+Coding agents based on Large Language Models (LLMs) suffer from
+cross-session knowledge volatility: with every new task, the agent
+loses the context accumulated in previous resolutions.
+Several persistence architectures have been proposed to mitigate this
+limitation, but the field remains fragmented, without systematic
+comparison across alternatives or cross-study cost analysis.
+\textbf{Objective.}
+Map the literature on knowledge persistence in AI-based coding agents
+and answer five secondary questions covering taxonomy, evaluation,
+performance, cost, and architectural complexity.
+\textbf{Method.}
+Systematic review conducted following PRISMA 2020.
+Searches in Scopus and arXiv, supplemented by citation chasing via
+Semantic Scholar, identified 1,194 records published between 2023
+and March 2026.
+After duplicate removal and title/abstract/full-text screening, 28
+studies were included for structured extraction of 37 fields.
+\textbf{Results.}
+Experience banks account for 46\% of primary studies, with the LLM
+itself acting as read/write controller in 54\% of the cases and
+hybrid temporal scope in 58\%.
+The 19 studies with controlled comparison report universal gains over
+the no-persistence baseline, with a median of 6.8 percentage points on
+SWE-bench Verified and an amplitude of +2.2 to +39.0 percentage points.
+Despite these gains, 43\% of the studies omit cost data, 32\% document
+memory-induced degradation scenarios, and none compares three or more
+architectures on the same benchmark with the same model.
+\textbf{Conclusion.}
+The absence of direct comparisons and the underreporting of costs limit
+both architectural choice and practical assessment.
+These findings point to the need for a controlled empirical comparative
+study as the field's natural next step.
 \end{abstract}
 
-\textbf{Palavras-chave:} revisão sistemática; agentes de codificação;
-persistência de conhecimento; memória para agentes; custo-eficiência.
+\textbf{Keywords:} systematic review; coding agents; knowledge
+persistence; agent memory; cost-efficiency.
 
 \input{secoes/introducao}
 \input{secoes/trabalhos-relacionados}
@@ -175,22 +171,23 @@ persistência de conhecimento; memória para agentes; custo-eficiência.
 \input{secoes/apendice-validacao-busca}
 \input{secoes/apendice-prisma-checklist}
 
-\section*{Declarações}
-O protocolo desta revisão está disponível no pacote de replicação
+\section*{Declarations}
+The protocol of this review is available in the replication package
 (DOI: 10.5281/zenodo.19463131).
-A pesquisa não recebeu financiamento específico.
-O autor declara não haver conflitos de interesse.
+The research received no specific funding.
+The author declares no conflicts of interest.
 
-\section*{Disponibilidade de dados e materiais}
-O protocolo, as planilhas de triagem (título/resumo e texto
-completo) com as decisões e razões de exclusão, os formulários de
-extração estruturada dos 28 estudos incluídos e os artefatos
-intermediários da síntese estão publicados como pacote de replicação
-no Zenodo sob licença CC-BY-4.0 (DOI:
+\section*{Data and materials availability}
+The protocol, the screening spreadsheets (title/abstract and full text)
+with decisions and per-criterion exclusion reasons, the structured
+extraction forms of the 28 included studies, and the intermediate
+synthesis artefacts are published as a replication package on Zenodo
+under a CC-BY-4.0 licence (DOI:
 \href{https://doi.org/10.5281/zenodo.19463131}{10.5281/zenodo.19463131}),
-com espelho em
+mirrored at
 \url{https://github.com/alexandre-zatti/slr-code-agent-memory}.
 
+\bibliographystyle{plainnat}
 \bibliography{referencias/estudos-incluidos}
 
 \end{document}

@@ -1,273 +1,252 @@
 \Needspace{14\baselineskip}
-\section{Discussão}
+\section{Discussion}
 \label{sec:discussao}
 
-% PRISMA Item 17: Discussão dos resultados no contexto de outras evidências
-% PRISMA Item 18: Limitações da revisão
+% PRISMA Item 17: Discussion of results in the context of other evidence
+% PRISMA Item 18: Limitations of the review
 
-\subsection{Principais achados}
+\subsection{Main findings}
 \label{sec:principais-achados}
 
-Os 28 estudos mapeados revelam um campo concentrado em torno de uma
-arquitetura predominante: bancos de experiência que destilam trajetórias
-de resolução em entradas reutilizáveis (46\% dos estudos primários,
-\autoref{tab:arquiteturas}), com o próprio LLM atuando como
-controlador de memória (54\%) e avaliação centrada no SWE-bench
-Verified (67\% dos estudos com benchmark, \autoref{tab:benchmarks}).
-Essa convergência, porém, não implica maturidade.
-O campo permanece dominado por preprints (82\%), e os 28 estudos
-utilizam pelo menos oito LLMs distintos como backbone.
-Comparações controladas entre arquiteturas no mesmo benchmark e
-com o mesmo modelo permanecem ausentes do corpus, de modo que a
-convergência observada reflete escolhas independentes dos autores,
-não uma validação empírica da superioridade dos bancos de
-experiência sobre alternativas como grafos de conhecimento ou
-metáforas git.
+The 28 mapped studies reveal a field concentrated around one dominant
+architecture: experience banks that distil resolution trajectories into
+reusable entries (46\% of primary studies,
+\autoref{tab:arquiteturas}), with the LLM itself acting as the memory
+controller (54\%) and evaluation centred on SWE-bench Verified (67\% of
+studies with a benchmark, \autoref{tab:benchmarks}).
+This convergence, however, does not imply maturity.
+The field remains dominated by preprints (82\%), and the 28 studies use
+at least eight distinct LLMs as backbones.
+Controlled comparisons across architectures on the same benchmark with
+the same model are absent from the corpus, so the observed convergence
+reflects independent author choices rather than an empirical validation
+of experience banks over alternatives such as knowledge graphs or Git
+metaphors.
 
-Todos os 19 estudos com comparação controlada reportam melhoria
-em relação ao baseline sem memória (\autoref{tab:desempenho}),
-com ganho mediano de 6,8~pp no SWE-bench Verified
-e amplitude de +2,2~pp a +39,0~pp.
-Os dados indicam um padrão de rendimentos decrescentes:
-no SWE-bench Verified, sistemas com baselines abaixo de 35\% obtêm
-ganhos superiores
-a 10~pp~\cite{li2026traversalaspolicy,zhang2025darwingodel},
-enquanto baselines acima de 65\% alcançam ganhos de 2 a
-9~pp~\cite{deng2026memcoder,wu2025gcc,chen2025sweexp}.
-O impacto no custo é bimodal: sistemas que substituem contexto
-por memória reduzem tokens em até
-39\%~\cite{li2026traversalaspolicy}.
-Sistemas que adicionam contexto via retrieval elevam o custo em
-+5 a +21\%~\cite{chen2025sweexp,wang2026memgovern,xia2025livesweagent}.
+All 19 studies with controlled comparison report improvements over the
+no-memory baseline (\autoref{tab:desempenho}), with a median gain of
+6.8~pp on SWE-bench Verified and an amplitude of +2.2~pp to +39.0~pp.
+The data indicate a diminishing-returns pattern:
+on SWE-bench Verified, systems with baselines below 35\% obtain gains
+above
+10~pp~\citep{li2026traversalaspolicy,zhang2025darwingodel},
+while baselines above 65\% obtain gains of 2 to
+9~pp~\citep{deng2026memcoder,wu2025gcc,chen2025sweexp}.
+The cost impact is bimodal: systems that replace context with memory
+cut tokens by up to
+39\%~\citep{li2026traversalaspolicy}.
+Systems that add context via retrieval raise cost by +5 to
++21\%~\citep{chen2025sweexp,wang2026memgovern,xia2025livesweagent}.
 
-O risco de degradação não é negligenciável.
-Nove dos 28 estudos (32\%) reportam cenários onde a memória
-prejudica o desempenho (\autoref{tab:degradacao}).
-Ruído na recuperação é o mecanismo citado em pelo menos três dos
-nove estudos com degradação:
-\citeonline{lindenbauer2025ctimrover} documentam queda de 11~pp
-por injeção não filtrada de itens no contexto,
-\citeonline{chen2025sweexp} documentam degradação com $k > 1$
-experiências recuperadas, e
-\citeonline{deshpande2025memtrack} identificam que backends de
-memória comerciais (Mem0, Zep) não melhoram o desempenho e mantêm
-a redundância de \textit{tool calls} em aproximadamente 21\%, sem
-redução em relação ao baseline sem memória.
-A vulnerabilidade de envenenamento documentada
-por~\citeonline{srivastava2025memorygraft}, na qual 9,1\% de
-experiências maliciosas comprometem 47,9\% dos retrievals em
-configuração de recuperação dual-channel (lexical + vetorial),
-indica que stores de memória sem verificação de proveniência
-podem constituir superfície de ataque.
+The risk of degradation is not negligible.
+Nine of the 28 studies (32\%) report scenarios where memory hurts
+performance (\autoref{tab:degradacao}).
+Retrieval noise is the mechanism cited in at least three of the nine
+studies with degradation:
+\citet{lindenbauer2025ctimrover} document a drop of 11~pp from unfiltered
+item injection into context,
+\citet{chen2025sweexp} document degradation with $k > 1$ retrieved
+experiences, and
+\citet{deshpande2025memtrack} identify that commercial memory backends
+(Mem0, Zep) do not improve performance and keep tool-call redundancy at
+roughly 21\%, with no reduction relative to the no-memory baseline.
+The poisoning vulnerability documented by
+\citet{srivastava2025memorygraft}, in which 9.1\% of malicious
+experiences compromise 47.9\% of retrievals under dual-channel
+retrieval (lexical + vector), indicates that memory stores without
+provenance checks can constitute an attack surface.
 
-\subsection{Implicações para a pesquisa}
+\subsection{Implications for research}
 \label{sec:implicacoes-pesquisa}
 
-A lacuna central identificada por esta revisão é a ausência de
-comparações head-to-head.
-Nenhum dos 28 estudos avalia três ou mais arquiteturas de
-persistência no mesmo benchmark, com o mesmo modelo e sob o mesmo
-orçamento computacional.
-Cada sistema reporta ganhos contra seu próprio baseline sem memória,
-porém as condições experimentais diferem em modelo, framework,
-subconjunto de instâncias e número de tentativas.
-Essa fragmentação impede qualquer conclusão sobre qual arquitetura
-é superior, pois os ganhos observados podem refletir diferenças
-de implementação tanto quanto diferenças de arquitetura de memória.
-Um estudo comparativo que avalie ao menos três arquiteturas
-representativas sob condições controladas preencheria essa lacuna.
+The central gap identified by this review is the absence of head-to-head
+comparisons.
+None of the 28 studies evaluates three or more persistence architectures
+on the same benchmark, with the same model, and under the same compute
+budget.
+Each system reports gains against its own no-memory baseline, but
+experimental conditions differ in model, framework, instance subset, and
+number of attempts.
+This fragmentation prevents any conclusion on which architecture is
+superior, because the observed gains may reflect implementation
+differences as much as differences in memory architecture.
+A comparative study evaluating at least three representative
+architectures under controlled conditions would fill this gap.
 
-A subnotificação de custos limita igualmente a utilidade prática
-dos resultados.
-Apenas sete estudos fornecem detalhamento
-completo~\cite{chen2025sweexp,guo2026eet,wang2026memgovern,wu2025gcc,xia2025livesweagent,zhang2025accelopt,zhou2025tomswe},
-e 12 dos 28 (43\%) não reportam nenhum dado de custo.
-Sem métricas padronizadas de custo por tarefa (tokens consumidos,
-custo monetário, tempo de parede), praticantes não conseguem
-avaliar o custo-benefício de adotar persistência.
-A construção de uma fronteira de Pareto entre acurácia e custo,
-ausente em todos os estudos analisados, constitui direção de
-pesquisa com aplicação imediata.
+Cost underreporting likewise limits the practical utility of the
+results.
+Only seven studies provide a complete
+breakdown~\citep{chen2025sweexp,guo2026eet,wang2026memgovern,wu2025gcc,xia2025livesweagent,zhang2025accelopt,zhou2025tomswe},
+and 12 of the 28 (43\%) report no cost data at all.
+Without standardised cost-per-task metrics (tokens consumed, monetary
+cost, wall-clock time), practitioners cannot assess the trade-off of
+adopting persistence.
+Constructing a Pareto frontier between accuracy and cost, absent in
+every analysed study, is a research direction with immediate applied
+value.
 
-A evidência sobre a relação entre complexidade arquitetural e
-ganho é parcial.
-Os dados indicam que sistemas simples, como
-AccelOpt~\cite{zhang2025accelopt} com fila de experiências e
-EET~\cite{guo2026eet} com terminação antecipada heurística,
-obtêm ganhos relevantes em seus respectivos domínios sem recorrer
-a arquiteturas multi-tier.
-No entanto, essa comparação é entre estudos distintos: benchmarks e
-modelos diferem entre os sistemas.
-Apenas um estudo controlando a variável complexidade internamente
-poderia confirmar se a simplicidade arquitetural é de fato
-suficiente ou se há cenários onde a sofisticação se justifica.
+Evidence on the relationship between architectural complexity and gain
+is partial.
+The data indicate that simple systems, such as
+AccelOpt~\citep{zhang2025accelopt} with an experience queue and
+EET~\citep{guo2026eet} with heuristic early termination, obtain
+relevant gains in their respective domains without resorting to
+multi-tier architectures.
+However, this comparison is between distinct studies: benchmarks and
+models differ across systems.
+Only a study controlling the complexity variable internally could
+confirm whether architectural simplicity is indeed sufficient or
+whether scenarios exist where sophistication is justified.
 
-Três estudos propõem memória como artefato diretamente executável,
-uma tendência emergente com evidência ainda limitada:
-árvores de comportamento~\cite{li2026traversalaspolicy},
-scripts criados em tempo de
-execução~\cite{xia2025livesweagent} e agentes
-inteiros~\cite{zhang2025darwingodel}.
-Os dois primeiros reportam ganhos expressivos (+39,0~pp e +3,2~pp,
-respectivamente), mas a certeza desse achado é baixa dado o
-número reduzido de estudos e a ausência de replicação
-independente.
+Three studies propose memory as a directly executable artefact, an
+emerging trend with still-limited evidence:
+behaviour trees~\citep{li2026traversalaspolicy},
+scripts created at run time~\citep{xia2025livesweagent}, and
+whole agents~\citep{zhang2025darwingodel}.
+The first two report substantial gains (+39.0~pp and +3.2~pp,
+respectively), but the certainty of this finding is low given the
+small number of studies and the absence of independent replication.
 
-\subsection{Implicações para a prática}
+\subsection{Implications for practice}
 \label{sec:implicacoes-pratica}
 
-Para equipes que desejam incorporar persistência de conhecimento em
-agentes de codificação, os dados desta revisão sugerem um ponto de
-partida conservador: bancos de experiência com retrieval
-por similaridade.
-Essa é a arquitetura dominante (46\%), conta com implementações de
-referência em código aberto e produz ganhos de 2 a 9~pp em todos os
-estudos com baselines acima de 65\%.
-Sistemas mais complexos (grafos de conhecimento, memória hierárquica)
-não apresentam, nos dados disponíveis, evidência clara de ganhos
-sistematicamente superiores, embora essa comparação seja limitada
-por diferenças de benchmark e modelo entre os estudos.
+For teams that wish to incorporate knowledge persistence into coding
+agents, the data in this review suggest a conservative starting point:
+experience banks with similarity-based retrieval.
+This is the dominant architecture (46\%), has reference open-source
+implementations, and yields gains of 2 to 9~pp in every study with
+baselines above 65\%.
+More complex systems (knowledge graphs, hierarchical memory) do not
+present, in the available data, clear evidence of systematically larger
+gains, though this comparison is limited by benchmark and model
+differences across studies.
 
-Os dados disponíveis sugerem que a calibração do mecanismo de
-recuperação pode importar mais do que a sofisticação da arquitetura.
-\citeonline{chen2025sweexp} reportam que recuperar mais de uma
-experiência ($k > 1$) degrada o desempenho de 42,0\% para 39,0\%,
-e \citeonline{shen2026structurally} reportam que o isolamento por
-categoria supera a recuperação global por 2,3~pp.
-Esses dois resultados apontam na mesma direção: a seletividade na
-recuperação influencia o ganho efetivo, e o excesso de contexto
-recuperado pode introduzir ruído.
+The available data suggest that retrieval-mechanism calibration may
+matter more than architectural sophistication.
+\citet{chen2025sweexp} report that retrieving more than one experience
+($k > 1$) degrades performance from 42.0\% to 39.0\%, and
+\citet{shen2026structurally} report that category isolation outperforms
+global retrieval by 2.3~pp.
+Both results point in the same direction: selectivity in retrieval
+influences the effective gain, and excess retrieved context can
+introduce noise.
 
-Para sistemas já implantados, a terminação antecipada orientada
-por experiência oferece redução de custo com risco mínimo.
-\citeonline{guo2026eet} reportam economia de 31,8\% no custo total
-com perda máxima de 0,2~pp, identificando oportunidades de
-terminação em 11,3\% das instâncias.
-Essa abordagem é independente do agente e não requer alterações na
-arquitetura de memória subjacente.
+For already-deployed systems, experience-guided early termination
+offers cost reduction with minimal risk.
+\citet{guo2026eet} report 31.8\% savings in total cost with a maximum
+loss of 0.2~pp, by identifying termination opportunities in 11.3\% of
+instances.
+This approach is agent-agnostic and requires no changes to the
+underlying memory architecture.
 
-Dos 24 estudos primários, 17 disponibilizam repositório completo e
-três oferecem acesso parcial, totalizando 83\% com algum grau
-de reprodutibilidade.
+Of the 24 primary studies, 17 share a complete repository and three
+offer partial access, totalling 83\% with some degree of
+reproducibility.
 
-\subsection{Limitações desta revisão}
+\subsection{Limitations of this review}
 \label{sec:limitacoes}
 
-As limitações desta revisão são organizadas em quatro categorias
-de ameaça à validade: validade interna (rigor dos processos de
-seleção e extração), validade externa (generalização dos achados
-para fora do corpus), validade de construto (operacionalização
-dos conceitos medidos) e validade de conclusão (estabilidade das
-inferências cross-study).
+The limitations of this review are organised into four categories of
+validity threat: internal validity (rigour of the selection and
+extraction processes), external validity (generalisation of the
+findings beyond the corpus), construct validity (operationalisation of
+the measured concepts), and conclusion validity (stability of
+cross-study inferences).
 
-A triagem foi conduzida por um único pesquisador, o que constitui
-ameaça reconhecida em revisões sistemáticas e impede o cálculo de
-índices formais de concordância como o coeficiente $\kappa$ de
-Cohen.
-Essa limitação foi mitigada por critérios de elegibilidade
-calibrados em estudo piloto e refinados por stress test contra
-cinco revisões sistemáticas comparáveis em
-LLM/ES~\cite{hou2024llmse,zhang2024unifying,jin2024llmagents,wang2024llmagents,liu2024llmagents},
-processo que produziu 17 casos limite documentados e um
-fluxograma de decisão com oito perguntas sequenciais.
-Cada decisão de triagem foi registrada em planilha versionada
-com justificativa por critério, permitindo auditoria retrospectiva
-das exclusões.
+Screening was conducted by a single researcher, which is an
+acknowledged threat in systematic reviews and precludes the computation
+of formal agreement indices such as Cohen's $\kappa$.
+This limitation was mitigated by eligibility criteria calibrated in a
+pilot study and refined through a stress test against five comparable
+systematic reviews in
+LLM/SE~\citep{hou2024llmse,zhang2024unifying,jin2024llmagents,wang2024llmagents,liu2024llmagents},
+a process that produced 17 documented borderline cases and a decision
+flow chart with eight sequential questions.
+Each screening decision was recorded in a versioned spreadsheet with
+per-criterion rationale, permitting retrospective audit of the
+exclusions.
 
-A extração de dados foi realizada pelo mesmo pesquisador, o que
-introduz risco de viés na interpretação de campos qualitativos
-como a classificação do tipo de arquitetura e do mecanismo de
-degradação.
-Quatro mitigações reduziram esse risco: (i) verificação
-programática de 448 valores enum (16 campos $\times$ 28 estudos),
-com taxa de erro inferior a 1\% após correções; (ii) spot-check
-de 40 campos interpretativos em 10 estudos selecionados,
-conforme detalhado na \autoref{sec:extracao}; (iii) digests de
-fidelidade factual gerados a partir do texto integral de cada
-estudo, utilizados como referência ao redigir os claims
-interpretativos do manuscrito; (iv) re-verificação dos campos
-\textit{resultado\_negativo} contra o PDF original.
-Mesmo com essas mitigações, a reprodutibilidade formal da
-classificação em campos interpretativos não foi avaliada.
+Data extraction was performed by the same researcher, introducing risk
+of interpretation bias in qualitative fields such as architecture-type
+classification and degradation mechanism.
+Four mitigations reduced this risk: (i) programmatic validation of 448
+enum values (16 fields $\times$ 28 studies), with error rate below 1\%
+after corrections; (ii) spot-check of 40 interpretive fields across 10
+selected studies, as detailed in \autoref{sec:extracao}; (iii) factual
+fidelity digests generated from the full text of each study, used as
+reference when drafting the manuscript's interpretive claims; and (iv)
+re-verification of the \textit{negative\_result} fields against the
+original PDF.
+Even with these mitigations, formal reproducibility of the
+classification in interpretive fields was not assessed.
 
-A predominância de preprints (82\% do corpus) reduz a confiança
-nos achados desta revisão.
-O campo de persistência de conhecimento para agentes de codificação
-é recente, com publicações concentradas entre 2024 e 2026, e apenas
-cinco estudos foram publicados em venue com revisão por pares: dois
-em conferência~\cite{wang2026improving,zhang2025darwingodel} e três
-em
-workshop~\cite{deshpande2025memtrack,shen2025talm,lindenbauer2025ctimrover}.
-A análise de sensibilidade S1 (\autoref{sec:sensibilidade}) mostra
-que, ao excluir preprints, nenhuma conclusão qualitativa se inverte,
-mas a evidência para custos (QS4) cai de sete para dois estudos e a
-taxonomia detalhada perde sustentação empírica.
+The preprint prevalence (82\% of the corpus) reduces confidence in this
+review's findings.
+The field of knowledge persistence for coding agents is recent, with
+publications concentrated between 2024 and 2026, and only five studies
+have been published in peer-reviewed venues: two at
+conferences~\citep{wang2026improving,zhang2025darwingodel} and three at
+workshops~\citep{deshpande2025memtrack,shen2025talm,lindenbauer2025ctimrover}.
+Sensitivity analysis S1 (\autoref{sec:sensibilidade}) shows that,
+when preprints are excluded, no qualitative conclusion inverts, but the
+evidence base for cost (SQ4) drops from seven to two studies and the
+detailed taxonomy loses empirical support.
 
-As buscas foram limitadas a duas bases de dados (Scopus e arXiv),
-complementadas por rastreamento de citações.
-Estudos publicados exclusivamente em bases não cobertas (por exemplo,
-IEEE Xplore, ACM Digital Library) podem ter sido omitidos.
-A justificativa para essa escolha, baseada
-em~\citeonline{mourao2020hybrid}, está documentada na
-\autoref{sec:fontes}.
+Searches were limited to two databases (Scopus and arXiv), complemented
+by citation chasing.
+Studies published exclusively in uncovered bases (for example, IEEE
+Xplore, ACM Digital Library) may have been missed.
+The rationale for this choice, based on \citet{mourao2020hybrid}, is
+documented in \autoref{sec:fontes}.
 
-Os 14 estudos que utilizam SWE-bench Verified diferem em modelo
-base, framework de agente, subconjunto de instâncias e condições
-de execução (\autoref{sec:qs2}).
-O construto ``desempenho do agente'' não é operacionalizado de
-forma uniforme entre estudos, o que limita a comparabilidade direta
-de percentuais de resolução reportados como se fossem grandezas
-equivalentes.
-A taxonomia proposta nesta revisão para arquiteturas de
-persistência também encerra escolhas interpretativas: famílias
-como ``híbrido'' agrupam mecanismos heterogêneos cuja
-diferenciação fina exigiria metadados ausentes nos textos
-publicados.
+The 14 studies that use SWE-bench Verified differ in base model, agent
+framework, instance subset, and run conditions (\autoref{sec:qs2}).
+The construct ``agent performance'' is not operationalised uniformly
+across studies, which limits direct comparability of resolution
+percentages reported as if they were equivalent quantities.
+The taxonomy proposed in this review for persistence architectures also
+embeds interpretive choices: families such as ``hybrid'' group
+heterogeneous mechanisms whose fine differentiation would require
+metadata absent from published texts.
 
-A heterogeneidade entre estudos impede meta-análise formal e
-restringe as inferências a padrões qualitativos sintetizados de
-forma narrativa.
-A classificação dos achados em tipos A, B e C de evidência
-(\autoref{tab:certeza}) torna explícito o grau de respaldo
-empírico de cada inferência: tipo A para contagens diretas, tipo B
-para padrões cross-study agregados e tipo C para caracterizações
-de mecanismo.
-As duas análises de sensibilidade conduzidas (S1, exclusão de
-preprints; S2, exclusão de estudos com pontuação inferior a 3,0)
-não inverteram nenhum achado quantitativo, o que reforça a
-estabilidade da síntese frente a critérios alternativos de inclusão.
+Heterogeneity across studies precludes formal meta-analysis and limits
+inferences to qualitative patterns synthesised narratively.
+Classifying findings into evidence types A, B, and C
+(\autoref{tab:certeza}) makes the empirical support of each inference
+explicit: type A for direct counts, type B for aggregated cross-study
+patterns, and type C for mechanism characterisations.
+The two sensitivity analyses conducted (S1, preprint exclusion;
+S2, exclusion of studies scoring below 3.0) did not invert any
+quantitative finding, reinforcing the stability of the synthesis under
+alternative inclusion criteria.
 
-\subsection{Agenda de pesquisa}
+\subsection{Research agenda}
 \label{sec:agenda-pesquisa}
 
-Os três gaps confirmados por esta revisão definem a agenda
-imediata do campo.
-O Gap~1 — ausência de comparações head-to-head — requer um
-experimento que avalie ao menos três arquiteturas representativas
-no mesmo benchmark, com o mesmo modelo e sob o mesmo orçamento
-computacional.
-O Gap~2 — subnotificação de custos — exige que tal experimento
-inclua análise integrada de custo por tarefa, produzindo uma
-fronteira de Pareto explícita entre acurácia e custo.
+The three gaps confirmed by this review define the field's immediate
+agenda.
+Gap~1 --- the absence of head-to-head comparisons --- calls for an
+experiment that evaluates at least three representative architectures
+on the same benchmark, with the same model, and under the same compute
+budget.
+Gap~2 --- cost underreporting --- requires that such an experiment
+include an integrated cost-per-task analysis, producing an explicit
+Pareto frontier between accuracy and cost.
 
-A padronização de métricas constitui pré-requisito para a
-comparabilidade futura.
-As métricas de aprendizado contínuo propostas
-por~\citeonline{joshi2025swebenchcl} (\textit{CL-Score},
-\textit{forward/backward transfer}, \textit{forgetting}) não foram
-adotadas por nenhum outro estudo
-do corpus.
-A adoção de métricas padronizadas de custo (tokens por tarefa,
-custo monetário, tempo de parede) e de retenção de conhecimento
-permitiria comparações cross-study que hoje são inviáveis.
+Metric standardisation is a prerequisite for future comparability.
+The continual-learning metrics proposed by
+\citet{joshi2025swebenchcl} (\textit{CL-Score},
+\textit{forward/backward transfer}, \textit{forgetting}) have been
+adopted by no other study in the corpus.
+Adopting standardised cost metrics (tokens per task, monetary cost,
+wall-clock time) and knowledge-retention metrics would enable
+cross-study comparisons that are currently unfeasible.
 
-Apenas um dos 24 estudos primários reporta compartilhamento de
-memória entre agentes~\cite{chen2025sweexp}, e mesmo assim
-limitado à reutilização de experiências dentro do mesmo
-framework.
-Protocolos de compartilhamento entre agentes heterogêneos
-continuam sem avaliação empírica.
-As vulnerabilidades sinalizadas
-por~\citeonline{srivastava2025memorygraft} indicam que qualquer
-protocolo desse tipo precisa endereçar o risco de envenenamento
-de stores abertos antes de ser recomendado para produção.
+Only one of the 24 primary studies reports memory sharing across
+agents~\citep{chen2025sweexp}, and even there it is limited to
+experience reuse within the same framework.
+Sharing protocols across heterogeneous agents remain without empirical
+evaluation.
+The vulnerabilities flagged by \citet{srivastava2025memorygraft}
+indicate that any such protocol must address the risk of poisoning in
+open stores before it can be recommended for production.

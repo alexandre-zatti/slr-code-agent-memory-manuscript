@@ -1,44 +1,40 @@
 \Needspace{14\baselineskip}
-\section{Conclusão}
+\section{Conclusion}
 \label{sec:conclusao}
 
-Esta revisão sistemática mapeou 28 estudos sobre persistência de
-conhecimento em agentes de codificação baseados em IA, todos
-publicados a partir de 2024.
-O campo é recente e predominantemente composto por preprints (82\%),
-mas já apresenta convergência em torno de padrões arquiteturais e
-de avaliação recorrentes.
-A persistência de memória produz ganhos em todos os cenários
-testados, porém com rendimentos decrescentes, riscos de degradação
-documentados e lacunas persistentes na documentação de custos.
+This systematic review mapped 28 studies on knowledge persistence in
+AI-based coding agents, all published from 2024 onwards.
+The field is recent and predominantly composed of preprints (82\%) but
+already shows convergence around recurring architectural and evaluation
+patterns.
+Memory persistence produces gains in every tested scenario, but with
+diminishing returns, documented degradation risks, and persistent gaps
+in cost reporting.
 
-As cinco questões secundárias receberam respostas com diferentes
-graus de certeza.
-Quanto à taxonomia (QS1), bancos de experiência predominam (46\%),
-o LLM atua como controlador em 54\% dos sistemas, e o escopo
-temporal híbrido é o mais frequente (58\%).
-Sobre avaliação (QS2), SWE-bench Verified concentra 67\% dos
-estudos com benchmark, porém a comparabilidade é limitada por
-diferenças de modelo, framework e condições experimentais.
-Os ganhos de desempenho (QS3) são universalmente positivos nas 19
-comparações controladas, com mediana de 6,8~pp e amplitude de
-+2,2 a +39,0~pp, e rendimentos decrescentes em baselines acima
-de 65\%.
-Em relação ao custo (QS4), 43\% dos estudos não reportam dados de
-custo, e o impacto da memória é bimodal: sistemas que substituem
-contexto reduzem tokens, enquanto sistemas que adicionam contexto
-elevam o custo em aproximadamente 5 a 21\%.
-Sobre complexidade e eficácia (QS5), 32\% dos estudos reportam
-degradação por memória, com ruído na recuperação como mecanismo
-principal, e não há evidência de que arquiteturas mais complexas
-produzam ganhos sistematicamente superiores.
+The five secondary questions received answers with differing degrees of
+certainty.
+For the taxonomy (SQ1), experience banks predominate (46\%), the LLM
+acts as the controller in 54\% of the systems, and hybrid temporal
+scope is the most frequent (58\%).
+On evaluation (SQ2), SWE-bench Verified concentrates 67\% of studies
+with a benchmark, though comparability is limited by differences in
+model, framework, and experimental conditions.
+Performance gains (SQ3) are universally positive across the 19
+controlled comparisons, with a median of 6.8~pp and an amplitude of
++2.2 to +39.0~pp, and diminishing returns for baselines above 65\%.
+For cost (SQ4), 43\% of the studies report no cost data, and the
+memory impact is bimodal: systems that replace context reduce tokens,
+while systems that add context raise cost by approximately 5 to 21\%.
+On complexity and effectiveness (SQ5), 32\% of the studies report
+memory-induced degradation, with retrieval noise as the main mechanism,
+and no evidence exists that more complex architectures yield
+systematically larger gains.
 
-Nenhum dos 28 estudos compara arquiteturas de persistência
-diretamente.
-Essa ausência, somada à subnotificação de custos e à incerteza
-sobre o papel da complexidade arquitetural, impede decisões
-informadas sobre qual abordagem adotar em cada contexto.
-A lacuna mais crítica — ausência de comparações diretas — requer
-um experimento comparativo com ao menos três arquiteturas
-representativas, sob o mesmo benchmark, o mesmo modelo e com
-análise integrada de custo por tarefa.
+None of the 28 studies compares persistence architectures directly.
+This absence, combined with cost underreporting and the uncertainty
+about the role of architectural complexity, prevents informed decisions
+about which approach to adopt in each context.
+The most critical gap --- the absence of direct comparisons --- calls
+for a comparative experiment with at least three representative
+architectures, under the same benchmark, the same model, and with
+integrated per-task cost analysis.

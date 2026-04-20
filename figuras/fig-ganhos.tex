@@ -46,23 +46,23 @@
   \node[font=\scriptsize, below] at (\x, \ybot - 0.15) {\v};
 }
 \node[font=\footnotesize, below] at (4.4, \ybot - 0.7)
-  {Ganho (pontos percentuais)};
+  {Gain (percentage points)};
 \pgfmathsetmacro{\yleg}{\ybot - 1.8}
 \fill[archBanco!80] (0.5, \yleg) rectangle (0.85, \yleg+0.25);
 \node[anchor=west, font=\footnotesize] at (0.95, \yleg+0.125)
-  {Banco exp.};
+  {Experience bank};
 \fill[archHibrido!80] (3.2, \yleg) rectangle (3.55, \yleg+0.25);
 \node[anchor=west, font=\footnotesize] at (3.65, \yleg+0.125)
-  {Híbrido};
+  {Hybrid};
 \fill[archGit!80] (5.6, \yleg) rectangle (5.95, \yleg+0.25);
 \node[anchor=west, font=\footnotesize] at (6.05, \yleg+0.125)
-  {Git metáf.};
+  {Git metaphor};
 \pgfmathsetmacro{\ylegb}{\yleg - 0.5}
 \fill[archAST!80] (0.5, \ylegb) rectangle (0.85, \ylegb+0.25);
 \node[anchor=west, font=\footnotesize] at (0.95, \ylegb+0.125)
-  {AST guiado};
+  {AST-guided};
 \fill[archOutro!80] (3.2, \ylegb) rectangle (3.55, \ylegb+0.25);
 \node[anchor=west, font=\footnotesize] at (3.65, \ylegb+0.125)
-  {Outro};
+  {Other};
 
 \end{tikzpicture}

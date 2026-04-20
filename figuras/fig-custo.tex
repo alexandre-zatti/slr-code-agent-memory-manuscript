@@ -14,38 +14,38 @@
   arrow down/.style={-Stealth, thick, black!60},
 ]
 \node[group label, text=posGain] at (-3.5, 0)
-  {Substituição\\[-2pt]{\footnotesize (reduz custo)}};
+  {Replacement\\[-2pt]{\footnotesize (reduces cost)}};
 \node[group label, text=negLoss] at (3.5, 0)
-  {Adição\\[-2pt]{\footnotesize (aumenta custo)}};
+  {Addition\\[-2pt]{\footnotesize (raises cost)}};
 
 \draw[dashed, black!30, thick] (0, 0.5) -- (0, -7.5);
 \node[system box=posGain] at (-3.5, -1.0)
-  {EET: $-31{,}8$\% custo};
+  {EET: $-31{,}8$\% cost};
 \node[system box=posGain] at (-3.5, -2.0)
   {GBT: $-39$\% tokens};
 \node[system box=posGain] at (-3.5, -3.0)
   {TALM: $\sim$$-50$\% tokens};
 \node[system box=posGain] at (-3.5, -4.0)
-  {KernelBlaster: $2{,}4\times$ menos};
+  {KernelBlaster: $2{,}4\times$ less};
 \node[system box=posGain] at (-3.5, -5.0)
   {CodeMEM: $-30$k tok./round};
 \node[system box=posGain] at (-3.5, -6.0)
-  {CCA: $-11$k tok./tarefa};
+  {CCA: $-11$k tok./task};
 \node[system box=posGain] at (-3.5, -7.0)
-  {AccelOpt: $26\times$ mais barato};
+  {AccelOpt: $26\times$ cheaper};
 \node[system box=negLoss] at (3.5, -2.5)
   {SWE-Exp: $+7{,}5$\% tokens};
 \node[system box=negLoss] at (3.5, -3.5)
-  {MemGovern: $+4{,}8$\% custo};
+  {MemGovern: $+4{,}8$\% cost};
 \node[system box=negLoss] at (3.5, -4.5)
   {Live-SWE: $+4$--$21$\%};
 \node[system box=negLoss] at (3.5, -5.5)
-  {RepoMem: custo $\uparrow$ em tarefas difíceis};
+  {RepoMem: custo $\uparrow$ in hard tasks};
 \node[font=\scriptsize, text=black!60, align=center,
   text width=3.5cm] at (-3.5, -8.2)
-  {Memória substitui contexto\\redundante ou evita\\retrabalho};
+  {Memory replaces redundant\\context or avoids\\rework};
 \node[font=\scriptsize, text=black!60, align=center,
   text width=3.5cm] at (3.5, -7.2)
-  {Memória adiciona contexto\\via retrieval; ganho de\\desempenho proporcional};
+  {Memory adds context\\via retrieval; performance\\gain proportional};
 
 \end{tikzpicture}

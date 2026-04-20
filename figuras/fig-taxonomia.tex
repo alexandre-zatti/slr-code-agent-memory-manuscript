@@ -13,19 +13,19 @@
 \colorlet{polMix}{neutGray}
 
 \node[cell, font=\small\bfseries] at (0, 0) {};
-\node[cell, font=\small\bfseries] at (2.2, 0) {Texto};
-\node[cell, font=\small\bfseries] at (4.4, 0) {Estruturado};
-\node[cell, font=\small\bfseries] at (6.6, 0) {Híbrido};
-\node[cell, font=\small\bfseries] at (8.8, 0) {Executável};
+\node[cell, font=\small\bfseries] at (2.2, 0) {Text};
+\node[cell, font=\small\bfseries] at (4.4, 0) {Structured};
+\node[cell, font=\small\bfseries] at (6.6, 0) {Hybrid};
+\node[cell, font=\small\bfseries] at (8.8, 0) {Executable};
 
-\node[cell, font=\small\bfseries, anchor=east] at (-0.2, -1.6) {Híbrida};
+\node[cell, font=\small\bfseries, anchor=east] at (-0.2, -1.6) {Hybrid};
 \node[cell, font=\small\bfseries, anchor=east] at (-0.2, -3.2) {Procedural};
-\node[cell, font=\small\bfseries, anchor=east] at (-0.2, -4.8) {Episódica};
-\node[cell, font=\small\bfseries, anchor=east] at (-0.2, -6.4) {Semântica};
+\node[cell, font=\small\bfseries, anchor=east] at (-0.2, -4.8) {Episodic};
+\node[cell, font=\small\bfseries, anchor=east] at (-0.2, -6.4) {Semantic};
 \node[rotate=90, font=\footnotesize\bfseries, anchor=south]
-  at (-2.8, -4.0) {Escopo temporal};
+  at (-2.8, -4.0) {Temporal scope};
 \node[font=\footnotesize\bfseries] at (5.5, 0.8)
-  {Substrato representacional};
+  {Representational substrate};
 \foreach \cx/\cy in {
   6.6/-3.2, 8.8/-1.6, 8.8/-4.8, 8.8/-6.4,
   2.2/-6.4, 6.6/-4.8, 6.6/-6.4} {
@@ -62,13 +62,13 @@
   \begin{tikzpicture}[font=\footnotesize, baseline=-0.5ex]
     \node[circle, fill=polLLM!50, draw=polLLM,
       minimum size=0.35cm] at (0,0) {};
-    \node[anchor=west] at (0.3,0) {LLM controlador};
+    \node[anchor=west] at (0.3,0) {LLM controller};
     \node[circle, fill=polHeur!50, draw=polHeur,
       minimum size=0.35cm] at (3.3,0) {};
-    \node[anchor=west] at (3.6,0) {Heurística};
+    \node[anchor=west] at (3.6,0) {Heuristic};
     \node[circle, fill=polMix!40, draw=polMix,
       minimum size=0.35cm] at (5.8,0) {};
-    \node[anchor=west] at (6.1,0) {Sem maioria};
+    \node[anchor=west] at (6.1,0) {No majority};
   \end{tikzpicture}
 };
 
