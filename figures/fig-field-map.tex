@@ -1,6 +1,7 @@
 % Source: extraction/extracted-data.tsv (study, year, arch_family, seed_paper)
 \begin{figure}[!htbp]
   \centering
+  \resizebox{!}{0.42\textheight}{%
   \begin{tikzpicture}[
     every node/.style={font=\scriptsize},
     fnode/.style={
@@ -114,7 +115,8 @@
     \node[anchor=west, font=\scriptsize] at (8.00, -1.20)
       {executable substrate (n=3)};
 
-  \end{tikzpicture}
+  \end{tikzpicture}%
+  }
   \caption[Chronological map of the field]{Chronological map of the 28
   included studies, laid out by publication year (2024--2026) and
   architectural family or contextual role (colour). Double-bordered,

@@ -65,7 +65,16 @@ by SWE-Agent and OpenHands.
 The LLMs used include GPT-4o, Claude 3.5/4/4.5 Sonnet, DeepSeek-V3,
 and Gemini 2.5/3 Pro.
 
-\begin{longtable}{l c l l l S[table-format=1.1]}
+\small
+\setlength{\tabcolsep}{7pt}
+\begin{longtable}{@{}
+  >{\raggedright\arraybackslash}p{3.4cm}
+  >{\centering\arraybackslash}p{0.7cm}
+  >{\raggedright\arraybackslash}p{1.4cm}
+  >{\raggedright\arraybackslash}p{1.8cm}
+  >{\raggedright\arraybackslash}p{3.8cm}
+  S[table-format=1.1]
+@{}}
   \caption{Characteristics of the 28 included studies.
     \emph{Role / family}: architecture family for the 24 architecture
     studies and role (survey, benchmark, security) for the 4 contextual
@@ -270,53 +279,50 @@ proposal, limiting direct cross-study comparison.
 \begin{table}[htbp]
   \centering
   \caption{Benchmarks and usage frequency across the 24 studies with
-    benchmark evaluation.
+    benchmark evaluation, grouped by category.
     \emph{N} counts how many of those studies evaluate on each
     benchmark;
-    a single study may evaluate on more than one benchmark (so the
-    column does not sum to 24).}
+    a single study may evaluate on more than one benchmark (so counts
+    do not sum to 24).}
   \label{tab:benchmarks}
   \small
-  \setlength{\tabcolsep}{8pt}
-  \begin{tabular}{l r}
+  \setlength{\tabcolsep}{7pt}
+  \begin{tabular}{@{} l r @{\hspace{2em}} l r @{}}
     \toprule
-    Benchmark & $N$ \\
+    Benchmark & $N$ & Benchmark & $N$ \\
     \midrule
-    SWE-bench Verified         & 13 \\
-    WebArena                   &  2 \\
-    SWE-bench Pro              &  2 \\
-    SWE-bench Lite             &  1 \\
-    SWE-bench Multilingual     &  1 \\
-    SWE-bench-live             &  1 \\
-    SWE-Bench-CL               &  1 \\
-    Ambiguous SWE-bench        &  1 \\
-    Stateful SWE               &  1 \\
-    HumanEval                  &  1 \\
-    BigCodeBench               &  1 \\
-    ClassEval                  &  1 \\
-    LiveCodeBench v5           &  1 \\
-    CoderEval                  &  1 \\
-    CodeIF-Bench               &  1 \\
-    DS-1000                    &  1 \\
-    SRDD                       &  1 \\
-    KernelBench                &  1 \\
-    NKIBench                   &  1 \\
-    PyTorch-Bench              &  1 \\
-    Polyglot                   &  1 \\
-    MLE-Bench                  &  1 \\
-    ALE-Bench                  &  1 \\
-    GSM8K                      &  1 \\
-    Math-500                   &  1 \\
-    AIME 2024                  &  1 \\
-    AIME 2025                  &  1 \\
-    GPQA                       &  1 \\
-    OSWorld                    &  1 \\
-    Spider2-V                  &  1 \\
-    BrowseComp-Plus            &  1 \\
-    AgentSafetyBench           &  1 \\
-    AgentHarm                  &  1 \\
-    Agent Security Bench (ASB) &  1 \\
-    MemTrack                   &  1 \\
+    \multicolumn{4}{@{}l}{\emph{SWE-bench family}} \\
+    \quad SWE-bench Verified     & 13 & \quad SWE-bench-live      & 1 \\
+    \quad SWE-bench Pro          &  2 & \quad SWE-Bench-CL        & 1 \\
+    \quad SWE-bench Lite         &  1 & \quad Ambiguous SWE-bench & 1 \\
+    \quad SWE-bench Multilingual &  1 & \quad Stateful SWE        & 1 \\
+    \addlinespace
+    \multicolumn{4}{@{}l}{\emph{Code generation}} \\
+    \quad HumanEval        & 1 & \quad CoderEval    & 1 \\
+    \quad BigCodeBench     & 1 & \quad CodeIF-Bench & 1 \\
+    \quad ClassEval        & 1 & \quad DS-1000      & 1 \\
+    \quad LiveCodeBench v5 & 1 & \quad SRDD         & 1 \\
+    \addlinespace
+    \multicolumn{4}{@{}l}{\emph{Domain-specific}} \\
+    \quad KernelBench   & 1 & \quad Polyglot  & 1 \\
+    \quad NKIBench      & 1 & \quad MLE-Bench & 1 \\
+    \quad PyTorch-Bench & 1 & \quad ALE-Bench & 1 \\
+    \addlinespace
+    \multicolumn{4}{@{}l}{\emph{Reasoning and math}} \\
+    \quad GSM8K     & 1 & \quad AIME 2025 & 1 \\
+    \quad Math-500  & 1 & \quad GPQA      & 1 \\
+    \quad AIME 2024 & 1 &                 &   \\
+    \addlinespace
+    \multicolumn{4}{@{}l}{\emph{Tool-use and web}} \\
+    \quad WebArena & 2 & \quad Spider2-V       & 1 \\
+    \quad OSWorld  & 1 & \quad BrowseComp-Plus & 1 \\
+    \addlinespace
+    \multicolumn{4}{@{}l}{\emph{Safety}} \\
+    \quad AgentSafetyBench & 1 & \quad Agent Security Bench (ASB) & 1 \\
+    \quad AgentHarm        & 1 &                                  &   \\
+    \addlinespace
+    \multicolumn{4}{@{}l}{\emph{Memory / continual learning}} \\
+    \quad MemTrack & 1 &  &  \\
     \bottomrule
   \end{tabular}
 \end{table}
