@@ -5,11 +5,14 @@
 % PRISMA Item 3: Rationale — justification in the context of existing knowledge
 % PRISMA Item 4: Objectives — explicit statement of the questions addressed
 
-Nine of the 28 studies on knowledge persistence in coding agents report
-scenarios in which memory hurts agent performance.
-This finding makes it critical to distinguish when persisting knowledge
-is beneficial and when it is harmful, a decision that precedes the
-comparison among technically sophisticated architectures.
+Nine of the 28 included studies on knowledge persistence in coding
+agents report adverse outcomes associated with persistence:
+retrieval-noise-driven performance drops, model-dependent overhead,
+memory poisoning, and evaluation artefacts that complicate the
+interpretation of reported gains.
+These reports make it important to distinguish when persisting
+knowledge is beneficial and when it is not, a decision that precedes
+the comparison among technically sophisticated architectures.
 Coding agents based on large language models (LLMs) have achieved
 growing adoption in software engineering tasks such as automated issue
 resolution, code generation, and repository
@@ -18,13 +21,12 @@ Systems such as SWE-Agent and OpenHands, together with Agentless,
 interact iteratively with the source code; they run tests and propose
 fixes without direct human intervention.
 Agent capability, however, remains limited by a basic constraint:
-every session starts from scratch.
+many benchmarked agents are effectively stateless across tasks unless
+an explicit persistence mechanism is added.
 
 The agent rediscovers project architecture, repeats mistakes already
 made in earlier sessions, and ignores design decisions previously
 validated.
-This knowledge volatility is equivalent to a developer without memory
-between meetings.
 Cross-session knowledge persistence emerged in response to this
 limitation: by recording information from past resolutions, the agent
 can reuse it in subsequent tasks.
@@ -34,18 +36,20 @@ published between 2024 and the first quarter of 2026.
 Architectures range from experience banks that distil resolution
 trajectories to knowledge graphs, AST-guided memory, and version-control
 metaphors inspired by Git.
-The field, however, remains fragmented: studies do not converge on a
-unified taxonomy, and most do not cite contemporary work on the same
-problem.
+These studies do not converge on a unified taxonomy, and most do not
+cite contemporary work on the same problem, so evaluation conditions
+remain heterogeneous across systems.
 
-From this fragmentation arise gaps that limit both research and
+From this heterogeneity arise gaps that limit both research and
 practice.
-No study compares three or more persistence architectures on the same
-benchmark with the same model; all evidence of architectural
-superiority depends on comparisons across studies with heterogeneous
-experimental conditions.
-Cost underreporting compounds the problem: 43\% of the studies omit
-cost data, and none constructs a Pareto frontier between accuracy and
+No study in the corpus compares three or more persistence architectures
+on the same benchmark with the same model;
+any claim of architectural superiority therefore relies on comparisons
+across studies with heterogeneous experimental conditions.
+Cost underreporting compounds the problem: eight of the 24
+architecture studies (33\%) report no cost data, rising to 12 of the 28
+included studies (43\%) when contextual sources are counted, and no
+study in the corpus constructs a Pareto frontier between accuracy and
 computational cost.
 Nor is there controlled evidence on the relationship between
 architectural complexity and effectiveness, so it remains unknown
@@ -140,9 +144,12 @@ The contributions of this review are as follows:
     persistence architectures for coding agents along three dimensions:
     temporal scope of memory, representational substrate, and
     read/write policy;
-  \item a quantitative synthesis of 19 controlled comparisons on
-    effectiveness and cost, identifying diminishing returns on strong
-    baselines and a bimodal impact on operating cost;
+  \item a quantitative synthesis of 19 controlled effectiveness
+    comparisons (18 positive, one controlled negative result from
+    CTIM-Rover), paired with a cost-reporting synthesis of the studies
+    that publish monetary, token, or latency data;
+    together they identify diminishing returns on strong baselines and
+    a bimodal impact on operating cost;
   \item empirical confirmation of three central gaps in the field:
     absence of head-to-head comparisons across architectures on the
     same benchmark, systematic underreporting of per-task cost, and

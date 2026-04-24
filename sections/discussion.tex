@@ -10,52 +10,68 @@
 
 The 28 mapped studies reveal a field concentrated around one dominant
 architecture: experience banks that distil resolution trajectories into
-reusable entries (46\% of primary studies,
+reusable entries (11 of 24 architecture studies; 46\%,
 \autoref{tab:architectures}).
-The LLM itself acts as the memory controller in 54\% of systems.
-Evaluation is centred on SWE-bench Verified, which appears in 67\% of
-studies with a benchmark (\autoref{tab:benchmarks}).
-This convergence, however, does not imply maturity.
-The field remains dominated by preprints (82\%), and the 28 studies use
-at least eight distinct LLMs as backbones.
-Controlled comparisons across architectures on the same benchmark with
-the same model are absent from the corpus, so the observed convergence
-reflects independent author choices rather than an empirical validation
-of experience banks over alternatives such as knowledge graphs or Git
-metaphors.
+The LLM itself acts as the memory controller in 54\% of the
+architecture studies.
+Evaluation is centred on SWE-bench Verified, which appears in 13 of the
+24 studies with benchmark evaluation (54\%, \autoref{tab:benchmarks}).
+This convergence does not yet imply maturity.
+The 28 included studies are dominated by preprints (82\%) and use at
+least eight distinct LLMs as backbones.
+No study in the corpus compares architectures on the same benchmark
+with the same model, so the observed convergence reflects independent
+author choices rather than an empirical validation of experience banks
+over alternatives such as knowledge graphs or Git metaphors.
 
-All 19 studies with controlled comparison report improvements over the
-no-memory baseline (\autoref{tab:performance}), with a median gain of
-6.8~pp on SWE-bench Verified and an amplitude of +2.2~pp to +39.0~pp.
-The data indicate a diminishing-returns pattern:
-on SWE-bench Verified, systems with baselines below 35\% obtain gains
-above
-10~pp~\citep{li2026traversalaspolicy,zhang2025darwingodel},
-while baselines above 65\% obtain gains of 2 to
-9~pp~\citep{deng2026memcoder,wu2025gcc,chen2025sweexp}.
-The cost impact is bimodal: systems that replace context with memory
-cut tokens by up to
-39\%~\citep{li2026traversalaspolicy}.
-Systems that add context via retrieval raise cost by +5 to
+Controlled evidence is mostly positive but not uniformly so:
+18 of the 19 architecture studies with a controlled no-persistence
+baseline report positive aggregate gains in their main comparison
+(\autoref{tab:performance}), while
+CTIM-Rover~\citep{lindenbauer2025ctimrover} reports negative results
+across its CTIM configurations;
+within the SWE-bench Verified subset ($n=12$, including CTIM-Rover)
+the median gain is 6.5~pp, and across the 18 comparable comparisons
+the median is 7.8~pp, with reported gains ranging from $-$2.0~pp
+to +39.0~pp.
+The data are consistent with diminishing returns as the system
+approaches the benchmark ceiling, though the pattern is descriptive
+rather than formally tested: on SWE-bench Verified, the two largest
+gains come from the two weakest baselines
+(\citet{li2026traversalaspolicy}, 34.6\%~$\to$~+39.0~pp;
+\citet{zhang2025darwingodel}, 20.0\%~$\to$~+30.0~pp),
+and studies with baselines above 65\% report gains between +2.2 and
++9.4~pp~\citep{chen2025sweexp,wu2025gcc,xia2025livesweagent,deng2026memcoder}.
+The cost impact is bimodal: systems that substitute condensed memory
+for redundant context reduce token consumption by margins ranging from
+about $-32$\% in total cost for
+EET~\citep{guo2026eet} and $-39$\% in tokens for
+GBT~\citep{li2026traversalaspolicy} to roughly half the tokens of the
+baseline for TALM~\citep{shen2025talm} on ClassEval,
+while systems that add context via retrieval raise cost by +5 to
 +21\%~\citep{chen2025sweexp,wang2026memgovern,xia2025livesweagent}.
 
-The risk of degradation is not negligible.
-Nine of the 28 studies (32\%) report scenarios where memory hurts
-performance (\autoref{tab:degradation}).
-Retrieval noise is the mechanism cited in at least three of the nine
-studies with degradation:
-\citet{lindenbauer2025ctimrover} document a drop of 11~pp from unfiltered
-item injection into context,
-\citet{chen2025sweexp} document degradation with $k > 1$ retrieved
-experiences, and
+Adverse outcomes associated with persistence appear in nine of the 28
+included studies (32\%, \autoref{tab:degradation}).
+Four are direct performance drops; the remaining five capture overhead,
+maintenance burden, security, and evaluation artefacts.
+Retrieval selection and backend governance are the dominant mechanisms
+in the direct performance drops:
+\citet{lindenbauer2025ctimrover} report that unfiltered CTIM injection
+biases exploration and falls up to 11~pp below the AutoCodeRover
+baseline in its weakest configuration,
+\citet{chen2025sweexp} report that retrieving more than one experience
+($k > 1$) degrades performance from 42.0\% to 39.0\%, and
 \citet{deshpande2025memtrack} identify that commercial memory backends
-(Mem0, Zep) do not improve performance and keep tool-call redundancy at
-roughly 21\%, with no reduction relative to the no-memory baseline.
+(Mem0, Zep) do not improve aggregate correctness over the no-memory
+baseline, keep tool-call redundancy at roughly 21\%, and perform worse
+on follow-up-question conditions.
 The poisoning vulnerability documented by
-\citet{srivastava2025memorygraft}, in which 9.1\% of malicious
-experiences compromise 47.9\% of retrievals under dual-channel
-retrieval (lexical + vector), indicates that memory stores without
-provenance checks can constitute an attack surface.
+\citet{srivastava2025memorygraft}, in which 9.1\% of poisoned
+experiences appear in 47.9\% of retrieved records under dual-channel
+retrieval (lexical + vector) while downstream behavioural severity is
+not measured, indicates that memory stores without provenance checks
+constitute a retrieval-level attack surface.
 
 \subsection{Implications for research}
 \label{sec:implicacoes-pesquisa}
@@ -76,15 +92,20 @@ architectures under controlled conditions would fill this gap.
 
 Cost underreporting likewise limits the practical utility of the
 results.
-Only seven studies provide a complete
-breakdown~\citep{chen2025sweexp,guo2026eet,wang2026memgovern,wu2025gcc,xia2025livesweagent,zhang2025accelopt,zhou2025tomswe},
-and 12 of the 28 (43\%) report no cost data at all.
+Only seven studies report monetary cost per task with enough
+supporting detail for study-level cost
+interpretation~\citep{chen2025sweexp,guo2026eet,wang2026memgovern,wu2025gcc,xia2025livesweagent,zhang2025accelopt,zhou2025tomswe},
+and only a subset of these provide a within-study memory-vs-no-memory
+cost delta;
+eight of the 24 architecture studies (33\%) report no cost data, and
+the figure rises to 12 of the 28 included studies (43\%) when
+contextual sources are counted.
 Without standardised cost-per-task metrics (tokens consumed, monetary
 cost, wall-clock time), practitioners cannot assess the trade-off of
 adopting persistence.
 Constructing a Pareto frontier between accuracy and cost, absent in
-every analysed study, is a research direction with immediate applied
-value.
+every analysed study, would make adoption decisions measurable rather
+than accuracy-only.
 
 Evidence on the relationship between architectural complexity and gain
 is partial.
@@ -111,16 +132,25 @@ small number of studies and the absence of independent replication.
 \subsection{Implications for practice}
 \label{sec:implicacoes-pratica}
 
-For teams that wish to incorporate knowledge persistence into coding
-agents, the data in this review suggest a conservative starting point:
-experience banks with similarity-based retrieval.
-This is the dominant architecture (46\%), has reference open-source
-implementations, and yields gains of 2 to 9~pp in every study with
-baselines above 65\%.
-More complex systems (knowledge graphs, hierarchical memory) do not
-present, in the available data, clear evidence of systematically larger
-gains, though this comparison is limited by benchmark and model
-differences across studies.
+For teams testing persistence for the first time, the corpus supports
+using a simple experience-bank implementation with calibrated retrieval
+as a baseline, rather than adopting a more complex memory architecture
+immediately.
+Experience banks are the most frequent architecture in this corpus
+(11 of 24 architecture studies; 46\%) and have reference open-source
+implementations.
+In high-baseline SWE-bench Verified settings ($>65\%$), reported gains
+are modest but positive across several architecture families:
+\citet{chen2025sweexp} and \citet{deng2026memcoder} report
+experience-bank gains of $+2.2$ and $+9.4$~pp,
+\citet{wu2025gcc} reports a Git-metaphor context-management gain of
+$+6.2$~pp, and \citet{xia2025livesweagent} reports $+3.2$~pp for
+task-local executable tool creation.
+These results support testing simple memory or context-management
+baselines first, but they do not establish architectural superiority:
+no study in the corpus compares experience banks against knowledge
+graphs, hierarchical memory, or other architectures under controlled
+conditions.
 
 The available data suggest that retrieval-mechanism calibration may
 matter more than architectural sophistication.
@@ -133,15 +163,16 @@ influences the effective gain, and excess retrieved context can
 introduce noise.
 
 For already-deployed systems, experience-guided early termination
-offers cost reduction with minimal risk.
+offers cost reduction with a small reported accuracy cost.
 \citet{guo2026eet} report 31.8\% savings in total cost with a maximum
 loss of 0.2~pp, by identifying termination opportunities in 11.3\% of
 instances.
 This approach is agent-agnostic and requires no changes to the
-underlying memory architecture.
+underlying memory architecture, though the evidence rests on a single
+study.
 
-Of the 24 primary studies, 17 share a complete repository and three
-offer partial access, totalling 83\% with some degree of
+Of the 24 architecture studies, 17 share a complete repository and
+three offer partial access, totalling 83\% with some degree of
 reproducibility.
 
 \subsection{Limitations of this review}
@@ -172,15 +203,17 @@ exclusions.
 
 Data extraction was performed by the same researcher, introducing risk
 of interpretation bias in qualitative fields such as architecture-type
-classification and degradation mechanism.
+classification and the categorisation of adverse outcomes.
 Four mitigations reduced this risk: (i) programmatic validation of 448
-enum values (16 fields $\times$ 28 studies), with error rate below 1\%
-after corrections; (ii) spot-check of 40 interpretive fields across 10
-selected studies, as detailed in \autoref{sec:extraction}; (iii) factual
-fidelity digests generated from the full text of each study, used as
-reference when drafting the manuscript's interpretive claims; and (iv)
-re-verification of the \textit{negative\_result} fields against the
-original PDF.
+enum values (16 fields $\times$ 28 studies), yielding eight corrections
+on 1{,}036 extracted values (0.77\%);
+(ii) a spot-check of 40 interpretive fields across 10 selected studies,
+as detailed in \autoref{sec:extraction};
+(iii) per-study evidence summaries derived from the full text of each
+included paper, used as a reference when drafting the manuscript's
+interpretive claims;
+and (iv) re-verification of the \textit{negative\_result} fields
+against the original PDF.
 Even with these mitigations, formal reproducibility of the
 classification in interpretive fields was not assessed.
 
@@ -212,6 +245,10 @@ The taxonomy proposed in this review for persistence architectures also
 embeds interpretive choices: families such as ``hybrid'' group
 heterogeneous mechanisms whose fine differentiation would require
 metadata absent from published texts.
+The inclusion of Live-SWE-Agent~\citep{xia2025livesweagent} as a
+task-local executable-memory boundary case broadens the
+representational-substrate taxonomy but should not be interpreted as
+evidence for cross-session persistence.
 
 Heterogeneity across studies precludes formal meta-analysis and limits
 inferences to qualitative patterns synthesised narratively.
@@ -227,8 +264,8 @@ alternative inclusion criteria.
 \subsection{Research agenda}
 \label{sec:agenda-pesquisa}
 
-The three gaps confirmed by this review define the field's immediate
-agenda.
+The three gaps confirmed by this review define the next empirical
+step suggested by the evidence.
 Gap~1, the absence of head-to-head comparisons, calls for an experiment
 that evaluates at least three representative architectures on a shared
 benchmark, with a fixed model, and under a matching compute budget.
@@ -245,9 +282,13 @@ Adopting standardised cost metrics (tokens per task, monetary cost,
 wall-clock time) and knowledge-retention metrics would enable
 cross-study comparisons that are currently unfeasible.
 
-Only one of the 24 primary studies reports memory sharing across
-agents~\citep{chen2025sweexp}, and even there it is limited to
-experience reuse within the same framework.
+Cross-agent sharing remains underexplored.
+\citet{chen2025sweexp} is the only study with controlled evidence of
+memory sharing, and even there it is limited to experience reuse within
+the same framework;
+\citet{tablan2025smarter} proposes a collective shared-memory layer for
+coding agents but evaluates only synthetic experience under LLM-as-judge
+metrics, leaving controlled effectiveness unestablished.
 Sharing protocols across heterogeneous agents remain without empirical
 evaluation.
 The vulnerabilities flagged by \citet{srivastava2025memorygraft}

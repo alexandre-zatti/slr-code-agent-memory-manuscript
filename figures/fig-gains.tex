@@ -24,23 +24,31 @@
   {Xia (Live-SWE)/3.2/archOutro},
   {Wong (CCA)/3.0/archHibrido},
   {Guo (EET)/2.7/archBanco},
-  {Chen (SWE-Exp)/2.2/archBanco}%
+  {Chen (SWE-Exp)/2.2/archBanco},
+  {Lindenbauer (CTIM-R.)/-2.0/archBanco}%
 }
 \foreach \name/\gain/\col [count=\i from 0] in \entries {
   \pgfmathsetmacro{\y}{-\i * 0.65}
   \pgfmathsetmacro{\w}{\gain * \scale}
-  \node[bar label] at (-0.2, \y) {\name};
+  \node[bar label] at (-0.6, \y) {\name};
   \fill[\col!80] (0, \y - \barheight/2)
     rectangle (\w, \y + \barheight/2);
   \draw[\col!60!black, line width=0.3pt] (0, \y - \barheight/2)
     rectangle (\w, \y + \barheight/2);
-  \node[gain label] at (\w + 0.1, \y)
-    {+\pgfmathprintnumber[fixed, precision=1]{\gain}};
+  \pgfmathparse{\gain >= 0 ? 1 : 0}
+  \ifnum\pgfmathresult=1
+    \node[gain label] at (\w + 0.1, \y)
+      {+\pgfmathprintnumber[fixed, precision=1]{\gain}};
+  \else
+    \pgfmathsetmacro{\absgain}{abs(\gain)}
+    \node[anchor=east, font=\footnotesize] at (\w - 0.1, \y)
+      {$-$\pgfmathprintnumber[fixed, precision=1]{\absgain}};
+  \fi
 }
-\pgfmathsetmacro{\ybot}{-16 * 0.65 - 0.5}
+\pgfmathsetmacro{\ybot}{-17 * 0.65 - 0.5}
 \draw[thick, -Stealth] (0, 0.5) -- (0, \ybot);
-\draw[thick] (0, \ybot) -- (9.0, \ybot);
-\foreach \v in {0, 5, 10, 15, 20, 25, 30, 35, 40} {
+\draw[thick] (-1.1, \ybot) -- (9.0, \ybot);
+\foreach \v in {-5, 0, 5, 10, 15, 20, 25, 30, 35, 40} {
   \pgfmathsetmacro{\x}{\v * \scale}
   \draw (\x, \ybot) -- (\x, \ybot - 0.15);
   \node[font=\scriptsize, below] at (\x, \ybot - 0.15) {\v};
@@ -63,6 +71,6 @@
   {AST-guided};
 \fill[archOutro!80] (3.2, \ylegb) rectangle (3.55, \ylegb+0.25);
 \node[anchor=west, font=\footnotesize] at (3.65, \ylegb+0.125)
-  {Other};
+  {Executable substrate};
 
 \end{tikzpicture}

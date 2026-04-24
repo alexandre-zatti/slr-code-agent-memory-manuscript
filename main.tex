@@ -127,34 +127,48 @@ Coding agents based on Large Language Models (LLMs) suffer from
 cross-session knowledge volatility: with every new task, the agent
 loses the context accumulated in previous resolutions.
 Several persistence architectures have been proposed to mitigate this
-limitation, but the field remains fragmented, without systematic
-comparison across alternatives or cross-study cost analysis.
+limitation, but the field lacks systematic comparison across
+alternatives and cross-study cost analysis.
 \textbf{Objective.}
-Map the literature on knowledge persistence in AI-based coding agents
-and answer five secondary questions covering taxonomy, evaluation,
-performance, cost, and architectural complexity.
+To map the literature on knowledge persistence in AI-based coding
+agents and to answer five secondary questions covering taxonomy,
+evaluation, performance, cost, and architectural complexity.
 \textbf{Method.}
 Systematic review conducted following PRISMA 2020.
 Searches in Scopus and arXiv, supplemented by citation chasing via
-Semantic Scholar, identified 1,194 records published between 2023
-and March 2026.
+Semantic Scholar and one documented manual addition,
+identified 1{,}194 records published between 2023 and March 2026.
 After duplicate removal and title/abstract/full-text screening, 28
-studies were included for structured extraction of 37 fields.
+studies were included for structured extraction of 37 fields:
+24 propose persistence architectures and 4 are contextual sources
+(one analytical survey, two benchmark proposals, one security
+evaluation).
+One of the 24 architecture studies, Live-SWE-Agent, was retained as a
+boundary case: it externalises task-local procedural knowledge as
+executable tools but does not persist those tools across tasks.
 \textbf{Results.}
-Experience banks account for 46\% of primary studies, with the LLM
-itself acting as read/write controller in 54\% of the cases and
-hybrid temporal scope in 58\%.
-The 19 studies with controlled comparison report universal gains over
-the no-persistence baseline, with a median of 6.8 percentage points on
-SWE-bench Verified and an amplitude of +2.2 to +39.0 percentage points.
-Despite these gains, 43\% of the studies omit cost data, 32\% document
-memory-induced degradation scenarios, and none compares three or more
+Among the 24 architecture studies, experience banks account for 46\%,
+the LLM itself acts as read/write controller in 54\%, and hybrid
+temporal scope is present in 58\%.
+Of the 19 architecture studies with controlled no-persistence
+baselines, 18 report positive aggregate results in their main
+controlled comparison, while CTIM-Rover reports negative results
+across its CTIM configurations;
+within the SWE-bench Verified subset ($n=12$, including CTIM-Rover),
+the median gain is 6.5 percentage points, with reported gains ranging
+from $-$2.0 to +39.0 percentage points.
+Eight of the 24 architecture studies (33\%) report no cost data, rising
+to 12 of the 28 included studies (43\%) when contextual sources are
+counted;
+nine studies (32\%) report adverse or cautionary findings related to
+persistence---retrieval noise, model-dependent overhead, security, or
+evaluation artefacts---and no study compares three or more
 architectures on the same benchmark with the same model.
 \textbf{Conclusion.}
-The absence of direct comparisons and the underreporting of costs limit
-both architectural choice and practical assessment.
-These findings point to the need for a controlled empirical comparative
-study as the field's natural next step.
+The absence of head-to-head comparisons and the underreporting of
+costs limit both architectural choice and practical assessment.
+These findings motivate a controlled comparative study with a shared
+benchmark, a fixed model, and standardised cost accounting.
 \end{abstract}
 
 \textbf{Keywords:} systematic review; coding agents; knowledge

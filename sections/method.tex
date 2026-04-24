@@ -17,9 +17,13 @@ extension~\citep{rethlefsen2021prismas}, and the full report follows the
 \subsection{Protocol and registration}
 \label{sec:protocol}
 
-The protocol was drafted before the searches began.
-Six amendments were logged during execution, refining eligibility
-criteria and the extraction form.
+The protocol was drafted before the searches began and was not
+registered in a public registry such as PROSPERO.
+It was versioned internally in the project repository and is
+available as part of the replication package (DOI: 10.5281/zenodo.19463131).
+Amendments were logged during execution, refining eligibility
+criteria, the extraction form, and the screening pool;
+the full amendment log is included in the replication package.
 
 \subsection{Eligibility criteria}
 \label{sec:criteria}
@@ -73,6 +77,19 @@ The coverage period spans publications from 2023 to March 2026.
   \end{tabularx}
 \end{table}
 
+IC1 was interpreted strictly for ordinary memory and retrieval systems:
+systems limited to intra-session retrieval of textual context were
+excluded under EC1.
+One exception was allowed for executable self-evolution systems that
+externalise procedural state into reusable artefacts during task
+execution.
+These systems were retained only when the artefact is created, invoked,
+and reused by the agent as part of the solving process, rather than
+merely retrieved as context.
+Cases admitted under this exception are marked as boundary admissions
+and are not treated as evidence of cross-session persistence unless the
+artefact survives across tasks.
+
 \subsection{Information sources}
 \label{sec:fontes}
 
@@ -82,17 +99,24 @@ The two-database strategy complemented by citation chasing is empirically
 validated by \citet{mourao2020hybrid}, who showed that Scopus combined
 with snowballing achieves recall comparable to searches across four or
 more databases for software engineering systematic reviews.
-IEEE Xplore was not searched separately because Scopus fully indexes its
-proceedings and journals.
+IEEE Xplore was not searched separately because the main IEEE
+software-engineering venues relevant to this review (ICSE, ASE, SANER,
+MSR, TSE) are broadly covered by Scopus;
+records published exclusively in IEEE Xplore remain a potential source
+of missed studies, discussed in~\autoref{sec:limitacoes}.
 
 The search was supplemented by forward and backward citation chasing via
 Semantic Scholar, starting from seven seed papers chosen for their
-architectural diversity and for being the most cited in the
-subfield~\citep{du2026memory,joshi2025swebenchcl,wang2026codemem,deng2026memcoder,wu2025gcc,wang2026improving,lindenbauer2025ctimrover}.
+architectural diversity and for recurring prominence in exploratory
+searches~\citep{du2026memory,joshi2025swebenchcl,wang2026codemem,deng2026memcoder,wu2025gcc,wang2026improving,lindenbauer2025ctimrover}.
+Citation counts were not used as a selection criterion because the
+seed papers are 2025--2026 preprints for which citation indicators
+were not yet stable.
 One of the seven seed papers (CodeMEM) was not captured by the search
 strings because it uses vocabulary outside the string terms;
 its manual addition to the screening pool was recorded as a protocol
-amendment.
+amendment and is counted in the per-source tally (\autoref{tab:search})
+under the \textit{Manual} row rather than citation chasing.
 
 \subsection{Search strategy}
 \label{sec:search}
@@ -169,18 +193,25 @@ The exact strings per database, in each API's native syntax, are
 available in the replication package
 (DOI: 10.5281/zenodo.19463131).
 
-Before execution, the strings underwent audit against eight comparable
-SLRs, 16 known systems, and ten alternative term formulations, resulting
-in the addition of six terms and coverage of six of the seven seed
-papers.
+Before execution, the strings underwent audit against six comparable
+secondary studies (five SLRs on LLM agents for software engineering and
+one survey on memory for LLM agents; full list in
+\autoref{tab:auditoria-slrs}), 16 known systems, and ten alternative
+term formulations, resulting in the addition of six terms and coverage
+of six of the seven seed papers.
 The single unretrieved seed paper (CodeMEM) uses vocabulary outside the
 string terms and was added manually.
+A later and independent stress test against the five SE SLRs refined
+the eligibility criteria and is documented in~\autoref{sec:criteria}
+and~\autoref{sec:limitacoes}.
 
 \autoref{tab:search} lists results per source.
 Searches ran on 25 March 2026.
-Citation chasing identified 186 unique records (8 forward, 178 backward).
-After consolidation and deduplication, the initial screening pool
-contains 1,111 records.
+Citation chasing identified 186 unique records (8 forward, 178 backward),
+and one additional record was admitted via the documented manual
+amendment (CodeMEM).
+After consolidation and deduplication (83 records removed), the initial
+screening pool contains 1{,}111 records.
 
 \begin{table}[htbp]
   \centering
@@ -207,18 +238,64 @@ contains 1,111 records.
 \label{sec:selecao}
 
 Selection proceeded in two phases.
-The researcher screened the 1,111 records by title and abstract,
+The researcher screened the 1{,}111 records by title and abstract,
 applying the IC/EC criteria.
 Uncertain records advanced to the next phase.
-Of the 1,111 screened records, 1,060 were excluded and 51 advanced to
+Of the 1{,}111 screened records, 1{,}060 were excluded and 51 advanced to
 full-text assessment.
 
 Full-text reading of the 51 candidates yielded 23 exclusions.
 Of the 23 excluded, 12 were removed under EC2 (LLM agents without
 software engineering evaluation) and 11 under the combined IC1/EC1 rule
 (intra-session retrieval without cross-session persistence).
-Three borderline cases were accepted with documented rationale.
+Five cases were admitted with documented borderline rationale,
+transcribed verbatim from the screening record and archived in the
+replication package:
+AccelOpt~\citep{zhang2025accelopt} and Traversal-as-Policy~\citep{li2026traversalaspolicy}
+as IC1 borderline (explicit but partly static persistent artefacts);
+OpenDev~\citep{bui2026opendev} as IC1 borderline (cross-session memory
+present, but evaluation does not meet the IC2 floor of two tasks with
+quantitative metrics, so the study contributes only to the SQ1 taxonomy
+and is excluded from SQ3 and SQ4 synthesis);
+Du~\citep{du2026memory} under borderline rule~1 of the criteria
+(analytical survey with original taxonomy, admitted for its SQ1
+contribution only);
+and Live-SWE-Agent~\citep{xia2025livesweagent} under the
+executable-self-evolution exception to EC1.
+Live-SWE-Agent's tools do not persist across tasks: each issue starts
+from the bare scaffold.
+The agent creates executable scripts during issue resolution and reuses
+them later within the same task, which makes it a task-local executable
+procedural-memory system relevant to SQ1's representational-substrate
+taxonomy.
+It is retained for SQ1 and for SQ3--SQ5 results that apply to its own
+controlled comparisons, but is not used as evidence for cross-session
+persistence.
+IC2 was enforced as the gating floor for the performance and cost
+synthesis: studies that did not clear it could be retained only when
+they supplied taxonomy, benchmark, security, or architectural evidence
+needed for SQ1, SQ2, or SQ5.
 At the end, 28 studies were included for data extraction.
+
+Of the 28, 24 propose or implement a persistence architecture and
+constitute the primary object of the synthesis;
+the remaining four are retained as contextual sources:
+the \citet{du2026memory} analytical survey,
+the benchmark proposals by \citet{deshpande2025memtrack} and
+\citet{joshi2025swebenchcl}, and the security evaluation by
+\citet{srivastava2025memorygraft}.
+Within the 24 architecture studies, OpenDev~\citep{bui2026opendev} does
+not meet the IC2 quantitative floor and therefore contributes only to
+the SQ1 taxonomy (text-notes substrate);
+the remaining 23 inform SQ1 and, where the relevant data are reported,
+the downstream performance (SQ3), cost (SQ4), and complexity (SQ5)
+syntheses.
+Unless the text states otherwise, \emph{architecture study} denotes any
+of the 24; \emph{included study} denotes any of the 28; and
+\emph{controlled-comparison study} denotes the 19 architecture studies
+that report an outcome relative to a documented no-persistence or
+non-memory baseline (\autoref{sec:sq3}), regardless of whether the
+outcome is positive, neutral, or negative.
 
 \subsection{Data extraction}
 \label{sec:extraction}
@@ -236,8 +313,8 @@ Each paper was read, its data logged on the form, and the values
 verified afterwards.
 Validation included programmatic checks on 448 enum values and a
 spot-check of 40 interpretive fields across ten papers.
-The final error rate was below 1\%, corresponding to eight corrections
-out of 1{,}036 extracted values (28 papers $\times$ 37 fields).
+Validation identified eight corrections among the 1{,}036 extracted
+values (28 papers $\times$ 37 fields), an error rate of 0.77\%.
 
 \subsection{Quality assessment}
 \label{sec:quality}
@@ -252,9 +329,13 @@ Each item received a score of 0, 0.5, or 1, up to a maximum of 6.0.
 Scores range from 2.0 to 6.0, with a median of 5.0.
 Twenty-six of the 28 studies (93\%) scored at or above 4.0.
 The two studies scoring below
-3.0~\citep{bui2026opendev,du2026memory} contribute only qualitative
-descriptions and do not affect the quantitative findings, as verified in
-the sensitivity analysis (\autoref{sec:results}).
+3.0~\citep{bui2026opendev,du2026memory} are those admitted under
+borderline rationale (\autoref{sec:selecao}): the Du analytical survey,
+which is a non-architecture contextual source, and OpenDev, an
+architecture study that does not clear the IC2 quantitative floor.
+Both contribute only qualitative descriptions and are excluded from the
+quantitative synthesis by design, as verified in the sensitivity
+analysis (\autoref{sec:results}).
 For calibration, eight papers were re-assessed after the full extraction.
 
 \subsection{Synthesis methods}
@@ -278,8 +359,8 @@ impact on quantitative findings.
 
 Formal publication-bias assessment is not applicable to narrative
 synthesis~\citep{page2021prisma}.
-The preprint-dominated corpus (82\%) is acknowledged as a potential
-source of bias and discussed in the limitations.
+The preprint-dominated corpus (23 of 28 studies; 82\%) is acknowledged
+as a potential source of bias and discussed in the limitations.
 Certainty of evidence was rated qualitatively per finding:
 high (multiple studies with quality $\geq$~4/6 converge),
 moderate (few studies or variable quality), and

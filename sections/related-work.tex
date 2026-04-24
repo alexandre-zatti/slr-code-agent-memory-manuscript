@@ -7,45 +7,53 @@
 This section positions the present review against two classes of
 secondary work: surveys on memory for LLM-based agents in general and
 systematic reviews on LLMs applied to software engineering.
-The first class is represented mainly by the recent survey of Du et al.;
+The first class is represented mainly by the recent survey of
+\citet{du2026memory};
 the second groups five SLRs published between 2024 and 2025.
-Neither class adopts cross-session persistence as the primary object,
-nor reports per-task operational cost analysis, which are the critical
-dimensions assessed in this investigation.
+Du covers memory for LLM agents broadly, including within-session
+context management, rather than cross-session persistence as a
+distinct object;
+the five SE-focused SLRs treat memory only partially or not at all.
+Neither class adopts cross-session persistence as the primary object
+while also restricting scope to coding agents, and none reports
+per-task operational cost analysis.
 \autoref{tab:slrs-previas} summarises the comparison by thematic focus
 and coverage of these two dimensions.
 
 \begin{table}[htbp]
 \centering
 \caption{Comparison between related secondary work and this review.
-The \emph{Persistence?} and \emph{Cost?} columns indicate, respectively,
-whether the work explicitly addresses cross-session knowledge
-persistence and whether it reports per-task operational cost analysis.}
+\emph{Persist.} marks whether the work treats cross-session knowledge
+persistence as a primary object of analysis (``Yes''), as one of several
+components (``Partial''), or not at all (``No'').
+\emph{Cost} marks whether the work reports per-task operational cost
+data for the systems it reviews.}
 \label{tab:slrs-previas}
 \small
-\begin{tabularx}{\textwidth}{l c X c c}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\textwidth}{@{} l c >{\raggedright\arraybackslash}X c c @{}}
 \toprule
 \textbf{Work} & \textbf{Year} & \textbf{Main focus} &
-  \textbf{Persistence?} & \textbf{Cost?} \\
+  \textbf{Persist.} & \textbf{Cost} \\
 \midrule
-Du et al.~\citep{du2026memory} & 2026 &
+\citet{du2026memory} & 2026 &
   Memory for LLM agents in general &
   Yes & No \\
-Hou et al.~\citep{hou2024llmse} & 2024 &
+\citet{hou2024llmse} & 2024 &
   LLMs for software engineering (395 studies) &
   No & No \\
-Zhang et al.~\citep{zhang2024unifying} & 2024 &
+\citet{zhang2024unifying} & 2024 &
   Language models for code (NLP $\cap$ SE) &
   No & No \\
-Jin et al.~\citep{jin2024llmagents} & 2024 &
+\citet{jin2024llmagents} & 2024 &
   Evolution of LLMs into agents in SE &
   No & No \\
-Wang et al.~\citep{wang2024llmagents} & 2024 &
+\citet{wang2024llmagents} & 2024 &
 % audit:ignore-next-line — describes cited work's own framing
-  Landscape of autonomous agents for SE &
+  Autonomous agents for SE &
   Partial & No \\
-Liu et al.~\citep{liu2024llmagents} & 2024 &
-  LLM agents for software engineering (124 studies) &
+\citet{liu2024llmagents} & 2024 &
+  LLM agents for software engineering (117 studies) &
   Partial & No \\
 \midrule
 \textbf{This review} & 2026 &
@@ -59,7 +67,7 @@ Liu et al.~\citep{liu2024llmagents} & 2024 &
 \subsection{Surveys on memory for LLM agents}
 \label{sec:rel-memoria}
 
-\citet{du2026memory} present the most recent survey on memory
+\citet{du2026memory} presents the most recent survey on memory
 mechanisms for LLM-based agents, proposing a three-dimensional taxonomy
 (temporal scope, representational substrate, and control policy) that
 this review adopts and refines as the starting point of SQ1.
@@ -67,18 +75,18 @@ The survey catalogues five families of memory mechanisms: resident
 context compression, retrieval-augmented stores, self-correcting
 reflective memory, virtual hierarchical contexts, and policy-learned
 memory management.
-The authors' scope is explicitly broad.
+The survey's scope is explicitly broad.
 It covers general agents for web navigation, mathematical reasoning and
 dialogue, without restriction to the coding domain.
-The coverage of software engineering in the Du et al.\ survey is
-therefore limited to ChatDev and MetaGPT.
+The coverage of software engineering in Du's survey is therefore
+limited to ChatDev and MetaGPT.
 Systems central to the present investigation are not mentioned:
 MemCoder~\citep{deng2026memcoder},
 CodeMEM~\citep{wang2026codemem}, and the Repository Memory approach of
 \citet{wang2026improving}.
 The present review complements that work by restricting the scope to
 coding agents and by incorporating per-task operational cost analysis,
-a dimension absent from the Du et al.\ survey.
+a dimension absent from Du's survey.
 
 \subsection{Systematic reviews on LLMs in software engineering}
 \label{sec:rel-llmse}
@@ -98,7 +106,7 @@ architectural component, without characterising cross-session
 persistence architectures.
 \citet{wang2024llmagents} survey autonomous agents in software
 engineering with a focus on execution pipelines, and
-\citet{liu2024llmagents} cover 124 studies with partial discussion of
+\citet{liu2024llmagents} cover 117 studies with partial discussion of
 memory modules, but without cross-system synthesis of persistence
 effectiveness and cost.
 None of these reviews directly answers SQ1--SQ5 of this investigation.
@@ -116,7 +124,7 @@ investigation, not as an ancillary architectural component of a broader
 synthesis.
 On this basis, it incorporates per-task operational cost analysis as a
 dedicated dimension (SQ4).
-That cost dimension is the central differential relative to prior work.
+That cost dimension is what distinguishes this review from prior work.
 None of the previously identified SLRs simultaneously gathers a focus
 on cross-session persistence, a coding-agent scope, and cross-study cost
 quantification.

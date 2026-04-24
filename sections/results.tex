@@ -17,7 +17,8 @@ Of the 23 exclusions at the full-text stage, 12 were excluded under EC2
 (LLM agents without software engineering evaluation) and 11 under the
 IC1/EC1 combination (intra-session retrieval without cross-session
 persistence).
-Three borderline cases were accepted with documented rationale.
+Five borderline cases were accepted with documented rationale
+(\autoref{sec:selecao}).
 The full list of the 23 studies excluded at full-text screening, with
 per-criterion exclusion reasons, is available in the replication package
 (DOI: 10.5281/zenodo.19463131).
@@ -32,37 +33,52 @@ Ultimately, 28 studies were included for data extraction.
 \autoref{tab:characteristics} summarises the 28 included studies.
 All were published between 2024 and 2026; no 2023 study met the
 eligibility criteria.
-Preprints account for 82\% of the corpus (23/28), with two conference
+Preprints account for 82\% of the corpus (23 of 28), with two
+conference
 publications~\citep{wang2026improving,zhang2025darwingodel} and three
 workshop
 publications~\citep{deshpande2025memtrack,shen2025talm,lindenbauer2025ctimrover}.
 
-Regarding source code, 17 of the 24 primary studies share an open
-repository and three offer partial access.
+Of the 28 included studies, four do not propose a persistence
+architecture and are retained as contextual sources
+(\autoref{sec:selecao}):
+the \citet{du2026memory} analytical survey,
+the \citet{deshpande2025memtrack} and \citet{joshi2025swebenchcl}
+benchmark proposals, and the \citet{srivastava2025memorygraft} security
+evaluation.
+The remaining 24 studies propose or implement persistence architectures
+and are analysed in the taxonomy;
+where the underlying paper reports the relevant data, they also
+contribute to the performance (\autoref{sec:sq3}), cost
+(\autoref{sec:sq4}), and complexity (\autoref{sec:sq5}) syntheses.
+OpenDev~\citep{bui2026opendev}, for example, is included in the SQ1
+taxonomy but does not clear the quantitative evaluation floor and is
+therefore excluded from SQ3/SQ4/SQ5;
+Live-SWE-Agent~\citep{xia2025livesweagent} is retained as a task-local
+boundary case whose executable tools are reused within a task but
+discarded across tasks (\autoref{sec:selecao}).
+
+Of the 24 architecture studies, 17 share an open repository and three
+offer partial access.
 The most recurring agent frameworks are custom implementations, followed
 by SWE-Agent and OpenHands.
 The LLMs used include GPT-4o, Claude 3.5/4/4.5 Sonnet, DeepSeek-V3,
 and Gemini 2.5/3 Pro.
 
-Four studies do not propose primary persistence architectures:
-\citet{du2026memory} is a survey,
-\citet{deshpande2025memtrack} and \citet{joshi2025swebenchcl}
-propose benchmarks, and
-\citet{srivastava2025memorygraft} investigates memory security.
-The remaining 24 studies propose or implement architectures and are
-analysed in the following subsections.
-
 \begin{longtable}{l c l l l S[table-format=1.1]}
   \caption{Characteristics of the 28 included studies.
+    \emph{Role / family}: architecture family for the 24 architecture
+    studies and role (survey, benchmark, security) for the 4 contextual
+    studies.
     Score: quality score (0--6 scale, per
     \autoref{sec:quality-results}).}
   \label{tab:characteristics} \\
   \toprule
-  Study & Year & Venue & Type & Architecture & {Score} \\
+  Study & Year & Venue & Type & Role / family & {Score} \\
   \midrule
   \endfirsthead
   \toprule
-  Study & Year & Venue & Type & Architecture & {Score} \\
+  Study & Year & Venue & Type & Role / family & {Score} \\
   \midrule
   \endhead
   \bottomrule
@@ -76,7 +92,7 @@ analysed in the following subsections.
   Guo (EET) & 2026 & arXiv & preprint & experience bank & 5.5 \\
   Hosain (Xolver) & 2025 & arXiv & preprint & hybrid & 5.5 \\
   Joshi (SWE-Bench-CL) & 2025 & arXiv & preprint & benchmark & 5.0 \\
-  Li (GBT) & 2026 & arXiv & preprint & other & 5.5 \\
+  Li (GBT) & 2026 & arXiv & preprint & executable substrate & 5.5 \\
   Lindenbauer (CTIM-Rover) & 2025 & REALM-W & workshop & experience bank & 4.0 \\
   Nadafian (KAPSO) & 2026 & arXiv & preprint & hybrid & 5.5 \\
   Qian (IER) & 2024 & arXiv & preprint & experience bank & 4.0 \\
@@ -91,9 +107,9 @@ analysed in the following subsections.
   Wang (MemGovern) & 2026 & arXiv & preprint & experience bank & 5.5 \\
   Wong (CCA) & 2025 & arXiv & preprint & hybrid & 5.5 \\
   Wu (GCC) & 2025 & arXiv & preprint & Git metaphor & 5.5 \\
-  Xia (Live-SWE-Agent) & 2025 & arXiv & preprint & other & 5.5 \\
+  Xia (Live-SWE-Agent) & 2025 & arXiv & preprint & executable substrate (boundary) & 5.5 \\
   Zhang (AccelOpt) & 2025 & arXiv & preprint & experience bank & 5.5 \\
-  Zhang (Darwin-Gödel) & 2025 & ICLR & conference & other & 5.0 \\
+  Zhang (Darwin-Gödel) & 2025 & ICLR & conference & executable substrate & 5.0 \\
   Zhou (ToM-SWE) & 2025 & arXiv & preprint & hybrid & 5.5 \\
 \end{longtable}
 
@@ -119,8 +135,8 @@ alter any quantitative finding.
 \subsection{Taxonomy of persistence architectures (SQ1)}
 \label{sec:sq1}
 
-\autoref{tab:architectures} shows the distribution of the 24 primary
-studies by architecture type.
+\autoref{tab:architectures} shows the distribution of the 24
+architecture studies by architecture type.
 Eleven studies (46\%) distil resolution trajectories into reusable
 entries, making experience banks the most frequent type
 (e.g.,~\citep{chen2025sweexp,deng2026memcoder,guo2026eet,shen2026structurally,su2025learnbyinteract}).
@@ -134,19 +150,23 @@ graph~\citep{dong2026kernelblaster} have one study each.
 
 \begin{table}[htbp]
   \centering
-  \caption{Distribution of primary studies by architecture type.}
+  \caption{Distribution of the 24 architecture studies by architecture
+    type.
+    The executable-substrate row includes one task-local boundary case,
+    Live-SWE-Agent, whose executable tools are reused within a task but
+    discarded across tasks.}
   \label{tab:architectures}
   \begin{tabular}{l r r}
     \toprule
     Architecture type & $N$ & \% \\
     \midrule
-    Experience bank     & 11 & 46 \\
-    Hybrid              &  5 & 21 \\
-    Other               &  3 & 12 \\
-    Git metaphor        &  2 &  8 \\
-    AST-guided          &  1 &  4 \\
-    Knowledge graph     &  1 &  4 \\
-    Text notes          &  1 &  4 \\
+    Experience bank       & 11 & 46 \\
+    Hybrid                &  5 & 21 \\
+    Executable substrate  &  3 & 13 \\
+    Git metaphor          &  2 &  8 \\
+    AST-guided            &  1 &  4 \\
+    Knowledge graph       &  1 &  4 \\
+    Text notes            &  1 &  4 \\
     \midrule
     \textbf{Total}      & \textbf{24} & \\
     \bottomrule
@@ -176,8 +196,15 @@ Full-context memory loading is used only when volume is
 compact~\citep{xia2025livesweagent,zhang2025accelopt}.
 The predominant granularity is task (16 studies, 67\%), aligned with
 benchmark structure in which each issue corresponds to a task.
-Only one of the 24 primary studies reports memory sharing across
-agents~\citep{chen2025sweexp}.
+Cross-agent sharing remains underexplored.
+\citet{chen2025sweexp} is the only architecture study that evaluates
+memory sharing under a controlled Pass@1 setting, and even there it is
+limited to experience reuse within the same framework.
+\citet{tablan2025smarter} proposes Spark as a collective shared-memory
+layer across coding agents but evaluates a single learning epoch with
+synthetic experience and LLM-as-judge metrics, supporting the existence
+of shared-memory infrastructure rather than controlled evidence of its
+effectiveness.
 \autoref{fig:taxonomy} visualises the distribution of studies in the
 temporal scope $\times$ substrate space, with colour indicating the
 dominant control policy.
@@ -185,16 +212,19 @@ dominant control policy.
 \begin{figure}[!htbp]
   \centering
   \resizebox{\textwidth}{!}{\input{figures/fig-taxonomy}}
-  \caption{Distribution of the 24 primary studies in the space of
+  \caption{Distribution of the 24 architecture studies in the space of
     temporal scope (rows) $\times$ representational substrate
     (columns).
-    Bubble size is proportional to the number of studies in each
-    cell, and colour indicates the cell's majority control policy;
-    cells without a majority appear in grey.
-    The figure highlights the concentration on experience banks
-    with hybrid temporal scope, the cell with the largest number
-    of proposals, while substrates such as AST-guided, knowledge
-    graphs, and Git metaphors remain at isolated adoption.}
+    Coloured bubbles mark cells that contain at least one study;
+    bubble size is proportional to the number of studies in the
+    cell, and colour indicates the cell's majority control policy
+    (LLM-controlled, heuristic, or no majority when tied).
+    Small grey dots mark cells with zero studies and are included
+    as grid reference points, not as data.
+    The largest cluster is experience-like architectures with a
+    hybrid temporal scope, while substrates such as AST-guided,
+    knowledge graphs, and Git metaphors remain at isolated
+    adoption.}
   \label{fig:taxonomy}
 \end{figure}
 
@@ -202,70 +232,145 @@ dominant control policy.
 \subsection{Evaluation methods and benchmarks (SQ2)}
 \label{sec:sq2}
 
-Of the 28 studies, 21 use benchmarks, three use case studies, and one
-combines both.
-\autoref{tab:benchmarks} lists the identified benchmarks.
-SWE-bench Verified is the dominant benchmark, used by 14 of the 21
-studies with benchmark evaluation (67\%), which creates a natural
-comparability point across systems.
-By contrast, seven studies use unique benchmarks not shared by any other
-study~\citep{deshpande2025memtrack,dong2026kernelblaster,qian2024iterative,tablan2025smarter,zhang2025accelopt,nadafian2026kapso,wang2026codemem},
-which limits direct comparisons.
+Of the 28 included studies, 23 rely on benchmark-only evaluation;
+three use non-standard, non-benchmark evaluation:
+\citet{bui2026opendev} and \citet{vasilopoulos2026codified} provide
+architecture or practitioner case evidence, while
+\citet{srivastava2025memorygraft} provide a custom retrieval-level
+security evaluation (110 experience seeds, 12 handcrafted queries);
+one combines benchmark and case-study evaluation~\citep{zhou2025tomswe};
+and one~\citep{du2026memory} is an analytical survey without evaluation
+of its own.
+The 24 studies with benchmark evaluation (23 benchmark-only plus one
+mixed) comprise 22 architecture studies and two contextual benchmark
+proposals (MemTrack and SWE-Bench-CL).
+ToM-SWE~\citep{zhou2025tomswe} is coded as a hybrid architecture study
+whose evaluation combines benchmark and in-the-wild deployment.
+\autoref{tab:benchmarks} lists every benchmark used for evaluation
+across the 24 studies and the number of studies that adopt each one.
+SWE-bench Verified is the most frequent benchmark, used by 13 of the
+24 studies with benchmark evaluation (54\%), supplying a partial
+comparability anchor across systems even though model, scaffold,
+instance subset, and run settings still differ.
+Evaluation outside SWE-bench Verified is highly fragmented: only
+WebArena and SWE-bench Pro appear in more than one study, with two
+studies each, while the remaining 32 benchmarks each appear in a
+single study.
+This fragmentation spans SWE-bench variants (Lite, Pro, Multilingual,
+live, CL, Ambiguous, Stateful), code-generation benchmarks
+(HumanEval, BigCodeBench, ClassEval, LiveCodeBench v5, CoderEval,
+CodeIF-Bench, DS-1000, SRDD), domain-specific benchmarks
+(KernelBench, NKIBench, PyTorch-Bench, Polyglot, MLE-Bench,
+ALE-Bench), reasoning and math benchmarks (GSM8K, Math-500, AIME
+2024, AIME 2025, GPQA), tool-use and web benchmarks (OSWorld,
+Spider2-V, BrowseComp-Plus), safety benchmarks (AgentSafetyBench,
+AgentHarm, Agent Security Bench), and the MemTrack benchmark
+proposal, limiting direct cross-study comparison.
 
 \begin{table}[htbp]
   \centering
-  \caption{Benchmarks and usage frequency.}
+  \caption{Benchmarks and usage frequency across the 24 studies with
+    benchmark evaluation.
+    \emph{N} counts how many of those studies evaluate on each
+    benchmark;
+    a single study may evaluate on more than one benchmark (so the
+    column does not sum to 24).}
   \label{tab:benchmarks}
+  \small
+  \setlength{\tabcolsep}{8pt}
   \begin{tabular}{l r}
     \toprule
     Benchmark & $N$ \\
     \midrule
-    SWE-bench Verified    & 14 \\
-    SWE-bench Lite        &  2 \\
-    SWE-bench Pro         &  2 \\
-    WebArena              &  2 \\
-    SWE-Bench-CL          &  1 \\
-    KernelBench           &  1 \\
-    MLE/ALE-Bench         &  1 \\
-    DS-1000               &  1 \\
-    \midrule
-    \multicolumn{2}{l}{\footnotesize
-      Four other single-use benchmarks omitted.} \\
+    SWE-bench Verified         & 13 \\
+    WebArena                   &  2 \\
+    SWE-bench Pro              &  2 \\
+    SWE-bench Lite             &  1 \\
+    SWE-bench Multilingual     &  1 \\
+    SWE-bench-live             &  1 \\
+    SWE-Bench-CL               &  1 \\
+    Ambiguous SWE-bench        &  1 \\
+    Stateful SWE               &  1 \\
+    HumanEval                  &  1 \\
+    BigCodeBench               &  1 \\
+    ClassEval                  &  1 \\
+    LiveCodeBench v5           &  1 \\
+    CoderEval                  &  1 \\
+    CodeIF-Bench               &  1 \\
+    DS-1000                    &  1 \\
+    SRDD                       &  1 \\
+    KernelBench                &  1 \\
+    NKIBench                   &  1 \\
+    PyTorch-Bench              &  1 \\
+    Polyglot                   &  1 \\
+    MLE-Bench                  &  1 \\
+    ALE-Bench                  &  1 \\
+    GSM8K                      &  1 \\
+    Math-500                   &  1 \\
+    AIME 2024                  &  1 \\
+    AIME 2025                  &  1 \\
+    GPQA                       &  1 \\
+    OSWorld                    &  1 \\
+    Spider2-V                  &  1 \\
+    BrowseComp-Plus            &  1 \\
+    AgentSafetyBench           &  1 \\
+    AgentHarm                  &  1 \\
+    Agent Security Bench (ASB) &  1 \\
+    MemTrack                   &  1 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Pass@1 (or Resolve Rate) is the universal metric, adopted by 18 of the
-21 studies with benchmarks.
+Pass@1 (or Resolve Rate) is the dominant metric, adopted by 18 of the
+24 studies with benchmark evaluation.
 Continual-learning metrics, such as forgetting and backward transfer,
 were proposed by \citet{joshi2025swebenchcl} but have not yet been
 adopted by other studies.
 
 Direct comparability across systems remains limited.
-Although 14 studies use SWE-bench Verified, experimental conditions
+Although 13 studies use SWE-bench Verified, experimental conditions
 differ: at least eight distinct LLMs serve as the backbone, subsets
 vary between 300 and 500 instances, and parameters such as temperature
 and timeout are rarely reported.
-No study compares three or more persistence architectures on the same
-benchmark with the same model, confirming Gap~1.
+No study in the corpus compares three or more persistence architectures
+on the same benchmark with the same model, confirming Gap~1.
 
 \FloatBarrier
 \subsection{Performance results (SQ3)}
 \label{sec:sq3}
 
-Nineteen studies present a controlled comparison against a baseline
-without memory persistence, all with positive gains.
-\autoref{tab:performance} lists the 17 whose gain is measurable in
-percentage points (pp); the remaining two use non-comparable metrics
-(speedup and qualitative score).
-Magnitudes range from +2.2~pp~\citep{chen2025sweexp} to
-+39.0~pp~\citep{li2026traversalaspolicy}, with a median of about
-+6.8~pp on SWE-bench Verified.
+Nineteen architecture studies present controlled comparisons against a
+no-persistence or non-memory baseline.
+Eighteen report positive aggregate results in their main controlled
+comparison; one, CTIM-Rover~\citep{lindenbauer2025ctimrover}, reports
+negative results across all CTIM configurations.
+\autoref{tab:performance} lists the 18 comparisons with gains measurable
+in percentage points (pp), drawn from 17 unique studies because
+\citet{su2025learnbyinteract} contributes separate OSWorld and
+SWE-bench Verified rows;
+Dong~\citep{dong2026kernelblaster} and
+Tablan~\citep{tablan2025smarter} are discussed separately because they
+use non-comparable metrics (speedup and qualitative score).
+Across the 18 percentage-point comparisons the median gain is
++7.8~pp;
+within the SWE-bench Verified subset ($n=12$, including CTIM-Rover) the
+median is +6.5~pp.
+Magnitudes range from $-2.0$~pp~\citep{lindenbauer2025ctimrover} to
++39.0~pp~\citep{li2026traversalaspolicy}.
+Gains that combine persistence with changes in search, tooling,
+orchestration, or evaluation budget (for example,
+KAPSO~\citep{nadafian2026kapso}, DGM~\citep{zhang2025darwingodel}, and
+GCC~\citep{wu2025gcc}) should be read as full-system gains relative to
+each study's own baseline rather than as isolated estimates of the
+memory component.
 
 \begin{table}[htbp]
   \centering
-  \caption{Performance gains over the no-persistence baseline, sorted
-    by absolute gain.}
+  \caption{Percentage-point comparisons against the no-persistence
+    baseline, sorted by gain.
+    Rows are comparisons, not studies:
+    Su~(Learn-by-Interact) contributes two benchmark rows, and gains
+    without within-study memory ablations are full-system gains.}
   \label{tab:performance}
   \begin{tabular}{l l r r r}
     \toprule
@@ -288,25 +393,41 @@ Magnitudes range from +2.2~pp~\citep{chen2025sweexp} to
     Wong (CCA) & SWE-b. Pro & $\sim$56 & 59.0 & +3.0~pp \\
     Guo (EET) & SWE-b. V. & $\sim$32 & $\sim$35 & +2.7~pp \\
     Chen (SWE-Exp) & SWE-b. V. & 70.8 & 73.0 & +2.2~pp \\
+    Lindenbauer (CTIM-Rover) & SWE-b. V. subset & 42.0 & 40.0 & $-2.0$~pp \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-The largest gains (above +10~pp) occur in systems that start from
-weaker baselines:
-\citet{li2026traversalaspolicy} starts at 34.6\%,
-\citet{zhang2025darwingodel} at 20.0\%, and
-\citet{su2025learnbyinteract} at 12.4\%.
-On SWE-bench Verified, baselines above 65\% obtain gains between
-+2 and +9~pp, which suggests diminishing returns as the system
-approaches the benchmark ceiling.
+The two largest SWE-bench Verified gains come from the weakest
+baselines: \citet{li2026traversalaspolicy} starts at 34.6\% and gains
++39.0~pp, and \citet{zhang2025darwingodel} starts at 20.0\% and gains
++30.0~pp;
+\citet{su2025learnbyinteract} on OSWorld (not SWE-bench Verified) also
+starts low (12.4\%) and gains +10.1~pp.
+Low baselines do not, however, uniformly imply gains above 10~pp:
+\citet{wang2026memgovern} starts at 23.2\% on SWE-bench Verified and
+reports a gain of 9.4~pp.
+On SWE-bench Verified, studies with baselines above 65\% report gains
+between +2.2 and +9.4~pp (Chen 70.8\%~$\to$~+2.2; Xia 74.2\%~$\to$~+3.2;
+Wu 74.0\%~$\to$~+6.2; Deng 68.4\%~$\to$~+9.4).
+The data are consistent with diminishing returns as the system
+approaches the benchmark ceiling, but this pattern is descriptive and
+not formally tested.
 
-Gains are consistent across LLMs.
+Cross-LLM effects are configuration-dependent.
 \citet{shen2026structurally} reports an average gain of +4.7~pp across
-four distinct LLMs, and \citet{wang2026memgovern} reports +4.65~pp
-across seven LLMs.
-In multi-model studies, persistence improves performance across every
-LLM tested.
+four distinct LLMs, and \citet{wang2026memgovern} reports +4.65~pp on
+average across seven LLMs for its governed full system.
+Within-study ablations, however, show inversions:
+Live-SWE-Agent~\citep{xia2025livesweagent} degrades GPT-5-Nano from
+44.0\% to 14.0\% and GPT-5-Mini from 60.0\% to 58.0\% on its ablation
+subset,
+TALM~\citep{shen2025talm} reports that memory hurts HumanEval with both
+GPT-4o-mini (90.59\%~$\to$~89.13\%) and GPT-4o (94.48\%~$\to$~92.55\%),
+and MemGovern's raw-experience standard-RAG variant decreases
+Qwen3-Coder from 48.0\% to 46.8\%.
+The evidence supports model- and configuration-dependent persistence
+effects rather than a uniform cross-LLM benefit.
 \autoref{fig:gains} visualises per-study gains, with colour indicating
 architecture type.
 
@@ -314,14 +435,24 @@ architecture type.
   \centering
   \input{figures/fig-gains}
   \caption{Gain in percentage points ($\Delta$~pp) over the
-    no-persistence baseline, for the 17 studies with comparable
-    metrics.
-    Each bar corresponds to a study, with colour indicating the
-    memory-architecture type.
-    The cross-study median is 6.8~pp; the largest gains (above
-    10~pp) concentrate in systems starting from baselines below
-    35\%, while baselines above 65\% show gains between 2 and
-    9~pp, a pattern consistent with diminishing returns.
+    no-persistence baseline, for the 18 comparable
+    percentage-point comparisons reported by 17 unique studies.
+    Each bar corresponds to a comparison, with colour indicating
+    the memory-architecture type;
+    Su~(Learn-by-Interact) contributes two benchmark rows.
+    Across the 18 comparisons the median gain is 7.8~pp; within
+    the SWE-bench Verified subset ($n = 12$, including
+    CTIM-Rover) the median is 6.5~pp.
+    The two largest gains (above 10~pp) come from systems starting
+    from baselines below 35\%, but within that baseline range some
+    studies remain below 10~pp (e.g., MemGovern: baseline
+    23.2\%, gain 9.4~pp).
+    On SWE-bench Verified, studies with baselines above 65\%
+    report gains between 2.2 and 9.4~pp; the data suggest
+    diminishing returns without formally testing it.
+    CTIM-Rover~\citep{lindenbauer2025ctimrover} appears as the only
+    controlled negative case ($-2.0$~pp relative to the
+    AutoCodeRover baseline in its best configuration).
     Dong (KernelBlaster) and Tablan (Spark) are omitted because
     they use non-comparable metrics (speedup and qualitative
     score, respectively).}
@@ -338,14 +469,33 @@ study, or incomparable baseline.
 \label{sec:sq4}
 
 Cost reporting is heterogeneous.
-Only seven studies provide a complete breakdown with tokens, monetary
-cost, and baseline comparison.
-Another nine report partial data (cost or tokens, but not both).
-The remaining 12 studies (43\%) provide no cost data at all, confirming
-Gap~2.
+Among the 24 architecture studies, seven report monetary cost per task
+with enough supporting detail (tokens, model, configuration) for
+study-level cost interpretation;
+nine report partial data (cost or tokens, but not both);
+and eight report no cost data (33\%).
+Only a subset of the cost-reporting studies provide a within-study
+memory-vs-no-memory cost delta;
+the remainder report cost under a single configuration or against a
+different backbone rather than against an ablated memory baseline.
+Adding the four contextual studies (the Du survey, for which the cost
+field is not applicable, plus the Deshpande, Joshi, and Srivastava
+studies, which do not report cost data) raises the count to 12 of the
+28 included studies (43\%) without cost information.
+The gap in cost reporting thus applies whether the denominator is the
+architecture corpus (33\%) or the full included corpus (43\%), and
+confirms Gap~2.
 
-\autoref{tab:cost} shows monetary cost per task in the studies that
-publish it.
+\autoref{tab:cost} reports monetary cost per task in the studies that
+publish it; not every row in this table is a memory-vs-no-memory
+contrast.
+AccelOpt~\citep{zhang2025accelopt} is included because it provides a
+detailed monetary breakdown, but its headline 26-fold cost reduction
+compares an open-source backbone with experience queue against a
+Claude~Sonnet~4 baseline, not a within-study memory-versus-no-memory
+contrast.
+This result is therefore not counted as a persistence-cost effect, and
+AccelOpt is omitted from \autoref{fig:cost} for the same reason.
 Variation is wide: from \$0.01 per
 task~\citep{guo2026eet} to \$7.27~\citep{wang2026memgovern},
 reflecting differences in the LLM backbone, the benchmark, and the
@@ -355,10 +505,12 @@ underlying architecture.
   \centering
   \caption{Monetary cost per task in studies that report monetary data,
     grouped by LLM configuration where the study presents several.
-    The seven studies with full cost breakdown (Chen, Guo, MemGovern,
-    Wu, Xia, Zhang AccelOpt, and Zhou) have at least one row; Wang
-    RepoMem is included despite partial detail because it reports
-    monetary cost per task.}
+    The seven studies with monetary cost and supporting detail (Chen,
+    Guo, MemGovern, Wu, Xia, Zhang AccelOpt, and Zhou) have at least
+    one row; Wang RepoMem is included despite partial detail because
+    it reports monetary cost per task.
+    Not every row is a within-study memory-vs-no-memory contrast; see
+    \autoref{fig:cost} for the subset with a within-study cost delta.}
   \label{tab:cost}
   \begin{tabular}{l r l l}
     \toprule
@@ -370,102 +522,154 @@ underlying architecture.
     Wang (MemGov., Qwen) & \$0.07 & Qwen3-30B & SWE-b. V. \\
     Chen (SWE-Exp) & \$0.13 & DeepSeek-V3 & SWE-b. V. \\
     Wu (GCC) & \$0.57--1.21 & various & SWE-b. Lite \\
-    Wang (RepoMem) & \$0.58--0.89 & n/r & SWE-b. V. \\
+    Wang (RepoMem) & \$0.58--0.89 & NR & SWE-b. V. \\
     Zhang (AccelOpt) & \$6.87--15.95 & open-source & NKIBench \\
     Wang (MemGov., Claude) & \$7.27 & Claude 4 S. & SWE-b. V. \\
     \midrule
-    \multicolumn{4}{l}{\footnotesize n/r: not reported in the original paper.} \\
+    \multicolumn{4}{l}{\footnotesize NR: not reported in the original paper.} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-The relationship between memory and cost follows two distinct patterns.
+Among studies with within-study memory-vs-baseline cost comparisons,
+the relationship between memory and cost follows two distinct patterns.
 Systems that use memory to replace redundant context reduce costs:
 \citet{guo2026eet} achieves $-31.8$\% in total cost,
 \citet{li2026traversalaspolicy} cuts tokens by 39\%, and
-\citet{shen2025talm} consumes roughly half the tokens of its baseline
-on ClassEval.
+\citet{shen2025talm} consume roughly half the tokens of their
+baseline on ClassEval.
 By contrast, systems that add context via retrieval increase costs
 marginally:
 \citet{chen2025sweexp} reports $+7.5$\% in tokens and
 \citet{wang2026memgovern} $+4.8$\% with Claude 4 Sonnet.
-The performance gains in these cases are proportional to the added
-cost.
+In these cases, the performance gains are accompanied by added cost;
+the corpus does not report a formal relationship between the
+magnitudes of gain and cost.
 \autoref{fig:cost} illustrates this duality.
 
 \begin{figure}[!htbp]
   \centering
   \resizebox{\textwidth}{!}{\input{figures/fig-cost}}
-  \caption{Two opposite patterns of memory impact on operating cost,
-    observed in the studies with complete cost data.
-    On the left, systems that replace redundant context with
-    condensed memory (EET, Traversal-as-Policy, TALM) reduce total
-    cost by between 32\% and 50\%.
-    On the right, systems that add context via retrieval (SWE-Exp,
-    MemGovern with Claude~4~Sonnet) raise cost by between 5\% and
-    21\%.
-    Each bar represents the percentage variation in tokens or
-    monetary cost relative to the study's own baseline without
-    memory.}
+  \caption{Schematic of the two opposite patterns of memory impact on
+    operating cost reported among studies that provide a within-study
+    cost or token delta against a no-persistence or ablation
+    comparator.
+    On the left, systems that substitute condensed memory for
+    redundant context (e.g., EET, Traversal-as-Policy, TALM) report
+    cost reductions.
+    On the right, systems that add context via retrieval (e.g.,
+    SWE-Exp, MemGovern with Claude~4~Sonnet) report cost increases.
+    Each entry shows the variation reported in the original study
+    relative to the study's own baseline or ablation comparator, using
+    the variable the authors provide (percentage cost, percentage
+    tokens, absolute token count, or a cost ratio);
+    the figure is qualitative and the entries are not directly
+    comparable across studies.
+    CodeMEM's token reduction is attributed specifically to the Code
+    Context Memory (CtxMem) component;
+    removing the session-memory SessAST component in the same study
+    reduces tokens further but at a performance cost, so the system's
+    token profile depends on configuration.
+    AccelOpt is omitted because its reported 26-fold cost reduction
+    compares an open-source backbone with experience queue against a
+    Claude~Sonnet~4 baseline rather than a within-study
+    memory-versus-no-memory contrast.}
   \label{fig:cost}
 \end{figure}
 
-\citet{guo2026eet} presents the best cost-performance balance among
-studies with available data:
-$-31.8$\% cost with a maximum loss of $-0.2$~pp, by identifying
-early-termination opportunities in 11.3\% of issues.
-\citet{zhang2025accelopt} is 26 times cheaper than Claude Sonnet~4
-with equivalent performance in its domain.
-No study constructs an explicit Pareto frontier between accuracy and
-cost.
-Available data indicate that some
-systems~\citep{guo2026eet,li2026traversalaspolicy} dominate others
-simultaneously on cost and performance, suggesting that the current
-efficient frontier can still be improved.
+Among studies with within-study persistence-cost comparisons,
+\citet{guo2026eet} provides the clearest cost-saving result:
+$-31.8$\% in total cost with at most a $-0.2$~pp loss in resolve rate
+in the authors' setting, by identifying early-termination opportunities
+in 11.3\% of issues.
+Separately, \citet{zhang2025accelopt} reports a 26-fold cost reduction
+relative to Claude Sonnet~4 with comparable performance in its
+domain;
+this result compares an open-source backbone with experience queue
+against a different model backbone and is therefore not counted as a
+persistence-cost effect.
+No study in the corpus constructs an explicit Pareto frontier between
+accuracy and cost.
+Cross-study dominance on both axes cannot be established directly:
+benchmarks, base models, and cost-accounting conventions differ among
+the studies that report cost data, so any apparent dominance reflects
+comparison across heterogeneous settings rather than a controlled
+evaluation on a shared frontier.
 
 \FloatBarrier
 \subsection{Complexity versus effectiveness (SQ5)}
 \label{sec:sq5}
 
-Nine of the 28 studies (32\%) report scenarios where memory degrades
-performance.
-\autoref{tab:degradation} summarises these cases.
+Nine of the 28 included studies (32\%) report adverse outcomes
+associated with knowledge persistence.
+\autoref{tab:degradation} groups these cases by mechanism category and
+indicates which are direct performance drops and which are overhead,
+security, or evaluation-artefact findings.
 
 \begin{table}[htbp]
   \centering
-  \caption{Memory-induced degradation scenarios.}
+  \caption{Adverse or cautionary findings related to persistence and
+    its evaluation, grouped by mechanism category.
+    Four cases document direct performance drops; the remainder
+    capture overhead, security, or evaluation artefacts.}
   \label{tab:degradation}
-  \begin{tabularx}{\textwidth}{p{2.8cm} @{\hspace{1em}} p{2.8cm} @{\hspace{1em}} X}
+  \small
+  \setlength{\tabcolsep}{5pt}
+  \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{2.0cm} >{\raggedright\arraybackslash}p{2.4cm} >{\raggedright\arraybackslash}p{2.9cm} >{\raggedright\arraybackslash}X @{}}
     \toprule
-    Study & Mechanism & Scenario \\
+    Study & Category & Mechanism & Scenario \\
     \midrule
-    Deshpande & noise & Mem0 and Zep retain tool-call redundancy at
-      $\sim$21\%, with no improvement over the baseline \\
-    Joshi & infrastructure & Evaluation harness incompatible with the
-      memory mechanism \\
-    Lindenbauer & noise & Noisy items divert exploration ($-11$~pp) \\
-    Chen & noise & $k > 1$ experiences degrades (42.0\% to 39.0\%) \\
-    Shen (TALM) & overhead & Retrieval does not pay off on simple tasks \\
-    Vasilopoulos & maintenance & Knowledge-to-code ratio of 24\%
-      requires 1--2 h/week \\
-    Xia & overhead & Weak LLMs degrade $-68.2$\% under tool creation \\
-    Srivastava & poisoning & 9.1\% of poisoned experiences compromise
-      47.9\% of retrievals \\
-    Zhou & bias & User simulator introduces over-compliance \\
+    Lindenbauer & Performance drop & retrieval noise &
+      Noisy items divert exploration ($-11$~pp) \\
+    Chen & Performance drop & retrieval noise &
+      retrieving $k > 1$ experiences degrades performance
+      (42.0\% to 39.0\%) \\
+    Deshpande & Performance drop & backend redundancy, follow-up decay &
+      Mem0 and Zep do not improve aggregate correctness, increase
+      tool-call redundancy to $\sim$21\%, and perform worse than no-memory
+      on follow-up-question conditions \\
+    Xia & Performance drop & model-dependent overhead &
+      Weak LLMs degrade $-68.2$\% under tool creation \\
+    \midrule
+    Shen (TALM) & Overhead & unnecessary retrieval &
+      Retrieval does not pay off on simple tasks;
+      memory also reduces HumanEval accuracy with GPT-4o-mini
+      (90.59\%~$\to$~89.13\%) and GPT-4o (94.48\%~$\to$~92.55\%) \\
+    Vasilopoulos & Overhead & maintenance burden &
+      Knowledge-to-code ratio of 24\% requires 1--2 h/week \\
+    \midrule
+    Srivastava & Security & memory poisoning &
+      9.1\% poisoned experiences appear in 47.9\% of retrieved records
+      under dual-channel retrieval; downstream behavioural severity is
+      not measured \\
+    \midrule
+    Joshi & Evaluation artefact & framework incompatibility &
+      Chronological ordering of tasks incompatible with the memory
+      mechanism \\
+    Zhou & Evaluation artefact & simulator bias &
+      User simulator introduces over-compliance \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-Four degradation mechanisms emerge from the data: retrieval noise,
-where irrelevant or excessive experiences divert the
-agent~\citep{lindenbauer2025ctimrover,chen2025sweexp,deshpande2025memtrack};
-unnecessary overhead, where retrieval does not pay off on simple tasks
-or with weak models~\citep{shen2025talm,xia2025livesweagent}; memory
-poisoning, a security vulnerability in open
-stores~\citep{srivastava2025memorygraft}; and incompatibility between
-the evaluation harness and the chronological ordering of
-tasks~\citep{joshi2025swebenchcl}, an experimental limitation the
-study itself acknowledges.
+Four mechanism categories emerge from the data.
+Four studies report direct performance drops in their main or coded
+adverse comparison:
+retrieval noise~\citep{lindenbauer2025ctimrover,chen2025sweexp},
+backend redundancy with follow-up decay~\citep{deshpande2025memtrack},
+and model-dependent overhead~\citep{xia2025livesweagent};
+\citet{shen2025talm} also report sub-benchmark drops on HumanEval
+when memory is enabled, even though their main BigCodeBench result
+(\autoref{tab:performance}) is positive.
+Two report overhead or maintenance burden without a direct performance
+drop~\citep{shen2025talm,vasilopoulos2026codified};
+one documents a security vulnerability in open experience stores
+(memory poisoning)~\citep{srivastava2025memorygraft};
+and two document evaluation artefacts that complicate interpretation
+without establishing performance degradation:
+evaluation-framework incompatibility with chronological task
+ordering~\citep{joshi2025swebenchcl} and user-simulator
+bias~\citep{zhou2025tomswe}.
 
 There is no evidence that greater architectural complexity yields
 systematically larger gains.
@@ -481,7 +685,8 @@ baseline~\citep{zhang2025darwingodel} produces +30~pp, while
 sophisticated memory on a strong
 baseline~\citep{chen2025sweexp} yields +2.2~pp.
 
-Retrieval calibration is decisive.
+Retrieval calibration is a major design variable in the studies that
+isolate it.
 \citet{chen2025sweexp} reports that retrieving more than one experience
 degrades the result (42.0\% to 39.0\% with $k = 4$), and
 \citet{shen2026structurally} shows that category isolation outperforms
@@ -499,9 +704,14 @@ from noise) hold qualitatively; however, the empirical base of SQ4
 drops from seven to two studies when
 EET~\citep{guo2026eet}, MemGovern~\citep{wang2026memgovern}, and
 GCC~\citep{wu2025gcc} are excluded.
-The second (S2) excluded the two studies scoring below 3.0;
-the removal did not alter any quantitative finding, since both
-contribute only qualitative descriptions.
+The second (S2) excluded the two studies scoring below 3.0.
+The removal does not alter SQ3 or SQ4 because neither study contributes
+to the performance or cost synthesis: Du is a non-architecture
+contextual source, and OpenDev is an architecture study that does not
+clear the IC2 quantitative floor and is used only for the SQ1
+taxonomy.
+For SQ1, excluding OpenDev removes the single text-notes substrate
+but does not change the dominance of experience banks.
 
 \autoref{tab:certainty} presents the per-finding certainty assessment.
 Each row also receives an evidence-type classification:
@@ -538,7 +748,9 @@ preprint influence cannot be ruled out.
   data (counts, percentages). Type B: aggregated cross-study pattern.
   Type C: mechanism characterisation or causal inference.}
   \label{tab:certainty}
-  \begin{tabularx}{\textwidth}{l c l X}
+  \small
+  \setlength{\tabcolsep}{7pt}
+  \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{5.4cm} >{\centering\arraybackslash}p{0.7cm} >{\centering\arraybackslash}p{1.5cm} >{\raggedright\arraybackslash}X @{}}
     \toprule
     Finding & Type & Certainty & Rationale \\
     \midrule
@@ -547,20 +759,29 @@ preprint influence cannot be ruled out.
     SQ1-C: LLM controls memory (54\%) & A & high & 13 studies, direct
       classification \\
     SQ1-E: hybrid retrieval (46\%) & A & high & 11 studies \\
-    SQ1-F: sharing unexplored & A & high & 23/24 report absence \\
-    SQ2-A: SWE-bench V. dominant & A & high & 14/21 studies \\
+    SQ1-F: sharing underexplored & A & high &
+      22 of 24 report no sharing proposal; Chen is the only study with
+      controlled evidence, Tablan proposes infrastructure without
+      controlled evaluation \\
+    SQ2-A: SWE-bench V. most frequent & A & high & 13 of 24 benchmark-evaluated studies \\
     SQ2-D: Gap~1 confirmed & A & high & exhaustive check \\
-    SQ3-A: universal gains & B & high & 19 comparisons, zero inversions \\
-    SQ4-A: 43\% without cost & A & high & direct count \\
+    SQ3-A: mostly positive controlled evidence, one negative case & B & high &
+      18 positive studies, 1 negative (CTIM-Rover) \\
+    SQ4-A: cost underreported (8/24 architecture; 12/28 full) & A & high &
+      direct count; denominator reported separately for architecture corpus
+      and full included corpus \\
     SQ4-D: no Pareto frontier & A & high & exhaustive check \\
-    SQ5-A: 32\% degradation & A & high & 9 studies with evidence \\
+    SQ5-A: 32\% adverse outcomes & A & high & 9 studies with evidence \\
     T-A: field dominated by preprints (82\%) & A & high & direct count \\
     T-C: Gap~1 remains confirmed & A & high & exhaustive check \\
     \midrule
     SQ3-B: diminishing returns & B & moderate & observed pattern,
       not formally tested \\
-    SQ3-C: cross-LLM consistency & B & moderate & 2 multi-LLM studies \\
-    SQ4-B: two cost patterns & B & moderate & 12 partial studies \\
+    SQ3-C: cross-LLM effects configuration-dependent & B & moderate &
+      2 multi-LLM studies show average gains; ablations and alternative
+      configurations show inversions \\
+    SQ4-B: two cost patterns & B & moderate &
+      cost/token deltas reported with heterogeneous metrics \\
     SQ5-B: complexity $\neq$ gain & C & moderate & cross-study
       inference, heterogeneous benchmarks \\
     SQ5-D: retrieval calibration & C & moderate & 2 direct studies \\

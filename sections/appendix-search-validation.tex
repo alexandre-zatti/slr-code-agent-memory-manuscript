@@ -12,9 +12,10 @@ The last subsection presents the full PRISMA-S report~\citep{rethlefsen2021prism
 \subsection{Pre-execution audit}
 \label{ap:auditoria}
 
-The pre-execution audit consulted six systematic reviews and mapping studies published
+The pre-execution audit consulted six secondary studies published
 between 2024 and 2026 on \textit{Large Language Model} (LLM)-based coding agents, autonomous
-software agents, and memory techniques in AI agents.
+software agents, and memory techniques in AI agents: five systematic reviews or mapping
+studies and one memory-focused survey.
 For each review we extracted: the full strings (when available), the term sets in the agent
 block and the memory block, and the representative systems catalogued.
 In parallel, a list of 16 systems known from current literature was compiled as recall
@@ -32,12 +33,12 @@ to the block refinement.
 \toprule
 \textbf{Review} & \textbf{Year} & \textbf{Venue} & \textbf{N} & \textbf{Contribution to refinement} \\
 \midrule
-Hou et al.~\citep{hou2024llmse} & 2024 & TOSEM & 395 & Terms in the \textit{coding}/\textit{software engineering} block; venue coverage. \\
-Liu et al.~\citep{liu2024llmagents} & 2024 & TOSEM & 117 & Vocabulary for autonomous software agents. \\
-Zhang et al.~\citep{zhang2024unifying} & 2024 & SCIS & 52 & Planning and memory terms in LLM agents. \\
-Jin et al.~\citep{jin2024llmagents} & 2024 & arXiv & 90 & Variants of \textit{LLM-based agent}; synonyms for block C1. \\
-Wang et al.~\citep{wang2024llmagents} & 2024 & ASE & 106 & Confirmation of the term \textit{language agent}; role vocabulary. \\
-Du et al.~\citep{du2026memory} & 2026 & arXiv & --- & Memory taxonomy for AI agents; vocabulary for block C2. \\
+\citet{hou2024llmse} & 2024 & TOSEM & 395 & Terms in the \textit{coding}/\textit{software engineering} block; venue coverage. \\
+\citet{liu2024llmagents} & 2024 & TOSEM & 117 & Vocabulary for autonomous software agents. \\
+\citet{zhang2024unifying} & 2024 & SCIS & 52 & Planning and memory terms in LLM agents. \\
+\citet{jin2024llmagents} & 2024 & arXiv & 90 & Variants of \textit{LLM-based agent}; synonyms for block C1. \\
+\citet{wang2024llmagents} & 2024 & ASE & 106 & Confirmation of the term \textit{language agent}; role vocabulary. \\
+\citet{du2026memory} & 2026 & arXiv & --- & Memory taxonomy for LLM agents; vocabulary for block C2. \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -60,14 +61,16 @@ Seven seed papers were defined, chosen for covering different persistence archit
 (experience bank, episodic memory, commit-oriented memory, \textit{git}-inspired context)
 and for including at least one negative result.
 The strategy underwent two refinement cycles documented in the versioned protocol, raising
-recovery from four to six of the seven seed papers; the remaining case (CodeMEM) was
-rescued by citation chasing, as described in the Method section.
+recovery from four to six of the seven seed papers; the remaining case (CodeMEM) was not
+captured by any database query and was added manually as a protocol amendment, as
+described in the Method section.
 \autoref{tab:qgs-recuperacao} consolidates the per-database recovery status.
 
 \begin{table}[htbp]
 \centering
-\caption{Seed-paper recovery by database and method. \textit{Cit.} indicates rescue via
-citation chasing.}
+\caption{Seed-paper recovery by database and method. \textit{String} indicates recovery via
+the primary Boolean search; \textit{Manual} indicates a documented protocol amendment
+for a seed paper not captured by any query.}
 \label{tab:qgs-recuperacao}
 \small
 \begin{tabular}{p{3.5cm}p{1cm}p{1.5cm}p{1.2cm}p{1.5cm}p{2cm}}
@@ -76,7 +79,7 @@ citation chasing.}
 \midrule
 Du (memory survey)~\citep{du2026memory} & 2026 & no & yes & yes & Yes (string) \\
 Joshi et al.\ (SWE-Bench-CL)~\citep{joshi2025swebenchcl} & 2025 & no & yes & yes & Yes (string) \\
-Wang et al.\ (CodeMEM)~\citep{wang2026codemem} & 2026 & no & no & yes & Yes (Cit.) \\
+Wang et al.\ (CodeMEM)~\citep{wang2026codemem} & 2026 & no & no & yes & Yes (Manual) \\
 Deng et al.\ (MemCoder)~\citep{deng2026memcoder} & 2026 & no & yes & yes & Yes (string) \\
 Wu et al.\ (GCC)~\citep{wu2025gcc} & 2025 & no & yes & yes & Yes (string) \\
 Wang et al.\ (Repository Memory)~\citep{wang2026improving} & 2026 & no & yes & yes & Yes (string) \\
@@ -118,15 +121,15 @@ management, and updates.
 2 & Platform/interface & Scopus via the Elsevier API (\texttt{scopus-mcp}); arXiv via REST API with full pagination (\texttt{fetch\_arxiv.py}). \\
 3 & Study registers & No study registers (for example, PROSPERO) were consulted. \\
 4 & Online resources & No organisational websites were consulted separately. \\
-5 & Citation chasing & Forward and backward via Semantic Scholar from seven seed papers; ResearchRabbit as a manual alternative. \\
+5 & Citation chasing & Forward and backward via Semantic Scholar from seven seed papers. \\
 6 & Author contact & No author was contacted. \\
-7 & Other methods & None beyond those described in items 1, 2, and 5. \\
+7 & Other methods & One documented manual addition: CodeMEM~\citep{wang2026codemem}, a seed paper not captured by the database strings; counted under the \textit{Manual} row of \autoref{tab:search}. See the amendment dated 2026-03-28 in the replication package. \\
 8 & Full strategies & Terms by conceptual block in \autoref{tab:search-strings}; exact per-database strings in the replication package (DOI: 10.5281/zenodo.19463131), versioned in \textit{git}. \\
 9 & Limits and restrictions & Scopus: \texttt{PUBYEAR > 2022}; arXiv: categories \texttt{cs.SE}, \texttt{cs.AI}, \texttt{cs.CL} and post-search filter \texttt{--year-from 2023}; English and Portuguese languages. \\
 10 & Strategy development & Mapping of three conceptual blocks, string construction with OR/AND, validation against seven seed papers, and two iterative refinement cycles documented in the versioned protocol. \\
 11 & Peer review & Strategy reviewed by the supervisor before final execution. \\
 12 & Record management & Zotero with Better BibTeX for management; \texttt{.bib} files versioned in \textit{git}. \\
-13 & Total records & 1,007 from the databases (Scopus: 39; arXiv: 968) and 186 unique from citation chasing; total of 1,193 before deduplication. \\
+13 & Total records & 1,007 from the databases (Scopus: 39; arXiv: 968), 186 unique from citation chasing, and 1 from documented manual addition (CodeMEM); total of 1,194 before deduplication. After removing 83 duplicates, 1,111 records entered title/abstract screening. \\
 14 & Deduplication & Elicit Pro deduplicates automatically on import; subsequent manual removal totalled 83 duplicates. \\
 15 & Automation tools & Scopus via MCP, arXiv via Python script, assisted screening via Elicit Pro, citation chasing via Semantic Scholar MCP. \\
 16 & Updates & Search to be re-run before submission if more than three months have elapsed since the initial execution. \\
