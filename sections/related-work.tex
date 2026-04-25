@@ -38,7 +38,7 @@ data for the systems it reviews.}
 \midrule
 \citet{du2026memory} & 2026 &
   Memory for LLM agents in general &
-  Yes & No \\
+  Partial & No \\
 \citet{hou2024llmse} & 2024 &
   LLMs for software engineering (395 studies) &
   No & No \\
@@ -67,7 +67,7 @@ data for the systems it reviews.}
 \subsection{Surveys on memory for LLM agents}
 \label{sec:rel-memoria}
 
-\citet{du2026memory} presents the most recent survey on memory
+\citet{du2026memory} presents a recent survey on memory
 mechanisms for LLM-based agents, proposing a three-dimensional taxonomy
 (temporal scope, representational substrate, and control policy) that
 this review adopts and refines as the starting point of SQ1.
@@ -80,6 +80,8 @@ It covers general agents for web navigation, mathematical reasoning and
 dialogue, without restriction to the coding domain.
 The coverage of software engineering in Du's survey is therefore
 limited to ChatDev and MetaGPT.
+Du treats memory as a primary topic, but not cross-session persistence
+in coding agents as a bounded review object.
 Systems central to the present investigation are not mentioned:
 MemCoder~\citep{deng2026memcoder},
 CodeMEM~\citep{wang2026codemem}, and the Repository Memory approach of
@@ -124,12 +126,13 @@ investigation, not as an ancillary architectural component of a broader
 synthesis.
 On this basis, it incorporates per-task operational cost analysis as a
 dedicated dimension (SQ4).
-That cost dimension is what distinguishes this review from prior work.
+Cost is where this review departs most sharply from prior secondary
+work.
 None of the previously identified SLRs simultaneously gathers a focus
 on cross-session persistence, a coding-agent scope, and cross-study cost
 quantification.
-The configuration enables answers to questions that earlier secondary
-work does not address.
-Chief among them are the absence of head-to-head comparisons between
-architectures, the systematic underreporting of costs, and the
-mechanisms by which memory can harm agent performance.
+This scope isolates two practical questions:
+what does memory improve, and what does it cost?
+It also exposes the absence of head-to-head comparisons between
+architectures and the mechanisms by which memory can harm agent
+performance.

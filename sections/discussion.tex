@@ -16,13 +16,16 @@ The LLM itself acts as the memory controller in 54\% of the
 architecture studies.
 Evaluation is centred on SWE-bench Verified, which appears in 13 of the
 24 studies with benchmark evaluation (54\%, \autoref{tab:benchmarks}).
-This convergence does not yet imply maturity.
+Studies increasingly choose SWE-bench Verified, but they do not test
+memory designs against one another.
 The 28 included studies are dominated by preprints (82\%) and use at
 least eight distinct LLMs as backbones.
-No study in the corpus compares architectures on the same benchmark
-with the same model, so the observed convergence reflects independent
-author choices rather than an empirical validation of experience banks
-over alternatives such as knowledge graphs or Git metaphors.
+No study in the corpus compares three or more independent persistence
+architectures under the same benchmark, model backbone, scaffold,
+compute budget, and cost-accounting protocol.
+The observed convergence reflects independent author choices rather
+than an empirical validation of experience banks over alternatives such
+as hierarchical knowledge bases or repository-history memory.
 
 Controlled evidence is mostly positive but not uniformly so:
 18 of the 19 architecture studies with a controlled no-persistence
@@ -46,17 +49,21 @@ The cost impact is bimodal: systems that substitute condensed memory
 for redundant context reduce token consumption by margins ranging from
 about $-32$\% in total cost for
 EET~\citep{guo2026eet} and $-39$\% in tokens for
-GBT~\citep{li2026traversalaspolicy} to roughly half the tokens of the
-baseline for TALM~\citep{shen2025talm} on ClassEval,
+GBT~\citep{li2026traversalaspolicy} to 2.4$\times$ fewer tokens for
+KernelBlaster~\citep{dong2026kernelblaster},
 while systems that add context via retrieval raise cost by +5 to
 +21\%~\citep{chen2025sweexp,wang2026memgovern,xia2025livesweagent}.
+TALM~\citep{shen2025talm} reports roughly half the tokens of MapCoder
+on ClassEval, but that is a full-system comparison;
+the memory module itself adds only marginal token overhead.
 
 Adverse outcomes associated with persistence appear in nine of the 28
 included studies (32\%, \autoref{tab:degradation}).
-Four are direct performance drops; the remaining five capture overhead,
-maintenance burden, security, and evaluation artefacts.
+Four include direct performance drops or benchmark-level regressions;
+the remaining five capture overhead, maintenance burden, security, and
+evaluation artefacts.
 Retrieval selection and backend governance are the dominant mechanisms
-in the direct performance drops:
+in the direct regressions:
 \citet{lindenbauer2025ctimrover} report that unfiltered CTIM injection
 biases exploration and falls up to 11~pp below the AutoCodeRover
 baseline in its weakest configuration,
@@ -78,9 +85,9 @@ constitute a retrieval-level attack surface.
 
 The central gap identified by this review is the absence of head-to-head
 comparisons.
-None of the 28 studies evaluates three or more persistence architectures
-on the same benchmark, with the same model, and under the same compute
-budget.
+No study compares three or more independent persistence architectures
+under the same benchmark, model backbone, scaffold, compute budget, and
+cost-accounting protocol.
 Each system reports gains against its own no-memory baseline, but
 experimental conditions differ in model, framework, instance subset, and
 number of attempts.
@@ -98,14 +105,18 @@ interpretation~\citep{chen2025sweexp,guo2026eet,wang2026memgovern,wu2025gcc,xia2
 and only a subset of these provide a within-study memory-vs-no-memory
 cost delta;
 eight of the 24 architecture studies (33\%) report no cost data, and
-the figure rises to 12 of the 28 included studies (43\%) when
-contextual sources are counted.
+12 of the 28 included studies (43\%) do not contribute cost data when
+contextual sources are counted, including the Du survey for which cost
+is not applicable.
 Without standardised cost-per-task metrics (tokens consumed, monetary
 cost, wall-clock time), practitioners cannot assess the trade-off of
 adopting persistence.
-Constructing a Pareto frontier between accuracy and cost, absent in
-every analysed study, would make adoption decisions measurable rather
-than accuracy-only.
+Constructing a cross-architecture Pareto frontier between accuracy and
+cost would make adoption decisions measurable rather than accuracy-only.
+ToM-SWE reports a configuration-level frontier within one architecture,
+but the corpus does not contain a frontier that compares multiple
+persistence designs under the same benchmark, model backbone, scaffold,
+compute budget, and cost-accounting protocol.
 
 Evidence on the relationship between architectural complexity and gain
 is partial.
@@ -143,17 +154,16 @@ In high-baseline SWE-bench Verified settings ($>65\%$), reported gains
 are modest but positive across several architecture families:
 \citet{chen2025sweexp} and \citet{deng2026memcoder} report
 experience-bank gains of $+2.2$ and $+9.4$~pp,
-\citet{wu2025gcc} reports a Git-metaphor context-management gain of
+\citet{wu2025gcc} reports a Git-style version-control memory gain of
 $+6.2$~pp, and \citet{xia2025livesweagent} reports $+3.2$~pp for
 task-local executable tool creation.
 These results support testing simple memory or context-management
 baselines first, but they do not establish architectural superiority:
-no study in the corpus compares experience banks against knowledge
-graphs, hierarchical memory, or other architectures under controlled
-conditions.
+no study in the corpus compares experience banks against
+hierarchical/state knowledge bases, repository-history memory, or other
+architectures under controlled conditions.
 
-The available data suggest that retrieval-mechanism calibration may
-matter more than architectural sophistication.
+Two ablations make retrieval calibration hard to ignore.
 \citet{chen2025sweexp} report that retrieving more than one experience
 ($k > 1$) degrades performance from 42.0\% to 39.0\%, and
 \citet{shen2026structurally} report that category isolation outperforms
@@ -225,9 +235,10 @@ have been published in peer-reviewed venues: two at
 conferences~\citep{wang2026improving,zhang2025darwingodel} and three at
 workshops~\citep{deshpande2025memtrack,shen2025talm,lindenbauer2025ctimrover}.
 Sensitivity analysis S1 (\autoref{sec:sensitivity}) shows that,
-when preprints are excluded, no qualitative conclusion inverts, but the
-evidence base for cost (SQ4) drops from seven to two studies and the
-detailed taxonomy loses empirical support.
+when preprints are excluded, no qualitative conclusion inverts, but SQ4
+becomes preprint-sensitive:
+detailed monetary cost evidence is largely removed, and the remaining
+peer-reviewed cost evidence is partial.
 
 Searches were limited to two databases (Scopus and arXiv), complemented
 by citation chasing.
@@ -236,7 +247,7 @@ Xplore, ACM Digital Library) may have been missed.
 The rationale for this choice, based on \citet{mourao2020hybrid}, is
 documented in \autoref{sec:fontes}.
 
-The 14 studies that use SWE-bench Verified differ in base model, agent
+The 13 studies that use SWE-bench Verified differ in base model, agent
 framework, instance subset, and run conditions (\autoref{sec:sq2}).
 The construct ``agent performance'' is not operationalised uniformly
 across studies, which limits direct comparability of resolution
@@ -264,14 +275,16 @@ alternative inclusion criteria.
 \subsection{Research agenda}
 \label{sec:agenda-pesquisa}
 
-The three gaps confirmed by this review define the next empirical
-step suggested by the evidence.
-Gap~1, the absence of head-to-head comparisons, calls for an experiment
-that evaluates at least three representative architectures on a shared
-benchmark, with a fixed model, and under a matching compute budget.
-Gap~2, cost underreporting, requires that such an experiment include
-an integrated cost-per-task analysis, producing an explicit Pareto
-frontier between accuracy and cost.
+The next empirical step should compare representative memory designs
+under the same conditions rather than add another isolated system
+report.
+The absence of head-to-head comparisons calls for an experiment that
+compares three or more independent persistence architectures under the
+same benchmark, model backbone, scaffold, compute budget, and
+cost-accounting protocol.
+Cost underreporting requires that such an experiment include an
+integrated cost-per-task analysis, producing a cross-architecture
+Pareto frontier between accuracy and cost.
 
 Metric standardisation is a prerequisite for future comparability.
 The continual-learning metrics proposed by

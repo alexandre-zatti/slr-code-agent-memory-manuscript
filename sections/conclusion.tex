@@ -34,23 +34,28 @@ median gain is 6.5~pp, and across the 18 comparable comparisons the
 median is 7.8~pp, with reported gains ranging from $-$2.0 to
 +39.0~pp.
 For cost (SQ4), eight of 24 architecture studies (33\%) report no cost
-data, and the memory impact is bimodal: systems that replace context
-reduce tokens, while systems that add context raise cost by
-approximately 5 to 21\%.
+data, and 12 of 28 included studies (43\%) do not contribute cost
+data, including one survey for which cost is not applicable.
+Where within-study deltas are reported, the memory impact is bimodal:
+systems that replace context reduce tokens, while systems that add
+context raise cost by approximately 5 to 21\%.
 On complexity and effectiveness (SQ5), nine of the 28 included studies
 (32\%) report adverse or cautionary findings related to persistence;
-four report direct performance drops in their main or coded adverse
-comparison (retrieval noise, backend redundancy with follow-up decay,
-or model-dependent overhead), and TALM reports sub-benchmark drops on
+four include direct performance drops or benchmark-level regressions
+(retrieval noise, backend redundancy with follow-up decay, or
+model-dependent overhead), and TALM reports sub-benchmark drops on
 HumanEval when memory is enabled;
 the corpus contains no controlled evidence that isolates architectural
 complexity as a cause of larger gains.
 
-None of the 28 studies compares persistence architectures directly.
+No study compares three or more independent persistence architectures
+under the same benchmark, model backbone, scaffold, compute budget, and
+cost-accounting protocol.
 This absence, combined with cost underreporting and the uncertainty
 about the role of architectural complexity, prevents informed decisions
 about which approach to adopt in each context.
 The most critical gap is the absence of head-to-head comparisons.
 Closing it requires a comparative experiment that evaluates at least
-three representative architectures under a shared benchmark, a fixed
-model backbone, and integrated per-task cost analysis.
+three representative architectures under the same benchmark, model
+backbone, scaffold, compute budget, and cost-accounting protocol,
+producing a cross-architecture cost-performance frontier.

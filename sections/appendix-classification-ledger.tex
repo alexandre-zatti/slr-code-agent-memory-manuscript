@@ -1,0 +1,65 @@
+\section{Architecture Classification Ledger}
+\label{ap:classification-ledger}
+
+This appendix reports the coded values used for the SQ1 taxonomy and
+for inclusion in the SQ3 and SQ4 syntheses.
+It is a compact audit ledger for the 24 architecture studies; the four
+contextual sources are excluded from this table.
+For SQ3, ``pp'' marks inclusion in the percentage-point synthesis,
+``sep.'' marks studies discussed separately because their metrics are
+not comparable in percentage points, and ``excl.'' marks studies
+excluded from the SQ3 percentage-point synthesis.
+For SQ4, ``detailed'' marks monetary cost with supporting detail,
+``partial'' marks token or cost evidence without complete
+cost accounting, and ``none'' marks no usable cost data.
+
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\begin{longtable}{@{}
+  >{\raggedright\arraybackslash}p{2.15cm}
+  >{\raggedright\arraybackslash}p{2.05cm}
+  >{\raggedright\arraybackslash}p{1.35cm}
+  >{\raggedright\arraybackslash}p{1.45cm}
+  >{\raggedright\arraybackslash}p{1.2cm}
+  >{\raggedright\arraybackslash}p{1.55cm}
+  >{\centering\arraybackslash}p{0.75cm}
+  >{\centering\arraybackslash}p{0.95cm}
+@{}}
+  \caption{Classification ledger for the 24 architecture studies.}
+  \label{tab:classification-ledger} \\
+  \toprule
+  Study & Family & Scope & Substrate & Control & Retrieval & SQ3 & SQ4 \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Study & Family & Scope & Substrate & Control & Retrieval & SQ3 & SQ4 \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+  Bui (OpenDev) & Text notes & Hybrid & Text & LLM & Hybrid & excl. & none \\
+  Chen (SWE-Exp) & Experience bank & Hybrid & Structured & LLM & Hybrid & pp & detailed \\
+  Deng (MemCoder) & Experience bank & Hybrid & Structured & LLM & Hybrid & pp & none \\
+  Dong (KernelBlaster) & Hierarchical/state KB & Hybrid & Structured & Learned & State match & sep. & partial \\
+  Guo (EET) & Experience bank & Episodic & Structured & LLM & TF-IDF top-1 & pp & detailed \\
+  Hosain (Xolver) & Hybrid & Hybrid & Text & LLM & Hybrid & excl. & partial \\
+  Li (GBT) & Executable substrate & Procedural & Executable & Heuristic & Other & pp & partial \\
+  Lindenbauer (CTIM-Rover) & Experience bank & Episodic & Text & Heuristic & Embeddings & pp & none \\
+  Nadafian (KAPSO) & Hybrid & Hybrid & Hybrid & LLM & Hybrid & pp & partial \\
+  Qian (IER) & Experience bank & Procedural & Text & Heuristic & Embeddings & excl. & none \\
+  Shen (TALM) & Experience bank & Hybrid & Hybrid & Heuristic & Embeddings & pp & partial \\
+  Shen (Structurally) & Experience bank & Procedural & Structured & Heuristic & Hybrid & pp & none \\
+  Su (Learn-by-Interact) & Experience bank & Episodic & Text & Heuristic & Hybrid & pp & partial \\
+  Tablan (Spark) & Experience bank & Hybrid & Hybrid & LLM & Hybrid & sep. & none \\
+  Vasilopoulos (Codified) & Hybrid & Hybrid & Text & Heuristic & Hybrid & excl. & none \\
+  Wang (RepoMem) & Repository-history memory & Hybrid & Hybrid & Heuristic & BM25 & pp & partial \\
+  Wang (CodeMEM) & AST-guided & Hybrid & Hybrid & LLM & AST intersection & pp & partial \\
+  Wang (MemGovern) & Experience bank & Semantic & Structured & LLM & Hybrid & pp & detailed \\
+  Wong (CCA) & Hybrid & Hybrid & Text & LLM & Hybrid & pp & partial \\
+  Wu (GCC) & Git-style version-control memory & Hybrid & Text & LLM & Hybrid & pp & detailed \\
+  Xia (Live-SWE-Agent) & Executable substrate (task-local) & Procedural & Executable & LLM & Full load & pp & detailed \\
+  Zhang (AccelOpt) & Experience bank & Episodic & Text & Heuristic & Full load & excl. & detailed \\
+  Zhang (DGM) & Executable substrate & Procedural & Executable & Learned & Other & pp & none \\
+  Zhou (ToM-SWE) & Hybrid & Hybrid & Structured & LLM & BM25 & pp & detailed \\
+\end{longtable}
+\normalsize

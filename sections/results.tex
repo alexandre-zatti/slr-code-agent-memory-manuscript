@@ -46,17 +46,22 @@ the \citet{du2026memory} analytical survey,
 the \citet{deshpande2025memtrack} and \citet{joshi2025swebenchcl}
 benchmark proposals, and the \citet{srivastava2025memorygraft} security
 evaluation.
-The remaining 24 studies propose or implement persistence architectures
-and are analysed in the taxonomy;
+The remaining 24 studies are architecture studies relevant to
+persistence:
+23 propose cross-session persistence architectures, and
+Live-SWE-Agent is retained as a task-local executable-memory boundary
+case.
+They are analysed in the taxonomy;
 where the underlying paper reports the relevant data, they also
 contribute to the performance (\autoref{sec:sq3}), cost
 (\autoref{sec:sq4}), and complexity (\autoref{sec:sq5}) syntheses.
 OpenDev~\citep{bui2026opendev}, for example, is included in the SQ1
 taxonomy but does not clear the quantitative evaluation floor and is
 therefore excluded from SQ3/SQ4/SQ5;
-Live-SWE-Agent~\citep{xia2025livesweagent} is retained as a task-local
-boundary case whose executable tools are reused within a task but
-discarded across tasks (\autoref{sec:selecao}).
+Live-SWE-Agent~\citep{xia2025livesweagent} contributes to the taxonomy
+but not as cross-session evidence because its executable tools are
+reused within a task and discarded across tasks
+(\autoref{sec:selecao}).
 
 Of the 24 architecture studies, 17 share an open repository and three
 offer partial access.
@@ -96,7 +101,7 @@ and Gemini 2.5/3 Pro.
   Chen (SWE-Exp) & 2025 & arXiv & preprint & experience bank & 6.0 \\
   Deng (MemCoder) & 2026 & arXiv & preprint & experience bank & 4.5 \\
   Deshpande (MemTrack) & 2025 & NeurIPS-W & workshop & benchmark & 4.5 \\
-  Dong (KernelBlaster) & 2026 & arXiv & preprint & knowledge graph & 4.5 \\
+  Dong (KernelBlaster) & 2026 & arXiv & preprint & hierarchical/state KB & 4.5 \\
   Du (survey) & 2026 & arXiv & preprint & survey & 2.5 \\
   Guo (EET) & 2026 & arXiv & preprint & experience bank & 5.5 \\
   Hosain (Xolver) & 2025 & arXiv & preprint & hybrid & 5.5 \\
@@ -111,11 +116,11 @@ and Gemini 2.5/3 Pro.
   Su (Learn-by-Interact) & 2025 & arXiv & preprint & experience bank & 5.0 \\
   Tablan (Spark) & 2025 & arXiv & preprint & experience bank & 5.0 \\
   Vasilopoulos (Codified) & 2026 & arXiv & preprint & hybrid & 5.0 \\
-  Wang (RepoMem) & 2026 & ICLR & conference & Git metaphor & 5.0 \\
+  Wang (RepoMem) & 2026 & ICLR & conference & repository-history memory & 5.0 \\
   Wang (CodeMEM) & 2026 & arXiv & preprint & AST-guided & 5.0 \\
   Wang (MemGovern) & 2026 & arXiv & preprint & experience bank & 5.5 \\
   Wong (CCA) & 2025 & arXiv & preprint & hybrid & 5.5 \\
-  Wu (GCC) & 2025 & arXiv & preprint & Git metaphor & 5.5 \\
+  Wu (GCC) & 2025 & arXiv & preprint & Git-style version-control memory & 5.5 \\
   Xia (Live-SWE-Agent) & 2025 & arXiv & preprint & executable substrate (boundary) & 5.5 \\
   Zhang (AccelOpt) & 2025 & arXiv & preprint & experience bank & 5.5 \\
   Zhang (Darwin-Gödel) & 2025 & ICLR & conference & executable substrate & 5.0 \\
@@ -152,10 +157,13 @@ entries, making experience banks the most frequent type
 Hybrid architectures account for five studies (21\%), typically
 combining episodic with semantic
 memory~\citep{hosain2025xolver,nadafian2026kapso,wong2025confucius}.
-Two implementations adopt a Git
-metaphor~\citep{wang2026improving,wu2025gcc}, and categories such as
-AST-guided~\citep{wang2026codemem} and knowledge
-graph~\citep{dong2026kernelblaster} have one study each.
+Two implementations use version-control or repository-history memory:
+\citet{wang2026improving} mine commit history into episodic and
+semantic stores, while \citet{wu2025gcc} exposes a Git-style
+version-control memory interface.
+Categories such as AST-guided~\citep{wang2026codemem} and
+hierarchical/state knowledge base~\citep{dong2026kernelblaster} have
+one study each.
 
 \begin{table}[htbp]
   \centering
@@ -172,9 +180,9 @@ graph~\citep{dong2026kernelblaster} have one study each.
     Experience bank       & 11 & 46 \\
     Hybrid                &  5 & 21 \\
     Executable substrate  &  3 & 13 \\
-    Git metaphor          &  2 &  8 \\
+    Repository-history / version-control memory &  2 &  8 \\
     AST-guided            &  1 &  4 \\
-    Knowledge graph       &  1 &  4 \\
+    Hierarchical/state KB &  1 &  4 \\
     Text notes            &  1 &  4 \\
     \midrule
     \textbf{Total}      & \textbf{24} & \\
@@ -232,8 +240,8 @@ dominant control policy.
     as grid reference points, not as data.
     The largest cluster is experience-like architectures with a
     hybrid temporal scope, while substrates such as AST-guided,
-    knowledge graphs, and Git metaphors remain at isolated
-    adoption.}
+    hierarchical/state knowledge bases and repository-history or
+    version-control memory remain at isolated adoption.}
   \label{fig:taxonomy}
 \end{figure}
 
@@ -254,7 +262,8 @@ The 24 studies with benchmark evaluation (23 benchmark-only plus one
 mixed) comprise 22 architecture studies and two contextual benchmark
 proposals (MemTrack and SWE-Bench-CL).
 ToM-SWE~\citep{zhou2025tomswe} is coded as a hybrid architecture study
-whose evaluation combines benchmark and in-the-wild deployment.
+whose evaluation combines benchmark results with an observational
+user-study component.
 \autoref{tab:benchmarks} lists every benchmark used for evaluation
 across the 24 studies and the number of studies that adopt each one.
 SWE-bench Verified is the most frequent benchmark, used by 13 of the
@@ -335,11 +344,15 @@ adopted by other studies.
 
 Direct comparability across systems remains limited.
 Although 13 studies use SWE-bench Verified, experimental conditions
-differ: at least eight distinct LLMs serve as the backbone, subsets
-vary between 300 and 500 instances, and parameters such as temperature
-and timeout are rarely reported.
-No study in the corpus compares three or more persistence architectures
-on the same benchmark with the same model, confirming Gap~1.
+differ: at least eight distinct LLMs serve as the backbone, instance
+subsets range from CTIM-Rover's 45-instance test
+subset~\citep{lindenbauer2025ctimrover} to DGM's 200-task
+subset~\citep{zhang2025darwingodel} and the full 500-instance
+benchmark, and parameters such as temperature and timeout are rarely
+reported.
+No study in the corpus compares three or more independent persistence
+architectures under the same benchmark, model backbone, scaffold,
+compute budget, and cost-accounting protocol.
 
 \FloatBarrier
 \subsection{Performance results (SQ3)}
@@ -465,10 +478,13 @@ architecture type.
   \label{fig:gains}
 \end{figure}
 
-Five studies do not present a controlled
-comparison~\citep{bui2026opendev,vasilopoulos2026codified,qian2024iterative,hosain2025xolver,zhang2025accelopt},
-for reasons such as absence of a formal benchmark, observational case
-study, or incomparable baseline.
+Five architecture studies are excluded from the percentage-point SQ3
+synthesis because they lack a comparable no-persistence coding-agent
+baseline, use non-standard proxy metrics, or compare against baselines
+that do not isolate persistence:
+\citet{bui2026opendev}, \citet{vasilopoulos2026codified},
+\citet{qian2024iterative}, \citet{hosain2025xolver}, and
+\citet{zhang2025accelopt}.
 
 \FloatBarrier
 \subsection{Cost and efficiency (SQ4)}
@@ -482,19 +498,50 @@ nine report partial data (cost or tokens, but not both);
 and eight report no cost data (33\%).
 Only a subset of the cost-reporting studies provide a within-study
 memory-vs-no-memory cost delta;
-the remainder report cost under a single configuration or against a
-different backbone rather than against an ablated memory baseline.
-Adding the four contextual studies (the Du survey, for which the cost
-field is not applicable, plus the Deshpande, Joshi, and Srivastava
-studies, which do not report cost data) raises the count to 12 of the
-28 included studies (43\%) without cost information.
-The gap in cost reporting thus applies whether the denominator is the
-architecture corpus (33\%) or the full included corpus (43\%), and
-confirms Gap~2.
+the remainder report component ablations, full-system comparisons, or
+non-comparable partial cost figures rather than against an ablated
+memory baseline.
+Adding the four contextual studies raises the count to 12 of the 28
+included studies (43\%) that do not contribute cost data, including
+the Du survey, for which the cost field is not applicable.
+Cost underreporting is therefore visible under both denominators:
+the architecture corpus (33\%) and the full included corpus (43\%).
+
+\autoref{tab:cost-evidence} distinguishes the cost evidence types
+considered during SQ4 coding.
+The distinction matters because only the first type estimates the
+incremental operating cost of persistence under a fixed system and
+backbone.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Cost evidence types considered in SQ4.}
+  \label{tab:cost-evidence}
+  \small
+  \begin{tabularx}{\textwidth}{@{} l X X @{}}
+    \toprule
+    Evidence type & Meaning & Examples in this corpus \\
+    \midrule
+    Memory delta &
+      Same system and backbone, with memory or persistence ablated &
+      EET, SWE-Exp, MemGovern \\
+    Component ablation &
+      One memory component removed or isolated inside the same system &
+      CodeMEM CtxMem/SessAST, KernelBlaster KB, TALM memory module \\
+    Full-system comparison &
+      Scaffold, model, or orchestration changes together with memory &
+      TALM vs.\ MapCoder, GCC vs.\ other agents, AccelOpt vs.\
+      Claude~Sonnet~4 \\
+    Single configuration &
+      Cost reported without a comparable memory baseline &
+      None retained after strict SQ4 coding \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
 
 \autoref{tab:cost} reports monetary cost per task in the studies that
-publish it; not every row in this table is a memory-vs-no-memory
-contrast.
+publish it, with the evidence type interpreted according to
+\autoref{tab:cost-evidence}.
 AccelOpt~\citep{zhang2025accelopt} is included because it provides a
 detailed monetary breakdown, but its headline 26-fold cost reduction
 compares an open-source backbone with experience queue against a
@@ -518,21 +565,23 @@ underlying architecture.
     Not every row is a within-study memory-vs-no-memory contrast; see
     \autoref{fig:cost} for the subset with a within-study cost delta.}
   \label{tab:cost}
-  \begin{tabular}{l r l l}
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{l r l l l}
     \toprule
-    Study & Cost/task & LLM & Benchmark \\
+    Study & Cost/task & LLM & Benchmark & Evidence \\
     \midrule
-    Guo (EET) & \$0.01 & GPT-5-mini & SWE-b. V. \\
-    Zhou (ToM-SWE) & \$0.02 & GPT-5-nano & Stateful SWE \\
-    Xia (Live-SWE) & \$0.05--0.73 & various & SWE-b. V./Pro \\
-    Wang (MemGov., Qwen) & \$0.07 & Qwen3-30B & SWE-b. V. \\
-    Chen (SWE-Exp) & \$0.13 & DeepSeek-V3 & SWE-b. V. \\
-    Wu (GCC) & \$0.57--1.21 & various & SWE-b. Lite \\
-    Wang (RepoMem) & \$0.58--0.89 & NR & SWE-b. V. \\
-    Zhang (AccelOpt) & \$6.87--15.95 & open-source & NKIBench \\
-    Wang (MemGov., Claude) & \$7.27 & Claude 4 S. & SWE-b. V. \\
+    Guo (EET) & \$0.01 & GPT-5-mini & SWE-b. V. & Memory delta \\
+    Zhou (ToM-SWE) & \$0.02 & GPT-5-nano & Stateful SWE & Memory delta \\
+    Xia (Live-SWE) & \$0.05--0.73 & various & SWE-b. V./Pro & Memory delta \\
+    Wang (MemGov., Qwen) & \$0.07 & Qwen3-30B & SWE-b. V. & Memory delta \\
+    Chen (SWE-Exp) & \$0.13 & DeepSeek-V3 & SWE-b. V. & Memory delta \\
+    Wu (GCC) & \$0.57--1.21 & various & SWE-b. Lite & Full-system \\
+    Wang (RepoMem) & \$0.58--0.89 & NR & SWE-b. V. & Memory delta \\
+    Zhang (AccelOpt) & \$6.87--15.95 & open-source & NKIBench & Full-system \\
+    Wang (MemGov., Claude) & \$7.27 & Claude 4 S. & SWE-b. V. & Memory delta \\
     \midrule
-    \multicolumn{4}{l}{\footnotesize NR: not reported in the original paper.} \\
+    \multicolumn{5}{l}{\footnotesize NR: not reported in the original paper.} \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -542,8 +591,12 @@ the relationship between memory and cost follows two distinct patterns.
 Systems that use memory to replace redundant context reduce costs:
 \citet{guo2026eet} achieves $-31.8$\% in total cost,
 \citet{li2026traversalaspolicy} cuts tokens by 39\%, and
-\citet{shen2025talm} consume roughly half the tokens of their
-baseline on ClassEval.
+\citet{dong2026kernelblaster} reports 2.4$\times$ fewer tokens than a
+minimal no-KB agent.
+\citet{shen2025talm} reports roughly half the tokens of MapCoder on
+ClassEval, but that is a full-system comparison;
+the memory module itself adds only marginal token overhead and is not
+counted as a within-study persistence-cost reduction.
 By contrast, systems that add context via retrieval increase costs
 marginally:
 \citet{chen2025sweexp} reports $+7.5$\% in tokens and
@@ -557,30 +610,33 @@ magnitudes of gain and cost.
   \centering
   \resizebox{\textwidth}{!}{\input{figures/fig-cost}}
   \caption{Schematic of the two opposite patterns of memory impact on
-    operating cost reported among studies that provide a within-study
-    cost or token delta against a no-persistence or ablation
-    comparator.
+    operating cost among studies that provide a within-study cost or
+    token delta against a no-persistence or ablation comparator.
     On the left, systems that substitute condensed memory for
-    redundant context (e.g., EET, Traversal-as-Policy, TALM) report
-    cost reductions.
+    redundant context (e.g., EET, Traversal-as-Policy, KernelBlaster)
+    report cost reductions.
     On the right, systems that add context via retrieval (e.g.,
     SWE-Exp, MemGovern with Claude~4~Sonnet) report cost increases.
-    Each entry shows the variation reported in the original study
-    relative to the study's own baseline or ablation comparator, using
-    the variable the authors provide (percentage cost, percentage
-    tokens, absolute token count, or a cost ratio);
-    the figure is qualitative and the entries are not directly
-    comparable across studies.
-    CodeMEM's token reduction is attributed specifically to the Code
-    Context Memory (CtxMem) component;
-    removing the session-memory SessAST component in the same study
-    reduces tokens further but at a performance cost, so the system's
-    token profile depends on configuration.
-    AccelOpt is omitted because its reported 26-fold cost reduction
-    compares an open-source backbone with experience queue against a
-    Claude~Sonnet~4 baseline rather than a within-study
-    memory-versus-no-memory contrast.}
+    Entries are qualitative and are not directly comparable across
+    studies.}
   \label{fig:cost}
+  \par\smallskip
+  \footnotesize\emph{Note.}
+  Each entry uses the variable reported by the original study
+  (percentage cost, percentage tokens, absolute token count, or cost
+  ratio).
+  TALM is not plotted because its roughly 50\% token reduction is a
+  full-system comparison against MapCoder; the memory module itself adds
+  only marginal token overhead.
+  CodeMEM's token reduction is attributed to the Code Context Memory
+  (CtxMem) component;
+  removing the session-memory SessAST component reduces tokens further
+  but at a performance cost.
+  AccelOpt is omitted because its reported 26-fold cost reduction
+  compares an open-source backbone with experience queue against a
+  Claude~Sonnet~4 baseline rather than a memory-versus-no-memory
+  contrast.
+  \normalsize
 \end{figure}
 
 Among studies with within-study persistence-cost comparisons,
@@ -594,13 +650,17 @@ domain;
 this result compares an open-source backbone with experience queue
 against a different model backbone and is therefore not counted as a
 persistence-cost effect.
-No study in the corpus constructs an explicit Pareto frontier between
-accuracy and cost.
+No study constructs a cross-architecture Pareto frontier under the same
+benchmark, model backbone, scaffold, compute budget, and
+cost-accounting protocol.
+ToM-SWE reports a configuration-level cost-performance frontier, and
+other papers provide cost-performance curves or single-system cost
+breakdowns, but none compares multiple persistence architectures under
+the same benchmark, model backbone, scaffold, compute budget, and
+cost-accounting protocol.
 Cross-study dominance on both axes cannot be established directly:
 benchmarks, base models, and cost-accounting conventions differ among
-the studies that report cost data, so any apparent dominance reflects
-comparison across heterogeneous settings rather than a controlled
-evaluation on a shared frontier.
+the studies that report cost data.
 
 \FloatBarrier
 \subsection{Complexity versus effectiveness (SQ5)}
@@ -609,15 +669,16 @@ evaluation on a shared frontier.
 Nine of the 28 included studies (32\%) report adverse outcomes
 associated with knowledge persistence.
 \autoref{tab:degradation} groups these cases by mechanism category and
-indicates which are direct performance drops and which are overhead,
-security, or evaluation-artefact findings.
+indicates which are direct regressions, overhead, security, or
+evaluation-artefact findings.
 
 \begin{table}[htbp]
   \centering
   \caption{Adverse or cautionary findings related to persistence and
     its evaluation, grouped by mechanism category.
-    Four cases document direct performance drops; the remainder
-    capture overhead, security, or evaluation artefacts.}
+    Four cases include a direct performance drop or benchmark-level
+    regression; the remainder capture overhead, security, or evaluation
+    artefacts.}
   \label{tab:degradation}
   \small
   \setlength{\tabcolsep}{5pt}
@@ -626,23 +687,28 @@ security, or evaluation-artefact findings.
     Study & Category & Mechanism & Scenario \\
     \midrule
     Lindenbauer & Performance drop & retrieval noise &
-      Noisy items divert exploration ($-11$~pp) \\
+      Noisy CTIM injection diverts exploration;
+      best CTIM configuration is $-2$~pp, weakest CTIM-only variants
+      fall to $-11$~pp \\
     Chen & Performance drop & retrieval noise &
       retrieving $k > 1$ experiences degrades performance
       (42.0\% to 39.0\%) \\
-    Deshpande & Performance drop & backend redundancy, follow-up decay &
+    Deshpande & Benchmark caution & backend redundancy, follow-up decay &
       Mem0 and Zep do not improve aggregate correctness, increase
       tool-call redundancy to $\sim$21\%, and perform worse than no-memory
       on follow-up-question conditions \\
     Xia & Performance drop & model-dependent overhead &
-      Weak LLMs degrade $-68.2$\% under tool creation \\
+      GPT-5-Nano: 44.0\%~$\to$~14.0\% ($-30$~pp;
+      $-68.2$\% relative) under tool creation \\
     \midrule
     Shen (TALM) & Overhead & unnecessary retrieval &
       Retrieval does not pay off on simple tasks;
       memory also reduces HumanEval accuracy with GPT-4o-mini
       (90.59\%~$\to$~89.13\%) and GPT-4o (94.48\%~$\to$~92.55\%) \\
     Vasilopoulos & Overhead & maintenance burden &
-      Knowledge-to-code ratio of 24\% requires 1--2 h/week \\
+      24.2\% knowledge-to-code ratio is diagnostic, not a target;
+      reported upkeep averaged 1--2 h/week and stale specs caused
+      silent failures \\
     \midrule
     Srivastava & Security & memory poisoning &
       9.1\% poisoned experiences appear in 47.9\% of retrieved records
@@ -659,16 +725,24 @@ security, or evaluation-artefact findings.
 \end{table}
 
 Four mechanism categories emerge from the data.
-Four studies report direct performance drops in their main or coded
-adverse comparison:
+Four studies report direct performance drops or benchmark-level
+regressions in their main or coded adverse comparison:
 retrieval noise~\citep{lindenbauer2025ctimrover,chen2025sweexp},
 backend redundancy with follow-up decay~\citep{deshpande2025memtrack},
 and model-dependent overhead~\citep{xia2025livesweagent};
 \citet{shen2025talm} also report sub-benchmark drops on HumanEval
 when memory is enabled, even though their main BigCodeBench result
 (\autoref{tab:performance}) is positive.
-Two report overhead or maintenance burden without a direct performance
-drop~\citep{shen2025talm,vasilopoulos2026codified};
+Deshpande is retained as benchmark-level cautionary evidence rather
+than as an architecture-level SQ3 degradation result.
+TALM is coded as an overhead case because its main coded benchmark
+comparison is positive, but it also reports memory-enabled HumanEval
+drops.
+The four direct performance-drop cases should therefore be read as main
+or coded adverse comparisons, not as every negative sub-result in the
+corpus.
+Two report overhead or maintenance burden rather than direct
+main-comparison drops~\citep{shen2025talm,vasilopoulos2026codified};
 one documents a security vulnerability in open experience stores
 (memory poisoning)~\citep{srivastava2025memorygraft};
 and two document evaluation artefacts that complicate interpretation
@@ -677,8 +751,7 @@ evaluation-framework incompatibility with chronological task
 ordering~\citep{joshi2025swebenchcl} and user-simulator
 bias~\citep{zhou2025tomswe}.
 
-There is no evidence that greater architectural complexity yields
-systematically larger gains.
+Adding memory layers is not, by itself, evidence of a better agent.
 \citet{zhang2025accelopt}, with a simple experience queue, and
 \citet{guo2026eet}, with a termination heuristic, obtain substantial
 gains in their respective domains without resorting to multi-tier
@@ -697,6 +770,10 @@ isolate it.
 degrades the result (42.0\% to 39.0\% with $k = 4$), and
 \citet{shen2026structurally} shows that category isolation outperforms
 global retrieval by +2.3~pp.
+Across the negative cases, the recurring issue is weak governance of
+what enters the prompt:
+excessive retrieval, unfiltered CTIM items, stale specifications, or
+low-quality stored trajectories.
 
 \FloatBarrier
 \subsection{Sensitivity analyses and certainty}
@@ -705,11 +782,12 @@ global retrieval by +2.3~pp.
 Two sensitivity analyses verified the stability of the findings.
 The first (S1) kept only the five studies published in peer-reviewed
 venues.
-The main findings (positive gains, diminishing returns, degradation
-from noise) hold qualitatively; however, the empirical base of SQ4
-drops from seven to two studies when
-EET~\citep{guo2026eet}, MemGovern~\citep{wang2026memgovern}, and
-GCC~\citep{wu2025gcc} are excluded.
+The headline direction of the findings does not invert, but SQ4 becomes
+much weaker:
+detailed monetary cost evidence is largely removed, and only two
+peer-reviewed architecture studies retain partial cost/token relevance
+(RepoMem~\citep{wang2026improving} and
+TALM~\citep{shen2025talm}).
 The second (S2) excluded the two studies scoring below 3.0.
 The removal does not alter SQ3 or SQ4 because neither study contributes
 to the performance or cost synthesis: Du is a non-architecture
@@ -726,9 +804,13 @@ percentages, exhaustive checks), \textbf{B} for cross-study patterns
 aggregated from multiple studies, and \textbf{C} for mechanism
 characterisations or causal inferences whose empirical base is
 inherently interpretive.
-Of the 19 coded findings, 13 receive high certainty, five receive
-moderate certainty, and one receives low certainty; in parallel, 13 are
-classified as type A, four as type B, and two as type C.
+Certainty refers to confidence in the extracted finding, not to causal
+identification of the memory component unless explicitly stated.
+After merging the duplicated Gap~1 row, the table reports 18 findings:
+12 receive high certainty, five receive moderate certainty, and one
+receives low certainty;
+in parallel, 12 are classified as type A, four as type B, and two as
+type C.
 The only low-certainty finding is SQ1-D (executable substrates, based
 on only three studies), while SQ5-B (relation between complexity and
 gain) receives moderate certainty because it relies on comparison
@@ -750,8 +832,11 @@ preprint influence cannot be ruled out.
 
 \begin{table}[htbp]
   \centering
-  \caption{Certainty and evidence type per finding. Type A: direct
-  data (counts, percentages). Type B: aggregated cross-study pattern.
+  \caption{Certainty and evidence type per finding.
+  Certainty refers to confidence in the extracted finding, not to causal
+  identification of the memory component unless explicitly stated.
+  Type A: direct data (counts, percentages).
+  Type B: aggregated cross-study pattern.
   Type C: mechanism characterisation or causal inference.}
   \label{tab:certainty}
   \small
@@ -770,16 +855,17 @@ preprint influence cannot be ruled out.
       controlled evidence, Tablan proposes infrastructure without
       controlled evaluation \\
     SQ2-A: SWE-bench V. most frequent & A & high & 13 of 24 benchmark-evaluated studies \\
-    SQ2-D: Gap~1 confirmed & A & high & exhaustive check \\
+    SQ2-D: no head-to-head comparison & A & high & exhaustive check \\
     SQ3-A: mostly positive controlled evidence, one negative case & B & high &
       18 positive studies, 1 negative (CTIM-Rover) \\
     SQ4-A: cost underreported (8/24 architecture; 12/28 full) & A & high &
       direct count; denominator reported separately for architecture corpus
       and full included corpus \\
-    SQ4-D: no Pareto frontier & A & high & exhaustive check \\
+    SQ4-D: no cross-architecture Pareto frontier & A & high &
+      exhaustive check; ToM-SWE reports a configuration-level frontier
+      within one architecture \\
     SQ5-A: 32\% adverse outcomes & A & high & 9 studies with evidence \\
     T-A: field dominated by preprints (82\%) & A & high & direct count \\
-    T-C: Gap~1 remains confirmed & A & high & exhaustive check \\
     \midrule
     SQ3-B: diminishing returns & B & moderate & observed pattern,
       not formally tested \\
