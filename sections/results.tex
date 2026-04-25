@@ -597,6 +597,10 @@ minimal no-KB agent.
 ClassEval, but that is a full-system comparison;
 the memory module itself adds only marginal token overhead and is not
 counted as a within-study persistence-cost reduction.
+For CodeMEM, the plotted token reduction refers to the Code Context
+Memory (CtxMem) component;
+removing the session-memory SessAST component reduces tokens further
+but also reduces performance.
 By contrast, systems that add context via retrieval increase costs
 marginally:
 \citet{chen2025sweexp} reports $+7.5$\% in tokens and
@@ -622,20 +626,11 @@ magnitudes of gain and cost.
   \label{fig:cost}
   \par\smallskip
   \footnotesize\emph{Note.}
-  Each entry uses the variable reported by the original study
-  (percentage cost, percentage tokens, absolute token count, or cost
-  ratio).
-  TALM is not plotted because its roughly 50\% token reduction is a
-  full-system comparison against MapCoder; the memory module itself adds
-  only marginal token overhead.
-  CodeMEM's token reduction is attributed to the Code Context Memory
-  (CtxMem) component;
-  removing the session-memory SessAST component reduces tokens further
-  but at a performance cost.
-  AccelOpt is omitted because its reported 26-fold cost reduction
-  compares an open-source backbone with experience queue against a
-  Claude~Sonnet~4 baseline rather than a memory-versus-no-memory
-  contrast.
+  Entries use the cost variable reported by each original study and are
+  directional, not directly comparable across studies.
+  TALM and AccelOpt are excluded from the plotted persistence-cost
+  effects because their headline reductions are full-system or
+  backbone-changing comparisons.
   \normalsize
 \end{figure}
 
